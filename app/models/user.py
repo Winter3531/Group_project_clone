@@ -26,8 +26,9 @@ class User(db.Model, UserMixin):
                             secondary=owner_album,
                             back_populates='owners')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='users')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='user_follow')
 
+    playlists = db.relationship('Playlist', back_populates='owner' )
     @property
     def password(self):
         return self.hashed_password

@@ -4,17 +4,17 @@ from sqlalchemy.sql import text
 # Add playlists
 
 playlist_1 = Playlist(
-        song_name='Work out',
+        playlist_name='Work out',
         owner_id = 1
     )
 
 playlist_2 = Playlist(
-        song_name='Meditation',
+        playlist_name='Meditation',
         owner_id = 2
     )
 
 playlist_3 = Playlist(
-        song_name='Dinner time',
+        playlist_name='Dinner time',
         owner_id = 3
     )
 def seed_playlists():

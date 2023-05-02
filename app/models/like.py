@@ -21,8 +21,10 @@ class Like(db.Model):
 
     users = db.relationship('User', back_populates='user_likes')
 
-    albums = db.relationship('Album', back_populates='likes')
+    albums = db.relationship('Album', primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)')
 
-    playlists = db.relationship('Playlist', back_populates='likes')
+    playlists = db.relationship('Playlist', primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)')
 
-    songs = db.relationship('Song', back_populates='likes')
+    songs = db.relationship('Song', primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)')
+
+    user_follow = db.relationship('User', primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)')
