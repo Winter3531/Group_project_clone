@@ -1,8 +1,9 @@
 from .db import db, environment, SCHEMA
-from sqlalchemy.schema import ForeignKey
+from .song_playlist import song_playlist
+from .like import Like
 
 
-class Song(db.Model):
+class Song(db.Model, Like):
     __tablename__ = 'songs'
 
     if environment == "production":
@@ -13,7 +14,21 @@ class Song(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     song_length = db.Column(db.Integer, nullalbe=False)
     song_src = db.Column(db.String, nullable=False)
-    album_id = db.Column(db.Integer, ForeignKey("albums.id"))
+    album_id = db.Column(db.Integer, db.ForeignKey("albums.id"), nullable=False)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'songs',
+        'with_polymorphic': '*'
+    }
+
+    album = db.relationship('Album', back_populates='songs')
+
+    playlists = db.relationship('Playlist',
+                                secondary=song_playlist,
+                                back_populates='songs'
+                                )
+
+
 
     @property
     def new_song_name(self):
