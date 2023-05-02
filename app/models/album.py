@@ -3,8 +3,8 @@ from sqlalchemy.schema import ForeignKey
 from .user_album import owner_album
 from .like import Like
 
-class Album(db.Model, Like):
-    __table__ = 'albums'
+class Album(db.Model):
+    __tablename__ = 'albums'
 
     if environment == 'production':
         __table_args__ = {'schema': SCHEMA}
@@ -14,11 +14,9 @@ class Album(db.Model, Like):
     year_recorded = db.Column(db.Integer, nullable=False)
     album_img = db.Column(db.String)
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'albums',
-        'with_polymorphic': '*'
-    }
 
     owners = db.relationship('User',
                             secondary=owner_album,
-                            back_populates='users')
+                            back_populates='albums')
+
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", Like.likable_id==Album.id)', back_populates='albums')

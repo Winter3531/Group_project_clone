@@ -5,7 +5,7 @@ from .user_album import owner_album
 from .like import Like
 
 
-class User(db.Model, UserMixin, Like):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     if environment == "production":
@@ -20,17 +20,13 @@ class User(db.Model, UserMixin, Like):
     date_of_birth = db.Column(db.Date(), nullable=False)
     user_image = db.Column(db.String)
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'users',
-        'with_polymorphic': '*'
-    }
-
-
-    album = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
+    user_likes = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
 
     albums = db.relationship('Album',
                             secondary=owner_album,
-                            back_populates='users')
+                            back_populates='owners')
+
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(likes.likable_type=="user", likes.likable_id==users.id)', back_populates='users')
 
     @property
     def password(self):
