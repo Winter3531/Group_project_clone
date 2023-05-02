@@ -18,4 +18,4 @@ class Playlist(db.Model):
                             secondary=song_playlist,
                             back_populates='playlists')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(likes.likable_type=="playlist", likes.likable_id==playlists.id)', back_populates='playlists')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='playlists')

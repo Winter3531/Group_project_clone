@@ -23,7 +23,7 @@ class Song(db.Model):
                                 back_populates='songs'
                                 )
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(likes.likable_type=="song", likes.likable_id==songs.id)', back_populates='songs')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs')
 
 
 

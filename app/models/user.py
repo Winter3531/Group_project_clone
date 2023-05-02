@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
                             secondary=owner_album,
                             back_populates='owners')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(likes.likable_type=="user", likes.likable_id==users.id)', back_populates='users')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='users')
 
     @property
     def password(self):

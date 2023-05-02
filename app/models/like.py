@@ -20,3 +20,9 @@ class Like(db.Model):
     }
 
     users = db.relationship('User', back_populates='user_likes')
+
+    albums = db.relationship('Album', back_populates='likes')
+
+    playlists = db.relationship('Playlist', back_populates='likes')
+
+    songs = db.relationship('Song', back_populates='likes')

@@ -19,4 +19,4 @@ class Album(db.Model):
                             secondary=owner_album,
                             back_populates='albums')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", Like.likable_id==Album.id)', back_populates='albums')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)')
