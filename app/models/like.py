@@ -10,7 +10,7 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    likable_type = db.Column(db.Enum('user','album','playlist','song', name='likable_tpye'), nullable=False)
+    likable_type = db.Column(db.Enum('user','album','playlist','song', name='likable_type'), nullable=False)
     likable_id = db.Column(db.Integer, nullable=False)
 
     __mapper_args__ = {
