@@ -1,4 +1,4 @@
 from flask import Blueprint
 
 
-playlists_routes = Blueprint('albums', __name__)
+playlists_routes = Blueprint('playlists', __name__)

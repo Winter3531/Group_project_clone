@@ -1,18 +1,18 @@
 const GET_ALBUMS = 'albums/current_user_albums'
 
-const getUserAlbums = (albums) => ({
+export const getUserAlbums = (albums) => ({
     type: GET_ALBUMS,
-    payload: albums
+    albums
 })
 
 export const currentUserAlbums = () => async (dispatch) => {
-    const res = await Fetch('/api/albums/current')
+    const res = await fetch('/api/albums/current')
+    console.log('res here', res.json())
     if (res.ok) {
         const albums = await res.json().then((data) => dispatch(getUserAlbums(data)))
-
         return albums
     }
-
+}
 
 
 const initalState = {};
@@ -21,7 +21,8 @@ export default function albumReducer(state = initalState, action) {
     switch(action.type) {
         case GET_ALBUMS: {
             const newState = {};
-            action.albums.Albums.forEach((album) => (newState[spot.id] = album))
+            console.log("HERE IS THE ACTION", action)
+            action.albums.Albums.forEach((album) => (newState[album.id] = album))
             return newState;
         }
         default:
