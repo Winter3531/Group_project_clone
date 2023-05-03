@@ -14,8 +14,12 @@ const UserAlbums = () => {
 
     return (
         <>
-        {Object.values(albums).map(album => album.id)}
-        {Object.values(albums).map(album => album.id)}
+        {Object.values(albums).map(album =>
+            <div>
+                <div>{album.id}</div>
+                <div>{album.album_name}</div>
+            </div>
+        )}
         </>
     )
 }
