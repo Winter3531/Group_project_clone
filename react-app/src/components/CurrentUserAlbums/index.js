@@ -14,7 +14,8 @@ const UserAlbums = () => {
 
     return (
         <>
-        <h1>WE MAKE IT </h1>
+        {Object.values(albums).map(album => album.id)}
+        {Object.values(albums).map(album => album.id)}
         </>
     )
 }

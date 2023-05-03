@@ -14,8 +14,7 @@ def user_albums():
     Query for all albums for the user and returns them in a list of album dictionaries
     """
     albums = Album.query.all()
-    return albums
-    # return {album.id: album.to_dict() for album in albums}
+    return {album.id: album.to_dict() for album in albums}
 
 # Get details of an album by the id.
 
