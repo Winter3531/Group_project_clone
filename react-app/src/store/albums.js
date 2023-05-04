@@ -1,8 +1,14 @@
-const GET_ALBUMS = 'albums/current_user_albums'
+const GET_ALBUMS = 'album/LOAD_ALBUM'
+const GETONE_ALBUM = 'album/GETONE_ALBUM'
 
-export const load = (albums) => ({
+const load = (albums) => ({
     type: GET_ALBUMS,
     albums
+})
+
+const getone = (album) => ({
+    type: GETONE_ALBUM,
+    album
 })
 
 export const currentUserAlbums = () => async (dispatch) => {
@@ -14,15 +20,28 @@ export const currentUserAlbums = () => async (dispatch) => {
     }
 }
 
+export const getAlbumDetail = (albumId) => async dispatch => {
+    console.log(albumId, 'this is albumId!!!!!!!!!')
+    const response = await fetch(`/api/albums/${albumId}`)
+
+    if (response.ok) {
+        const album = await response.json();
+        console.log(album, 'this is album!!!!!!!')
+        dispatch(getone(album));
+        return album
+    }
+}
+
 
 const initalState = {};
 
 export default function albumReducer(state = initalState, action) {
     switch(action.type) {
-        case GET_ALBUMS: {
-            console.log(action.albums, 'this is action!!!!!!')
+        case GET_ALBUMS:
             return {...state, ...action.albums};
-        }
+        case GETONE_ALBUM:
+            console.log(action, 'this is action!!!!!!')
+            return {...state, ...action.albums};
         default:
             return state
     }

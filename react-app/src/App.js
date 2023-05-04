@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import UserAlbums from "./components/AlbumsCurrent";
+import AlbumDetials from "./components/AlbumsDetail";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -25,8 +26,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/albums/current">
+          <Route exact path="/albums/current">
             <UserAlbums />
+          </Route>
+          <Route path="/albums/:albumId">
+            <AlbumDetials />
           </Route>
         </Switch>
       )}

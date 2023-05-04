@@ -18,6 +18,15 @@ def user_albums():
 
 # Get details of an album by the id.
 
+@albums_routes.route('/<int:id>')
+def album_detail(id):
+
+    album = Album.query.get(id)
+    print(album, "thi is album!!!!!!!!!!!!!!")
+    return album.to_dict()
+
 # Create an album
+
+# Update an album
 
 # Delete an album
