@@ -21,12 +21,10 @@ export const currentUserAlbums = () => async (dispatch) => {
 }
 
 export const getAlbumDetail = (albumId) => async dispatch => {
-    console.log(albumId, 'this is albumId!!!!!!!!!')
     const response = await fetch(`/api/albums/${albumId}`)
 
     if (response.ok) {
         const album = await response.json();
-        console.log(album, 'this is album!!!!!!!')
         dispatch(getone(album));
         return album
     }

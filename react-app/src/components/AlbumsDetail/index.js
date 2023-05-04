@@ -10,9 +10,11 @@ const AlbumDetials = () => {
     const albums = useSelector(state=>state.albums)
     const { albumId } = useParams()
 
+    // console.log(albumId) **confirmed
+
     useEffect(() => {
         dispatch(getAlbumDetail(albumId))
-    }, [dispatch, albumId])
+    }, [dispatch])
 
     return (
         <>

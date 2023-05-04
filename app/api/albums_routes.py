@@ -22,7 +22,6 @@ def user_albums():
 def album_detail(id):
 
     album = Album.query.get(id)
-    print(album, "thi is album!!!!!!!!!!!!!!")
     return album.to_dict()
 
 # Create an album
