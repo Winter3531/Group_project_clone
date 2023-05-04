@@ -4,19 +4,22 @@ from sqlalchemy.sql import text
 album_1 = Album(
     album_name='Teental',
     year_recorded = 2022,
-    album_img = ''
+    album_img = '',
+    user_id = 1
 )
 
 album_2 = Album(
     album_name='Aakash Gandhi rarfem',
     year_recorded = 2019,
-    album_img = ''
+    album_img = '',
+    user_id = 2
 )
 
 album_3 = Album(
     album_name='Hanu Dixit Ambltx',
     year_recorded = 2011,
-    album_img = ''
+    album_img = '',
+    user_id = 3
 )
 
 def seed_albums():

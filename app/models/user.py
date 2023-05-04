@@ -22,9 +22,7 @@ class User(db.Model, UserMixin):
 
     user_likes = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
 
-    albums = db.relationship('Album',
-                            secondary=owner_album,
-                            back_populates='owners')
+    albums = db.relationship('Album', back_populates='owners')
 
     likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='user_follow')
 
