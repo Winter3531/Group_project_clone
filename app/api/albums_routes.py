@@ -1,6 +1,9 @@
 from flask import Blueprint
 from flask_login import login_required
 from app.models import Album
+from app.forms import CreateAlbumForm
+from flask_login import current_user
+from
 
 
 albums_routes = Blueprint('albums', __name__)
@@ -22,10 +25,22 @@ def user_albums():
 def album_detail(id):
 
     album = Album.query.get(id)
-    print(album, "thi is album!!!!!!!!!!!!!!")
     return album.to_dict()
 
 # Create an album
+@albums_routes.route('/', method=['POST'])
+def create_album():
+    """
+    create an album
+    """
+    form = CreateAlbumForm()
+    new_album = Album(
+        album_name = form.data['album_name'],
+        year_recorded = form.data['year_recorded'],
+        album_img = form.data['album_img'],
+        user_id = current_user.id
+    )
+    db.session.add(new_album)
 
 # Update an album
 
