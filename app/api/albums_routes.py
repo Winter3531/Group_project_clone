@@ -3,7 +3,6 @@ from flask_login import login_required
 from app.models import Album
 from app.forms import CreateAlbumForm
 from flask_login import current_user
-from
 
 
 albums_routes = Blueprint('albums', __name__)
@@ -28,7 +27,7 @@ def album_detail(id):
     return album.to_dict()
 
 # Create an album
-@albums_routes.route('/', method=['POST'])
+@albums_routes.route('/', methods=['POST'])
 def create_album():
     """
     create an album
