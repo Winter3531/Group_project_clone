@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editAlbum } from "../../store/album";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-const EditAlbumForm = ({album}) => {
+const EditAlbumForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    console.log(album, 'album in the edit album')
-    const [album_name, setAlbumName] = useState(album);
+    const { albumId } = useParams()
+    console.log(albumId, 'album in the edit album')
+    const [album_name, setAlbumName] = useState("");
     const [year_recorded, setYearRecorded] = useState("");
     const [album_img, setAlbumImg] = useState("");
 
@@ -20,15 +22,16 @@ const EditAlbumForm = ({album}) => {
         e.preventDefault()
 
         const newAlbum = {
+            id : albumId,
             album_name,
             year_recorded,
             album_img,
         };
 
 
-        let createdAlbum = await dispatch(editAlbum(newAlbum));
-        if (createdAlbum) {
-            history.push(`/albums/${createdAlbum.id}`)
+        let updatedAlbum = await dispatch(editAlbum(newAlbum));
+        if (updatedAlbum) {
+            history.push(`/albums/${updatedAlbum.id}`)
         }
     };
 

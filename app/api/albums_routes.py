@@ -55,7 +55,7 @@ def create_album():
 
 # Update an album
 
-@albums_routes.route('/<int:id>/', methods=["GET", "PUT"])
+@albums_routes.route('/<int:id>/', methods=["PUT"])
 def edit_album(id):
     """
     edit an album
@@ -82,3 +82,11 @@ def edit_album(id):
 
 
 # Delete an album
+@albums_routes.route('/<int:id>/', methods=['DELETE'])
+def delete_album(id):
+    album = Album.query.get(id)
+    print(album)
+    db.session.delete(album)
+    db.session.commit()
+
+    return album.to_dict()

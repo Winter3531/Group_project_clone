@@ -67,7 +67,7 @@ export const createAlbum = (album) => async dispatch => {
     return newAlbum;
 }
 
-export const editAlbum = (album) => async disptach => {
+export const editAlbum = (album, albumId) => async disptach => {
     const { id, album_name, year_recorded, album_img } = album;
 
     console.log(album, 'this is album in edit album thunk')
@@ -90,6 +90,20 @@ export const editAlbum = (album) => async disptach => {
     }
 };
 
+export const deleteAlbum = albumId => async dispatch => {
+    console.log(albumId, 'this is album id ')
+    const response = await fetch(`/api/albums/${albumId}/`, {
+        method: 'DELETE',
+    });
+
+    console.log(response, 'this is response in delete album thunk')
+    if (response.ok) {
+        const album = await response.json();
+        dispatch(remove(album))
+        return album
+    }
+}
+
 const initalState = {};
 
 export default function albumReducer(state = initalState, action) {
@@ -102,7 +116,11 @@ export default function albumReducer(state = initalState, action) {
             return { [action.album.id]: action.album };
         case EDIT_ALBUM:
             console.log(action, 'this is action!!!!!!!!')
-            return { ...state, ...action.albums }
+            return { [action.album.id]: action.album };
+        case REMOVE_ALBUM:
+            const newState = {...state};
+            delete newState[action.albumId]
+            return newState
         default:
             return state
     }
