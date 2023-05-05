@@ -1,6 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.schema import ForeignKey
-from .user_album import owner_album
 from flask_login import current_user
 from .like import Like
 
