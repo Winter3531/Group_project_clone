@@ -19,3 +19,11 @@ class Playlist(db.Model):
                             back_populates='playlists')
 
     likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='playlists')
+
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'playlist_name': self.playlist_name,
+            'owner_id': self.owner_id
+        }

@@ -21,12 +21,10 @@ export const currentUserAlbums = () => async (dispatch) => {
 }
 
 export const getAlbumDetail = (albumId) => async dispatch => {
-    console.log(albumId, 'this is albumId!!!!!!!!!')
     const response = await fetch(`/api/albums/${albumId}`)
 
     if (response.ok) {
         const album = await response.json();
-        console.log(album, 'this is album!!!!!!!')
         dispatch(getone(album));
         return album
     }
@@ -40,7 +38,6 @@ export default function albumReducer(state = initalState, action) {
         case GET_ALBUMS:
             return {...state, ...action.albums};
         case GETONE_ALBUM:
-            console.log(action, 'this is action!!!!!!')
             return {...state, ...action.albums};
         default:
             return state
