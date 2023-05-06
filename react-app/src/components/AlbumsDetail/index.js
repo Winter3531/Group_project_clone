@@ -12,9 +12,11 @@ const AlbumDetials = () => {
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
 
+    // console.log(albumId) **confirmed
+
     useEffect(() => {
         dispatch(getAlbumDetail(albumId))
-    }, [dispatch, albumId])
+    }, [dispatch])
 
 
     const deleteAlbum = async (e) => {
