@@ -1,14 +1,16 @@
-import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { getAlbumDetail } from '../../store/albums'
+import { getAlbumDetail } from '../../store/album'
+import { useEffect, useState, useRef } from "react";
+import * as albumActions from '../../store/album';
 
 
 const AlbumDetials = () => {
     const dispatch = useDispatch();
-    const albums = useSelector(state=>state.albums)
     const { albumId } = useParams()
+    const history = useHistory()
+    let album = useSelector(state => state?.albums[albumId]);
 
     // console.log(albumId) **confirmed
 
@@ -16,15 +18,30 @@ const AlbumDetials = () => {
         dispatch(getAlbumDetail(albumId))
     }, [dispatch])
 
+
+    const deleteAlbum = async (e) => {
+        e.preventDefault();
+        await dispatch(albumActions.deleteAlbum(albumId));
+        await dispatch(albumActions.currentUserAlbums(albumId));
+        history.push('/albums/current')
+
+    }
     return (
-        <>
-        {Object.values(albums).map(album =>
-            <div>
-                <div>{album.id}</div>
-                <div>{album.album_name}</div>
-            </div>
-        )}
-        </>
+        <div>
+            {album ?
+                (
+                    <>
+                        <p>{album.id}</p>
+                        <p>{album.album_name}</p>
+                        <p>{album.year_recorded}</p>
+                        <p>{album.album_img}</p>
+                        <p>{album.user_id}</p>
+                        <button onClick={deleteAlbum}>Delete</button>
+                    </>
+                ) :
+                <p>Can't Read</p>
+            }
+        </div>
     )
 }
 
