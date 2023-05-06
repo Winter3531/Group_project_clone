@@ -1,11 +1,10 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from .user_album import owner_album
 from .like import Like
 
 
-class User(db.Model, UserMixin, Like):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     if environment == "production":
@@ -20,18 +19,13 @@ class User(db.Model, UserMixin, Like):
     date_of_birth = db.Column(db.Date(), nullable=False)
     user_image = db.Column(db.String)
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'users',
-        'with_polymorphic': '*'
-    }
+    user_likes = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
 
+    albums = db.relationship('Album', back_populates='owners')
 
-    album = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='user_follow')
 
-    albums = db.relationship('Album',
-                            secondary=owner_album,
-                            back_populates='users')
-
+    playlists = db.relationship('Playlist', back_populates='owner' )
     @property
     def password(self):
         return self.hashed_password

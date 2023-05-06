@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA
 from .song_playlist import song_playlist
 from .like import Like
 
-class Playlist(db.Model, Like):
+class Playlist(db.Model):
     __tablename__ = 'playlists'
 
     if environment == "production":
@@ -10,15 +10,12 @@ class Playlist(db.Model, Like):
 
     id = db.Column(db.Integer, primary_key=True)
     playlist_name = db.Column(db.String)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullablue=False)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'playlists',
-        'with_polymorphic': '*'
-    }
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     owner = db.relationship('User', back_populates='playlists')
 
     songs = db.relationship('Song',
                             secondary=song_playlist,
                             back_populates='playlists')
+
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='playlists')
