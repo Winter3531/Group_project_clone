@@ -29,11 +29,12 @@ const AlbumDetials = () => {
             {album ?
                 (
                     <>
-                        <p>{album.id}</p>
-                        <p>{album.album_name}</p>
-                        <p>{album.year_recorded}</p>
-                        <p>{album.album_img}</p>
-                        <p>{album.user_id}</p>
+                        <p>album id: {album.id}</p>
+                        <p>album name: {album.album_name}</p>
+                        <p>year recorded: {album.year_recorded}</p>
+                        <p>album img: {album.album_img}</p>
+                        <p>user id: {album.user_id}</p>
+                        <div>likes: {album.likes}</div>
                         <button onClick={deleteAlbum}>Delete</button>
                     </>
                 ) :

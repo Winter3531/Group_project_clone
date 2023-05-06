@@ -16,8 +16,12 @@ const UserAlbums = () => {
         <>
         {Object.values(albums).map(album =>
             <div>
-                <div>{album.id}</div>
-                <div>{album.album_name}</div>
+                <div>album id: {album.id}</div>
+                <div>album name; {album.album_name}</div>
+                <div>year recorded: {album.year_recorded}</div>
+                <div>album img: {album.album_img}</div>
+                <div>user id: {album.user_id}</div>
+                <div>likes: {album.likes}</div>
             </div>
         )}
         </>

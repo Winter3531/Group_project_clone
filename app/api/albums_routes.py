@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import Album, db
+from app.models import Album, db, Like
 from app.forms.album_form import CreateAlbumForm
 from flask_login import current_user
 from app.models.user import User, db
@@ -9,7 +9,9 @@ from app.models.user import User, db
 albums_routes = Blueprint('albums', __name__)
 
 # Get all playlist for the current user.
-  # api/albums/current
+# api/albums/current
+
+
 @albums_routes.route('/current')
 # @login_required
 def user_albums():
@@ -17,18 +19,22 @@ def user_albums():
     Query for all albums for the user and returns them in a list of album dictionaries
     """
     user_id = current_user.id
-    albums = Album.query.filter_by(user_id = user_id)
+    albums = Album.query.filter_by(user_id=user_id)
     return {album.id: album.to_dict() for album in albums}
 
 # Get details of an album by the id.
+
 
 @albums_routes.route('/<int:id>')
 def album_detail(id):
 
     album = Album.query.get(id)
-    return album.to_dict()
+    if album:
+        return album.to_dict()
+    return "Album does not exsit"
 
 # Create an album
+
 
 @albums_routes.route('', methods=['POST'])
 def create_album():
@@ -44,16 +50,17 @@ def create_album():
 
         # new_album = Album(**request.json)
         new_album = Album(
-        album_name = form.data['album_name'],
-        year_recorded = form.data['year_recorded'],
-        album_img = form.data['album_img'],
-        user_id = user_id
+            album_name=form.data['album_name'],
+            year_recorded=form.data['year_recorded'],
+            album_img=form.data['album_img'],
+            user_id=user_id
         )
         db.session.add(new_album)
         db.session.commit()
         return new_album.to_dict()
 
 # Update an album
+
 
 @albums_routes.route('/<int:id>/', methods=["PUT"])
 def edit_album(id):
@@ -91,8 +98,35 @@ def delete_album(id):
 
     return album.to_dict()
 
+
 # Like an album
-@albums_routes.route('/<int:id>/likes')
+@albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 def like_album(id):
-    album = Album.query.get(id)
-    return album.to_dict()
+    user_id = current_user.get_id()
+    albums = Album.query.select_from(Like).filter(Like.likable_type == 'album', Like.likable_id == id).first()
+    # return {album.id: album.to_dict() for album in albums}
+    if albums and request.method == 'POST':
+        return 'You already liked this album'
+    elif albums and request.method == 'GET':
+        return albums.to_dict()
+
+
+    liked_album = Like(
+        user_id=user_id,
+        likable_type='album',
+        likable_id=id
+    )
+    db.session.add(liked_album)
+    db.session.commit()
+    return liked_album.to_dict()
+
+
+# Delete a liked ablum
+@albums_routes.route('/<int:id>/likes', methods=['DELETE'])
+def delete_like_album(id):
+    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album').first()
+    if liked_album:
+        db.session.delete(liked_album)
+        db.session.commit()
+        return 'You unliked this album'
+    return 'You did not like this album yet'
