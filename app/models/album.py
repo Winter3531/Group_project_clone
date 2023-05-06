@@ -42,3 +42,11 @@ class Album(db.Model):
             'album_img': self.album_img,
             'user_id': self.user_id,
         }
+
+    # def liked_album_dict(self):
+    #             return {
+    #         'id': self.id,
+    #         'album_name': self.album_name,
+    #         'year_recorded': self.year_recorded,
+    #         'album_img': self.album_img,
+    #     }
