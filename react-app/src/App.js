@@ -5,8 +5,12 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import UserAlbums from "./components/AlbumsCurrent";
 import AlbumDetials from "./components/AlbumsDetail";
+import UserPlaylists from "./components/Playlists/Playlists"
+import PlaylistDetails from "./components/Playlists/PlaylistDetails";
+import CreatePlaylist from "./components/Playlists/CreatePlaylistModal";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 
@@ -20,6 +24,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <SideNav isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route path="/login" >
@@ -39,6 +44,12 @@ function App() {
           </Route>
           <Route path="/albums/:albumId">
             <AlbumDetials />
+          </Route>
+          <Route exact path="/playlists/current">
+            <UserPlaylists />
+          </Route>
+          <Route path="/playlists/:playlistId">
+            <PlaylistDetails />
           </Route>
         </Switch>
       )}
