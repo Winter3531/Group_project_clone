@@ -4,6 +4,8 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { getAlbumDetail } from '../../store/album'
 import { useEffect, useState, useRef } from "react";
 import * as albumActions from '../../store/album';
+import EditAlbumFormModal from "../AlbumEdit";
+import OpenModalButton from "../OpenModalButton";
 
 
 const AlbumDetials = () => {
@@ -22,8 +24,8 @@ const AlbumDetials = () => {
     const deleteAlbum = async (e) => {
         e.preventDefault();
         await dispatch(albumActions.deleteAlbum(albumId));
-        await dispatch(albumActions.currentUserAlbums(albumId));
         history.push('/albums/current')
+        await dispatch(albumActions.currentUserAlbums());
 
     }
     return (
@@ -37,6 +39,9 @@ const AlbumDetials = () => {
                         <p>album img: {album.album_img}</p>
                         <p>user id: {album.user_id}</p>
                         <div>likes: {album.likes}</div>
+                        <OpenModalButton
+                            buttonText={"Edit Album"}
+                            modalComponent={<EditAlbumFormModal album={album}/>} />
                         <button onClick={deleteAlbum}>Delete</button>
                     </>
                 ) :

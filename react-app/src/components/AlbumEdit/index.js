@@ -3,15 +3,16 @@ import { useDispatch } from "react-redux";
 import { editAlbum } from "../../store/album";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useModal } from "../../context/Modal";
 
-const EditAlbumForm = () => {
+const EditAlbumFormModal = ({album}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { albumId } = useParams()
-    const [album_name, setAlbumName] = useState("");
-    const [year_recorded, setYearRecorded] = useState("");
-    const [album_img, setAlbumImg] = useState("");
+    const [album_name, setAlbumName] = useState(album.album_name);
+    const [year_recorded, setYearRecorded] = useState(album.year_recorded);
+    const [album_img, setAlbumImg] = useState(album.album_img);
+    const { closeModal } = useModal();
 
     const updateAlbumName = (e) => setAlbumName(e.target.value);
     const updateYearRecorded = (e) => setYearRecorded(e.target.value);
@@ -21,7 +22,7 @@ const EditAlbumForm = () => {
         e.preventDefault()
 
         const newAlbum = {
-            id : albumId,
+            id : album.id,
             album_name,
             year_recorded,
             album_img,
@@ -29,7 +30,8 @@ const EditAlbumForm = () => {
 
         let updatedAlbum = await dispatch(editAlbum(newAlbum));
         if (updatedAlbum) {
-            history.push(`/albums/${updatedAlbum.id}`)
+            history.push(`/albums/${updatedAlbum.id}`);
+            closeModal();
         }
     };
 
@@ -63,11 +65,11 @@ const EditAlbumForm = () => {
                         value={album_img}
                         onChange={updateAlbumImg} />
                 </div>
-                <button type="submit">Create new Album</button>
+                <button type="submit">Update Album</button>
 
             </form>
         </section>
     )
 }
 
-export default EditAlbumForm;
+export default EditAlbumFormModal;
