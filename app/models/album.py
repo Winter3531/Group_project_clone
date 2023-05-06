@@ -30,3 +30,11 @@ class Album(db.Model):
             'user_id' : current_user.id,
             'likes' :[like.likable_type for like in self.likes] if self.likes else 'No'
         }
+
+    # def liked_album_dict(self):
+    #             return {
+    #         'id': self.id,
+    #         'album_name': self.album_name,
+    #         'year_recorded': self.year_recorded,
+    #         'album_img': self.album_img,
+    #     }

@@ -36,3 +36,10 @@ class Like(db.Model):
             'likable_type': self.likable_type,
             'likable_id': self.likable_id
         }
+
+    def album_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'likable_id': self.likable_id
+        }
