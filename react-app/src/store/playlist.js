@@ -33,9 +33,17 @@ export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
         dispatch(details(playlist));
         return playlist;
     };
-}
+};
 
+export const CreatePlaylist = (details) => async (dispatch) => {
+    const createFetch = await fetch('/api/playlists/create', {
+        method: 'POST',
+        body: JSON.stringify(details)
+    });
 
+    
+
+};
 
 const initalState = {};
 

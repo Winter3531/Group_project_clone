@@ -7,6 +7,7 @@ import UserAlbums from "./components/AlbumsCurrent";
 import AlbumDetials from "./components/AlbumsDetail";
 import UserPlaylists from "./components/Playlists/Playlists"
 import PlaylistDetails from "./components/Playlists/PlaylistDetails";
+import CreatePlaylist from "./components/Playlists/CreatePlaylistModal";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 

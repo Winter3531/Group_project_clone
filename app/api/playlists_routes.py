@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
 from app.models import Playlist
-from app.forms import PlaylistForm
+# from app.forms import PlaylistForm
 
 
 playlists_routes = Blueprint('playlists', __name__)
@@ -28,17 +28,17 @@ def playlist_details(id):
     return playlist.to_dict()
 
 # Create a playlist
-@playlists_routes.route('/create', methods=['POST'])
+@playlists_routes.route('/new', methods=['POST'])
 def create_playlist():
     """
     Creates a new playlist and redirects them to the playlist details
     """
-    form = PlaylistForm()
+    # form = PlaylistForm()
 
 
 
 # Update a playlist
-@playlists_routes.route('/edit')
+# @playlists_routes.route('/edit')
 
 # Delete a playlist
-@playlists_routes.route('/delete')
+# @playlists_routes.route('/delete')
