@@ -38,6 +38,7 @@ export default function albumReducer(state = initalState, action) {
         case GET_ALBUMS:
             return {...state, ...action.albums};
         case GETONE_ALBUM:
+            console.log(action, 'this is action!!!!!!')
             return {...state, ...action.albums};
         default:
             return state

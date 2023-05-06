@@ -28,3 +28,11 @@ class Like(db.Model):
     songs = db.relationship('Song', primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)')
 
     user_follow = db.relationship('User', primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'likable_type': self.likable_type,
+            'likable_id': self.likable_id
+        }
