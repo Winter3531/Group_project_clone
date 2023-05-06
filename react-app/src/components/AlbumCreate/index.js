@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createAlbum } from "../../store/album";
 import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 
 
-const CreateAlbumForm = () => {
+const CreateAlbumFormModal = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [album_name, setAlbumName] = useState("");
     const [year_recorded, setYearRecorded] = useState("");
     const [album_img, setAlbumImg] = useState("");
+    const { closeModal } = useModal();
 
     const updateAlbumName = (e) => setAlbumName(e.target.value);
     const updateYearRecorded = (e) => setYearRecorded(e.target.value);
@@ -27,7 +29,8 @@ const CreateAlbumForm = () => {
 
         let createdAlbum = await dispatch(createAlbum(newAlbum));
         if (createdAlbum) {
-            history.push(`/albums/${createdAlbum.id}`)
+            history.push(`/albums/${createdAlbum.id}`);
+            closeModal()
         }
     };
 
@@ -68,4 +71,4 @@ const CreateAlbumForm = () => {
     )
 }
 
-export default CreateAlbumForm;
+export default CreateAlbumFormModal;
