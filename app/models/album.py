@@ -27,5 +27,6 @@ class Album(db.Model):
             'album_name': self.album_name,
             'year_recorded': self.year_recorded,
             'album_img': self.album_img,
-            'user_id' : current_user.id
+            'user_id' : current_user.id,
+            'likes' :[like.likable_type for like in self.likes] if self.likes else 'No'
         }

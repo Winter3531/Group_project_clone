@@ -10,6 +10,8 @@ import PlaylistDetails from "./components/Playlists/PlaylistDetails";
 import CreatePlaylist from "./components/Playlists/CreatePlaylistModal";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import CreateAlbumForm from "./components/AlbumCreate";
+import EditAlbumForm from "./components/AlbumEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,8 +31,14 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path='/albums/new'>
+            <CreateAlbumForm />
+          </Route>
           <Route exact path="/albums/current">
             <UserAlbums />
+          </Route>
+          <Route path='/albums/:albumId/edit'>
+            <EditAlbumForm />
           </Route>
           <Route path="/albums/:albumId">
             <AlbumDetials />

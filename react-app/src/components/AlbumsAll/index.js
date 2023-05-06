@@ -6,7 +6,7 @@ import { currentUserAlbums } from '../../store/album'
 
 const UserAlbums = () => {
     const dispatch = useDispatch();
-    const albums = useSelector(state=>state?.albums)
+    const albums = useSelector(state=>state.albums)
 
     useEffect(() => {
         dispatch(currentUserAlbums())
