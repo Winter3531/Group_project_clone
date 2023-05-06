@@ -10,6 +10,7 @@ import PlaylistDetails from "./components/Playlists/PlaylistDetails";
 import CreatePlaylist from "./components/Playlists/CreatePlaylistModal";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 
@@ -23,6 +24,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <SideNav isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
           <Route path="/login" >

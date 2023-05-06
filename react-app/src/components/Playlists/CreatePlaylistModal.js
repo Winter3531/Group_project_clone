@@ -8,8 +8,8 @@ import { Redirect } from "react-router-dom"
 
 const PlaylistFormModal = () => {
     const dispatch = useDispatch();
-    [playlistName, setPlaylistName] = useState('');
     const sessionUser = useSelector(state=>state.session.user)
+    const [playlistName, setPlaylistName] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
@@ -36,7 +36,8 @@ const PlaylistFormModal = () => {
                 const errorMsg = "Playlist name is required";
                 setErrors(errorMsg);
             }
-        })
+        });
+
         if (playlist) {
             Redirect(`/playlist/${playlist.id}`).then(closeModal)
         }
@@ -44,18 +45,18 @@ const PlaylistFormModal = () => {
 
     return (
         <>
-        <h1 className="new-playlist-header">Create a new playlist</h1>
-        <from className='new-playlist-from' onSubmit={handleSubmit}>
-            <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
-            <input
-                type="text"
-                value={playlistName}
-                onChange={(e) => setPlaylistName(e.target.value)}
-                placeholder="Playlist Name"
-                className="playlistName"
-            />
-            <button className="submit" disabled={isButtonDisabled} type='submit'>Create</button>
-        </from>
+            <h1 className="new-playlist-header">Create a new playlist</h1>
+            <from className='new-playlist-from' onSubmit={handleSubmit}>
+                <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+                <input
+                    type="text"
+                    value={playlistName}
+                    onChange={(e) => setPlaylistName(e.target.value)}
+                    className="playlistName"
+                    placeholder="Playlist Name"
+                />
+                <button className="submit" disabled={isButtonDisabled} type='submit'>Create Playlist</button>
+            </from>
         </>
     )
 
