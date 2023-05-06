@@ -8,7 +8,7 @@ from app.models.user import User, db
 
 albums_routes = Blueprint('albums', __name__)
 
-# Get all playlist for the current user.
+# Get all albums for the current user.
   # api/albums/current
 @albums_routes.route('/current')
 # @login_required
