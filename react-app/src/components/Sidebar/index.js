@@ -1,11 +1,12 @@
 import React from "react";
-import { useSelector,  } from "react-redux";
+import { useSelector } from "react-redux";
 import PlaylistFormModal from "../Playlists/CreatePlaylistModal";
 import OpenModalButton from "../OpenModalButton";
 import CreateAlbumFormModal from "../AlbumCreate";
 
 
 const SideNav = ({ isLoaded }) => {
+    const sessionUser = useSelector(state=>state.session.user)
     return (
         <ul>
             {isLoaded && (
@@ -26,6 +27,6 @@ const SideNav = ({ isLoaded }) => {
             )}
         </ul>
     )
-}
+};
 
 export default SideNav;

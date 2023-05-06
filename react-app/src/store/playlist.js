@@ -1,5 +1,6 @@
 const LOAD_PLAYLISTS = 'playlist/LOAD_PLAYLISTS';
-const DETAILS_PLAYLIST = 'playlist/DETAILS_PLAYLIST'
+const DETAILS_PLAYLIST = 'playlist/DETAILS_PLAYLIST';
+const CREATE_PLAYLIST = 'playlist/CREATE_PLAYLIST';
 
 
 const load = (playlists) => ({
@@ -12,6 +13,10 @@ const details = (playlist) => ({
     playlist
 });
 
+const create = (playlist) => ({
+    type: CREATE_PLAYLIST,
+    playlist
+})
 
 
 export const currentUserPlaylists = () => async (dispatch) => {
@@ -35,14 +40,21 @@ export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
     };
 };
 
-export const CreatePlaylist = (details) => async (dispatch) => {
-    const createFetch = await fetch('/api/playlists/create', {
+export const CreatePlaylist = (playlist) => async (dispatch) => {
+    const { playlist_name } = playlist
+
+    const res = await fetch('/api/playlists/new', {
         method: 'POST',
-        body: JSON.stringify(details)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            playlist_name
+        })
     });
 
-    
-
+    const newPlaylist = await res.json()
+    console.log(newPlaylist, 'New Playlist')
+    dispatch(create(newPlaylist));
+    return newPlaylist;
 };
 
 const initalState = {};
