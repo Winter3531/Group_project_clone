@@ -34,3 +34,18 @@ class Song(db.Model):
     @new_song_name.setter
     def song(self, name):
         self.song_name = name
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'songName': self.song_name,
+            'likes': [like.to_dict() for like in self.likes] if self.likes else []
+        }
+
+
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'songName': self.song_name,
+    #         'like_ids': [like.id for like in self.likes] if self.likes else []
+    #     }

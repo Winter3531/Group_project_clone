@@ -13,11 +13,11 @@ class Like(db.Model):
     likable_type = db.Column(db.Enum('user','album','playlist','song', name='likable_type'), nullable=False)
     likable_id = db.Column(db.Integer, nullable=False)
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'likes',
-        'with_polymorphic': '*',
-        "polymorphic_on": likable_type
-    }
+    # __mapper_args__ = {
+    #     'polymorphic_identity': 'likes',
+    #     'with_polymorphic': '*',
+    #     "polymorphic_on": likable_type
+    # }
 
     users = db.relationship('User', back_populates='user_likes')
 
@@ -28,3 +28,11 @@ class Like(db.Model):
     songs = db.relationship('Song', primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)')
 
     user_follow = db.relationship('User', primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'likable_type': self.likable_type,
+            'likable_id': self.likable_id
+        }

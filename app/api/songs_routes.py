@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Song, Like
+from app.models import Song, Like, Album
 
 
 songs_routes = Blueprint('songs', __name__)
@@ -11,7 +11,9 @@ def all_songs():
     print(songs)
     return f'<p> {songs} </p>'
 
-@songs_routes.route('/<int:id>/likes')
+@songs_routes.route('/<int:id>/likes', methods=['POST', 'GET'])
 def song_likes(id):
     print(id, "This PRINTED")
-    return {'id': id}
+    songs = Song.query.all()
+    # print(likes)
+    return {song.id: song.to_dict() for song in songs}
