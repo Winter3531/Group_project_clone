@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Playlist
-# from app.forms import PlaylistForm
+from app.models.playlist import Playlist, db
+from app.forms.playlist_form import PlaylistForm;
 
 
 playlists_routes = Blueprint('playlists', __name__)
@@ -33,8 +33,19 @@ def create_playlist():
     """
     Creates a new playlist and redirects them to the playlist details
     """
-    # form = PlaylistForm()
+    form = PlaylistForm()
+    owner_id = current_user.get_id()
 
+    # form['csrf-token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_playlist = Playlist(
+            playlist_name = form.data['playlist_name'],
+            owner_id = owner_id
+        )
+        db.session.add(new_playlist)
+        db.session.commit()
+        return new_playlist.to_dict()
 
 
 # Update a playlist
