@@ -10,7 +10,9 @@ from flask import json, jsonify
 albums_routes = Blueprint('albums', __name__)
 
 # Get all playlist for the current user.
-  # api/albums/current
+# api/albums/current
+
+
 @albums_routes.route('/current')
 # @login_required
 def user_albums():
@@ -18,7 +20,7 @@ def user_albums():
     Query for all albums for the user and returns them in a list of album dictionaries
     """
     user_id = current_user.id
-    albums = Album.query.filter_by(user_id = user_id)
+    albums = Album.query.filter_by(user_id=user_id)
     return {album.id: album.to_dict() for album in albums}
 
 # GET ALL ALBUMS THAT CURRENT USER LIKES
@@ -41,13 +43,17 @@ def user_albums():
 
 # Get details of an album by the id.
 
+
 @albums_routes.route('/<int:id>')
 def album_detail(id):
 
     album = Album.query.get(id)
-    return album.to_dict()
+    if album:
+        return album.to_dict()
+    return "Album does not exsit"
 
 # Create an album
+
 
 @albums_routes.route('', methods=['POST'])
 def create_album():
@@ -63,16 +69,17 @@ def create_album():
 
         # new_album = Album(**request.json)
         new_album = Album(
-        album_name = form.data['album_name'],
-        year_recorded = form.data['year_recorded'],
-        album_img = form.data['album_img'],
-        user_id = user_id
+            album_name=form.data['album_name'],
+            year_recorded=form.data['year_recorded'],
+            album_img=form.data['album_img'],
+            user_id=user_id
         )
         db.session.add(new_album)
         db.session.commit()
         return new_album.to_dict()
 
 # Update an album
+
 
 @albums_routes.route('/<int:id>/', methods=["PUT"])
 def edit_album(id):
@@ -101,6 +108,7 @@ def edit_album(id):
 
 
 # Like an album
+@albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 def like_album(id):
     user_id = current_user.get_id()
