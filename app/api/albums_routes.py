@@ -90,3 +90,9 @@ def delete_album(id):
     db.session.commit()
 
     return album.to_dict()
+
+# Like an album
+@albums_routes.route('/<int:id>/likes')
+def like_album(id):
+    album = Album.query.get(id)
+    return album.to_dict()

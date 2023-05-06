@@ -70,7 +70,6 @@ export const createAlbum = (album) => async dispatch => {
 export const editAlbum = (album, albumId) => async disptach => {
     const { id, album_name, year_recorded, album_img } = album;
 
-    console.log(album, 'this is album in edit album thunk')
     const response = await fetch(`/api/albums/${album.id}/`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -91,12 +90,11 @@ export const editAlbum = (album, albumId) => async disptach => {
 };
 
 export const deleteAlbum = albumId => async dispatch => {
-    console.log(albumId, 'this is album id ')
+
     const response = await fetch(`/api/albums/${albumId}/`, {
         method: 'DELETE',
     });
 
-    console.log(response, 'this is response in delete album thunk')
     if (response.ok) {
         const album = await response.json();
         dispatch(remove(album))
@@ -115,7 +113,6 @@ export default function albumReducer(state = initalState, action) {
         case CREATE_ALBUM:
             return { [action.album.id]: action.album };
         case EDIT_ALBUM:
-            console.log(action, 'this is action!!!!!!!!')
             return { [action.album.id]: action.album };
         case REMOVE_ALBUM:
             const newState = {...state};

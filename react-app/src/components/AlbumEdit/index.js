@@ -9,7 +9,6 @@ const EditAlbumForm = () => {
     const history = useHistory();
 
     const { albumId } = useParams()
-    console.log(albumId, 'album in the edit album')
     const [album_name, setAlbumName] = useState("");
     const [year_recorded, setYearRecorded] = useState("");
     const [album_img, setAlbumImg] = useState("");
@@ -27,7 +26,6 @@ const EditAlbumForm = () => {
             year_recorded,
             album_img,
         };
-
 
         let updatedAlbum = await dispatch(editAlbum(newAlbum));
         if (updatedAlbum) {

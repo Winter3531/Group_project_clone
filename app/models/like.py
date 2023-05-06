@@ -13,11 +13,11 @@ class Like(db.Model):
     likable_type = db.Column(db.Enum('user','album','playlist','song', name='likable_type'), nullable=False)
     likable_id = db.Column(db.Integer, nullable=False)
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'likes',
-        'with_polymorphic': '*',
-        "polymorphic_on": likable_type
-    }
+    # __mapper_args__ = {
+    #     'polymorphic_identity': 'likes',
+    #     'with_polymorphic': '*',
+    #     "polymorphic_on": likable_type
+    # }
 
     users = db.relationship('User', back_populates='user_likes')
 
