@@ -16,7 +16,7 @@ const details = (playlist) => ({
 const create = (playlist) => ({
     type: CREATE_PLAYLIST,
     playlist
-})
+});
 
 
 export const currentUserPlaylists = () => async (dispatch) => {
@@ -44,18 +44,43 @@ export const CreatePlaylist = (playlist) => async (dispatch) => {
     const { playlist_name } = playlist
 
     const res = await fetch('/api/playlists/new', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
             playlist_name
-        })
+        }),
     });
 
-    const newPlaylist = await res.json()
-    console.log(newPlaylist, 'New Playlist')
-    dispatch(create(newPlaylist));
-    return newPlaylist;
+    if (res.ok) {
+        const newPlaylist = await res.json()
+        dispatch(create(newPlaylist));
+        return newPlaylist;
+    }
 };
+
+export const EditPlaylist = (playlist, id) => async (dispatch) => {
+    const { playlist_name } = playlist
+
+    const playlistFetch = await fetch (`/api/playlists/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            playlist_name
+        }),
+    });
+
+    if (playlistFetch.ok) {
+        const updatedPlaylist = await playlistFetch.json();
+        dispatch(create(updatedPlaylist))
+        return updatedPlaylist;
+    };
+};
+
+
 
 const initalState = {};
 
@@ -65,6 +90,8 @@ export default function playlistReducer(state = initalState, action) {
             return {...state, ...action.playlists}
         case DETAILS_PLAYLIST:
             return {...state, ...action.playlist}
+        case CREATE_PLAYLIST:
+            return { [action.playlist.id]: action.playlist }
         default:
             return state
     }

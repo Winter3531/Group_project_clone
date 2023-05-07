@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { CreatePlaylist } from "../../store/playlist";
-import { Redirect } from "react-router-dom"
+import { CreatePlaylist, PlaylistDetailsFetch } from "../../store/playlist";
 
 
 
 const PlaylistFormModal = () => {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state=>state.session.user)
+    const history = useHistory();
     const [playlist_name, setPlaylistName] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [errors, setErrors] = useState([]);
@@ -37,15 +37,17 @@ const PlaylistFormModal = () => {
             }
         });
 
-        // if (playlist) {
-        //     Redirect(`/playlist/${playlist.id}`).then(closeModal)
-        // }
+        if (playlist) {
+            await dispatch(PlaylistDetailsFetch(playlist.id))
+            history.push(`/playlists/${playlist.id}`)
+            closeModal()
+        }
     };
 
     return (
         <>
             <h1 className="playlist-modal-header">Create a new playlist</h1>
-            <form className='playlist-modal-from' onSubmit={handleSubmit}>
+            <form className='playlist-modal-form' onSubmit={handleSubmit}>
                 <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
                 <input
                     type="text"

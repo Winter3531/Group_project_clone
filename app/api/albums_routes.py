@@ -14,7 +14,7 @@ albums_routes = Blueprint('albums', __name__)
 
 
 @albums_routes.route('/current')
-# @login_required
+@login_required
 def user_albums():
     """
     Query for all albums for the user and returns them in a list of album dictionaries
