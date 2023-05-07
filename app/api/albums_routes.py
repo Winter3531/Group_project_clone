@@ -14,7 +14,7 @@ albums_routes = Blueprint('albums', __name__)
 
 
 @albums_routes.route('/current')
-# @login_required
+@login_required
 def user_albums():
     """
     Query for all albums for the user and returns them in a list of album dictionaries
@@ -42,8 +42,6 @@ def user_albums():
 #     return album_display
 
 # Get details of an album by the id.
-
-
 @albums_routes.route('/<int:id>')
 def album_detail(id):
 
@@ -52,9 +50,8 @@ def album_detail(id):
         return album.to_dict()
     return "Album does not exsit"
 
+
 # Create an album
-
-
 @albums_routes.route('', methods=['POST'])
 def create_album():
     """
@@ -78,9 +75,8 @@ def create_album():
         db.session.commit()
         return new_album.to_dict()
 
+
 # Update an album
-
-
 @albums_routes.route('/<int:id>/', methods=["PUT"])
 def edit_album(id):
     """
@@ -108,7 +104,6 @@ def edit_album(id):
 
 
 # Like an album
-@albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 def like_album(id):
     user_id = current_user.get_id()
@@ -139,15 +134,17 @@ def delete_like_album(id):
         db.session.commit()
         return 'You unliked this album'
     return 'You did not like this album yet'
-# # Delete an album
-# @albums_routes.route('/<int:id>/', methods=['DELETE'])
-# def delete_album(id):
-#     album = Album.query.get(id)
-#     print(album)
-#     db.session.delete(album)
-#     db.session.commit()
 
-#     return album.to_dict()
+
+# Delete an album
+@albums_routes.route('/<int:id>/', methods=['DELETE'])
+def delete_album(id):
+    album = Album.query.get(id)
+    print(album)
+    db.session.delete(album)
+    db.session.commit()
+
+    return album.to_dict()
 
 # # Like an album
 # @albums_routes.route('/<int:id>/likes')
