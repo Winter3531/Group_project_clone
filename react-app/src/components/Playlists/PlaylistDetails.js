@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { PlaylistDetailsFetch } from "../../store/playlist";
 import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
+import DeletePlaylistModal from "./DeletePlaylistModal";
 
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
@@ -31,6 +32,14 @@ const PlaylistDetails = () => {
                 <OpenModalButton
                     buttonText="Edit Playlist"
                     modalComponent={<EditPlaylistModal />}
+                />
+            </li>
+        </div>
+        <div>
+            <li>
+                <OpenModalButton
+                    buttonText="Delete Playlist"
+                    modalComponent={<DeletePlaylistModal />}
                 />
             </li>
         </div>

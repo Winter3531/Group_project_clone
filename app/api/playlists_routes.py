@@ -71,8 +71,12 @@ def edit_playlist(id):
 # Delete a playlist
 @playlists_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
-def deletePlaylist():
+def deletePlaylist(id):
     """
     Query for playlist by id and remove from database
     """
-    
+    playlist = Playlist.query.get(id)
+    db.session.delete(playlist)
+    db.session.commit()
+
+    return {'message': 'Playlist successfully deleted'}
