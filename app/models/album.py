@@ -43,6 +43,17 @@ class Album(db.Model):
             'user_id': self.user_id,
         }
 
+    # # THIS RETURNS ALBUM INFO WITH A LIST OF OBJECTS CONTAINING SONG DETAILS
+    # def song_plus_to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'album_name': self.album_name,
+    #         'year_recorded': self.year_recorded,
+    #         'album_img': self.album_img,
+    #         'user_id': self.user_id,
+    #         'Songs': [song.song_detail_dict() for song in self.songs] if self.songs else 'No Songs'
+    #     }
+
     # def liked_album_dict(self):
     #             return {
     #         'id': self.id,
