@@ -1,9 +1,10 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Like
+from app.models import User, Like, db
 from flask_login import current_user
 
 user_routes = Blueprint('users', __name__)
+# api/users/
 
 
 @user_routes.route('/')
@@ -25,6 +26,7 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
+# ALL OF CURRENT USERS LIKED USERS
 @user_routes.route('/likes')
 def user_liked_users():
     user_id = current_user.id
@@ -34,10 +36,38 @@ def user_liked_users():
     if liked_users:
         for like in liked_users:
             id = like.likable_id
-            print("Like ID", like.likable_id)
-            print("User ID", like.user_id)
-            print("")
+            # print("Like ID", like.likable_id)
+            # print("User ID", like.user_id)
+            # print("")
             user = User.query.get(id)
             user_display.append(user.to_dict())
 
     return user_display
+
+
+# LIKE/UNLIKE A USER
+@user_routes.route('/<int:user_id>/likes', methods=['POST', 'DELETE'])
+@login_required
+def user_likes(user_id):
+    curr_user_id = current_user.id
+    like_exists = Like.query.filter_by(user_id = curr_user_id, likable_id = user_id, likable_type = 'user').first()
+
+    if request.method == 'DELETE':
+        if like_exists:
+            db.session.delete(like_exists)
+            db.session.commit()
+            return f"User {curr_user_id}'s user like has been removed."
+        return f"User {curr_user_id} has not liked this user."
+
+    if like_exists:
+        return like_exists.exists_to_dict()
+
+    new_like = Like(
+        user_id = curr_user_id,
+        likable_type = 'user',
+        likable_id = user_id
+    )
+
+    db.session.add(new_like)
+    db.session.commit()
+    return new_like.to_dict()
