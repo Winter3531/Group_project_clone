@@ -9,7 +9,7 @@ const SideNav = ({ isLoaded }) => {
     const sessionUser = useSelector(state=>state.session.user)
     return (
         <ul>
-            {isLoaded && (
+            {isLoaded && sessionUser && (
                 <div>
                 <li>
                     <OpenModalButton

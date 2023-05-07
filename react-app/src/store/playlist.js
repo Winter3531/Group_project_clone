@@ -19,9 +19,9 @@ const create = (playlist) => ({
     playlist
 });
 
-const remove = (playlist) => ({
+const remove = (playlistId) => ({
     type: REMOVE_PLAYLIST,
-    playlist
+    playlistId
 })
 
 
@@ -86,13 +86,15 @@ export const EditPlaylist = (playlist, id) => async (dispatch) => {
     };
 };
 
-export const DeletePlaylist = (id) => async (dispatch) => {
-    const res = await fetch(`/api/playlists/${id}`, {
+export const DeletePlaylist = (playlistId) => async (dispatch) => {
+    const res = await fetch(`/api/playlists/${playlistId}`, {
         method: 'DELETE'
+
     });
 
     if (res.ok) {
-        dispatch(remove(id));
+        dispatch(remove(playlistId));
+        return res
     }
 };
 
@@ -109,7 +111,7 @@ export default function playlistReducer(state = initalState, action) {
             return { [action.playlist.id]: action.playlist }
         case REMOVE_PLAYLIST:
             const newState = {...state};
-            delete newState[action.albumId]
+            delete newState[action.playlistId]
             return newState
         default:
             return state
