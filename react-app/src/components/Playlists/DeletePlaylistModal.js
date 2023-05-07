@@ -12,9 +12,9 @@ const DeletePlaylistModal = () => {
     const playlist = useSelector(state=>state.playlists)
 
     const handleClick = async () => {
-        await dispatch(DeletePlaylist(playlist.id))
-        history.push(`/playlists/current`)
-        closeModal()
+        await dispatch(DeletePlaylist(playlist.id));
+        history.push(`/playlists/current`);
+        closeModal();
     }
 
     return (
