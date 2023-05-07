@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
 import { getAlbumDetail } from '../../store/album'
 import { useEffect, useState, useRef } from "react";
-import * as albumActions from '../../store/album';
 import EditAlbumFormModal from "../AlbumEdit";
 import OpenModalButton from "../OpenModalButton";
+import ConfirmDeleteAlbumModal from "../AlbumDeleteModal";
 
 
 const AlbumDetials = () => {
@@ -13,6 +13,7 @@ const AlbumDetials = () => {
     const { albumId } = useParams()
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
+    const sessionUser = useSelector(state => state?.session.user);
 
     // console.log(albumId) **confirmed
 
@@ -21,13 +22,7 @@ const AlbumDetials = () => {
     }, [dispatch])
 
 
-    const deleteAlbum = async (e) => {
-        e.preventDefault();
-        await dispatch(albumActions.deleteAlbum(albumId));
-        history.push('/albums/current')
-        await dispatch(albumActions.currentUserAlbums());
 
-    }
     return (
         <div>
             {album ?
@@ -38,11 +33,25 @@ const AlbumDetials = () => {
                         <p>year recorded: {album.year_recorded}</p>
                         <p>album img: {album.album_img}</p>
                         <p>user id: {album.user_id}</p>
-                        <div>likes: {album.likes}</div>
-                        <OpenModalButton
-                            buttonText={"Edit Album"}
-                            modalComponent={<EditAlbumFormModal album={album}/>} />
-                        <button onClick={deleteAlbum}>Delete</button>
+                        <p>Username: {album.username}</p>
+                        <div>song: </div>
+                        {/* <div>song id {album.songs.map(song => <div>Name: {song.songs_name}  length: {Math.floor(song.length / 60)} mins {song.length % 60} secs</div>)}</div> */}
+                        {/* <div>Name: {album.songs.songs_name.map(name =>
+                            <div>{name}</div>)}
+                        {album.songs.length.map(length =>
+                           <div>length: {Math.floor(length / 60)} mins {length % 60} secs </div>)}</div> */}
+                        {/* {album.songs.map(song =>
+                            <div>{song.id}. Name:{song.song_name} length:{song.song_length}</div>)} */}
+                        {sessionUser && sessionUser.id === album.user_id ?
+                            <>
+                                <OpenModalButton
+                                    buttonText={"Delete Album"}
+                                    modalComponent={<ConfirmDeleteAlbumModal albumId={album.id} />} />
+                                <OpenModalButton
+                                    buttonText={"Edit Album"}
+                                    modalComponent={<EditAlbumFormModal album={album} />} />
+                            </> : <></>
+                        }
                     </>
                 ) :
                 <p>Can't Read</p>
