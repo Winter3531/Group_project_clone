@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { PlaylistDetailsFetch } from "../../store/playlist"
+import { PlaylistDetailsFetch } from "../../store/playlist";
+import OpenModalButton from "../OpenModalButton";
+import EditPlaylistModal from "./EditPlaylistModal";
+import DeletePlaylistModal from "./DeletePlaylistModal";
 
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
@@ -23,6 +26,22 @@ const PlaylistDetails = () => {
         </div>
         <div>
             <div>{playlist.playlist_name}</div>
+        </div>
+        <div>
+            <li>
+                <OpenModalButton
+                    buttonText="Edit Playlist"
+                    modalComponent={<EditPlaylistModal />}
+                />
+            </li>
+        </div>
+        <div>
+            <li>
+                <OpenModalButton
+                    buttonText="Delete Playlist"
+                    modalComponent={<DeletePlaylistModal />}
+                />
+            </li>
         </div>
         </>
     );

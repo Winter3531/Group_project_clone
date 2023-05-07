@@ -81,7 +81,6 @@ export const editAlbum = (album, albumId) => async disptach => {
         })
     })
 
-    console.log(response, 'this is response in edit album thunk')
     if (response.ok) {
         const album = await response.json();
         disptach(edit(album))

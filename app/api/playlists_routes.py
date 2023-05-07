@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.playlist import Playlist, db
 from app.forms.playlist_form import PlaylistForm;
@@ -36,7 +36,7 @@ def create_playlist():
     form = PlaylistForm()
     owner_id = current_user.get_id()
 
-    # form['csrf-token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         new_playlist = Playlist(
@@ -49,7 +49,34 @@ def create_playlist():
 
 
 # Update a playlist
-# @playlists_routes.route('/edit')
+@playlists_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_playlist(id):
+    """
+    Query for a playlist based off playlist id and make changes.
+    """
+
+    form = PlaylistForm()
+    playlist = Playlist.query.get_or_404(id)
+
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        playlist.playlist_name = form.data['playlist_name']
+
+        db.session.commit()
+        return playlist.to_dict()
+
 
 # Delete a playlist
-# @playlists_routes.route('/delete')
+@playlists_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def deletePlaylist(id):
+    """
+    Query for playlist by id and remove from database
+    """
+    playlist = Playlist.query.get(id)
+    db.session.delete(playlist)
+    db.session.commit()
+
+    return {'message': 'Playlist successfully deleted'}
