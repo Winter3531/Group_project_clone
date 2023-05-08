@@ -41,12 +41,18 @@ class Album(db.Model):
             'year_recorded': self.year_recorded,
             'album_img': self.album_img,
             'user_id': self.user_id,
+            'username': self.owners.username,
+            # 'songs': {
+            #     'songs_name': [song.song_name for song in self.songs] if self.songs else 'No',
+            #     'length': [song.song_length for song in self.songs] if self.songs else 'No'
+            # },
+            'songs':[song.song_detail_dict() for song in self.songs] if self.songs else 'No Songs'
         }
 
-    # def liked_album_dict(self):
-    #             return {
-    #         'id': self.id,
-    #         'album_name': self.album_name,
-    #         'year_recorded': self.year_recorded,
-    #         'album_img': self.album_img,
-    #     }
+    def liked_album_dict(self):
+        return {
+            'id': self.id,
+            'album_name': self.album_name,
+            'year_recorded': self.year_recorded,
+            'album_img': self.album_img,
+        }
