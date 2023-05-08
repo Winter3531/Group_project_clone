@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import ConfirmDeleteAlbumModal from "../AlbumDeleteModal";
 
 
+
 const AlbumDetials = () => {
     const dispatch = useDispatch();
     const { albumId } = useParams()
@@ -22,6 +23,7 @@ const AlbumDetials = () => {
     }, [dispatch])
 
 
+    let count = 0
 
     return (
         <div>
@@ -40,8 +42,8 @@ const AlbumDetials = () => {
                             <div>{name}</div>)}
                         {album.songs.length.map(length =>
                            <div>length: {Math.floor(length / 60)} mins {length % 60} secs </div>)}</div> */}
-                        {/* {album.songs.map(song =>
-                            <div>{song.id}. Name:{song.song_name} length:{song.song_length}</div>)} */}
+                        {album.songs.map(song =>
+                            <div>{count+= 1}. Name:{song.song_name} length:{Math.floor(song.song_length /60)}: {song.song_length % 60}</div>)}
                         {sessionUser && sessionUser.id === album.user_id ?
                             <>
                                 <OpenModalButton

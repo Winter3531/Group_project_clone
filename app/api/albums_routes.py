@@ -45,6 +45,7 @@ def album_detail(id):
         return album.to_like()
     return "Album does not exsit"
 
+
 # Create an album
 @albums_routes.route('', methods=['POST'])
 def create_album():
@@ -68,6 +69,7 @@ def create_album():
         db.session.add(new_album)
         db.session.commit()
         return new_album.to_dict()
+
 
 # Update an album
 @albums_routes.route('/<int:id>/', methods=["PUT"])
@@ -112,7 +114,7 @@ def like_album(id):
     albums = Album.query.select_from(Like).filter(Like.likable_type == 'album', Like.likable_id == id).first()
     # return {album.id: album.to_dict() for album in albums}
     if albums and request.method == 'POST':
-        return 'You already liked this album'
+        return albums.to_dict()
     elif albums and request.method == 'GET':
         return albums.to_dict()
 
@@ -130,12 +132,12 @@ def like_album(id):
 # Delete a liked ablum
 @albums_routes.route('/<int:id>/likes', methods=['DELETE'])
 def delete_like_album(id):
-    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album').first()
+    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id).first()
     if liked_album:
         db.session.delete(liked_album)
         db.session.commit()
-        return 'You unliked this album'
-    return 'You did not like this album yet'
+        return user_liked_albums()
+    return user_liked_albums()
 
 # Album name search
 @albums_routes.route('/search', methods=['PUT'])
