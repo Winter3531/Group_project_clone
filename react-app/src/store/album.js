@@ -3,6 +3,8 @@ const GETONE_ALBUM = 'album/GETONE_ALBUM'
 const CREATE_ALBUM = 'album/CREATE_ALBUM'
 const EDIT_ALBUM = 'album/EDIT_ALBUM'
 const REMOVE_ALBUM = 'album/REMOVE_ALBUM'
+const LIKE_ALBUM = 'album/LIKE_ALBUM'
+const UNLIKE_ALBUM = 'album/UNLIKE_ALBUM'
 
 
 const load = (albums) => ({
@@ -28,6 +30,16 @@ const edit = (album) => ({
 const remove = (albumId) => ({
     type: REMOVE_ALBUM,
     albumId
+})
+
+const like = (album) => ({
+    type: LIKE_ALBUM,
+    album
+})
+
+const unlike = (album) => ({
+    type: UNLIKE_ALBUM,
+    album
 })
 
 export const currentUserAlbums = () => async (dispatch) => {
@@ -69,9 +81,10 @@ export const createAlbum = (album) => async dispatch => {
 }
 
 export const editAlbum = (album, albumId) => async disptach => {
+    console.log(album, 'this is album in edit ablum thunk')
     const { id, album_name, year_recorded, album_img } = album;
 
-    const response = await fetch(`/api/albums/${album.id}/`, {
+    const response = await fetch(`/api/albums/${albumId}/`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -102,6 +115,47 @@ export const deleteAlbum = albumId => async dispatch => {
     }
 }
 
+export const likeAlbum = (album) => async dispatch => {
+    // console.log(album, 'this is album in like ablum thunk')
+    const response = await fetch(`/api/albums/${album.id}/likes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(album)
+    });
+
+    if (response.ok) {
+        const liked_album = await response.json();
+        dispatch(like(liked_album))
+        return liked_album
+    }
+}
+
+export const unLikeAlbum = album => async dispatch => {
+    console.log(album, 'this is album in like ablum thunk')
+    const response = await fetch(`/api/albums/${album.id}/likes`, {
+        method: 'DELETE',
+    });
+
+    if (response.ok) {
+        const liked_album = await response.json();
+        dispatch(unlike(album))
+        return liked_album
+    }
+}
+
+export const searchAlbum = album => async dispatch => {
+    const response = await fetch('/api/albums/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(album)
+    });
+
+    if (response.ok) {
+        const searched = await response.json();
+        dispatch(load(searched))
+        return searched
+    }
+}
 
 const initialState = {};
 
