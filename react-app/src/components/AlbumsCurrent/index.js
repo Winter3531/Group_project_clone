@@ -14,7 +14,7 @@ const UserAlbums = () => {
 
     return (
         <>
-        {Object.values(albums).map(album =>
+        {albums && Object.values(albums).map(album =>
             <div>
                 <div>album id: {album.id}</div>
                 <div>album name; {album.album_name}</div>

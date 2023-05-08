@@ -7,6 +7,7 @@ import UserAlbums from "./components/AlbumsCurrent";
 import AlbumDetials from "./components/AlbumsDetail";
 import UserPlaylists from "./components/Playlists/Playlists"
 import PlaylistDetails from "./components/Playlists/PlaylistDetails";
+import SongsDisplay from "./components/Songs/Song";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import SideNav from "./components/Sidebar";
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route path="/playlists/:playlistId">
             <PlaylistDetails />
+          </Route>
+          <Route path="/songs">
+            <SongsDisplay />
           </Route>
         </Switch>
       )}
