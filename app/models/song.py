@@ -19,9 +19,8 @@ class Song(db.Model):
     albums = db.relationship('Album', back_populates='songs')
 
     playlists = db.relationship('Playlist',
-                                secondary=song_playlist,
-                                back_populates='songs'
-                                )
+                                secondary= song_playlist,
+                                back_populates='songs')
 
     likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs')
 

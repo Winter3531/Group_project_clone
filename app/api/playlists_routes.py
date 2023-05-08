@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.playlist import Playlist, db
+from app.models.like import Like, db
 from app.forms.playlist_form import PlaylistForm;
 
 
@@ -29,6 +30,7 @@ def playlist_details(id):
 
 # Create a playlist
 @playlists_routes.route('/new', methods=['POST'])
+@login_required
 def create_playlist():
     """
     Creates a new playlist and redirects them to the playlist details
@@ -80,3 +82,40 @@ def deletePlaylist(id):
     db.session.commit()
 
     return {'message': 'Playlist successfully deleted'}
+
+
+# Like a playlist
+
+@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST'])
+@login_required
+def like_playlist(id):
+    user_id = current_user.get_id()
+    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id, Playlist.id == id).first()
+
+    if playlist and request.method == 'POST':
+        return 'You already liked this playlist'
+    elif playlist and request.method == 'GET':
+        return playlist.to_dict()
+
+    liked_playlist = Like(
+        user_id = user_id,
+        likable_type = 'playlist',
+        likable_id = id
+    )
+    db.session.add(liked_playlist)
+    db.session.commit()
+    # return liked_playlist.to_dict()
+    return playlist.to_dict()
+
+# unlike a playlist
+@playlists_routes.route('/<int:id>/likes', methods=['DELETE'])
+@login_required
+def delete_like_playlist(id):
+    liked_playlist = Like.query.select_from(Playlist).filter(Playlist.id == id, Like.likable_type == 'playlist').first()
+
+    if liked_playlist:
+        db.session.delete(liked_playlist)
+        db.session.commit()
+        return 'You unliked this playlist'
+
+    return 'You did not like this playlist yet'

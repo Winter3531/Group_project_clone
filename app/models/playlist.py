@@ -25,5 +25,7 @@ class Playlist(db.Model):
         return {
             'id': self.id,
             'playlist_name': self.playlist_name,
-            'owner_id': self.owner_id
+            'owner_id': self.owner_id,
+            'likable_type': [like.likable_type for like in self.likes] if self.likes else 'No',
+            'likable_id': [like.id for like in self.likes] if self.likes else 'No'
         }
