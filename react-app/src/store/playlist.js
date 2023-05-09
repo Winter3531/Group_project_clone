@@ -2,6 +2,8 @@ const LOAD_PLAYLISTS = 'playlist/LOAD_PLAYLISTS';
 const DETAILS_PLAYLIST = 'playlist/DETAILS_PLAYLIST';
 const CREATE_PLAYLIST = 'playlist/CREATE_PLAYLIST';
 const REMOVE_PLAYLIST = 'playlist/REMOVE_PLAYLIST';
+const LIKE_PLAYLIST = 'playlist/LIKE_PLAYLIST';
+const UNLIKE_PLAYLIST = 'playlist/UNLIKE_PLAYLIST';
 
 
 const load = (playlists) => ({
@@ -22,7 +24,18 @@ const create = (playlist) => ({
 const remove = (playlistId) => ({
     type: REMOVE_PLAYLIST,
     playlistId
-})
+});
+
+const like = (album) => ({
+    type: LIKE_PLAYLIST,
+    album
+});
+
+const unlike = (album) => ({
+    type: UNLIKE_PLAYLIST,
+    album
+});
+
 
 
 export const currentUserPlaylists = () => async (dispatch) => {
@@ -97,6 +110,32 @@ export const DeletePlaylist = (playlistId) => async (dispatch) => {
         return res
     }
 };
+
+export const likePlaylist = (playlist) => async dispatch => {
+    const res = await fetch(`/api/playlists/${playlist.id}/likes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(playlist)
+    });
+
+    if (res.ok) {
+        const liked_playlist = await res.json();
+        dispatch(like(liked_playlist))
+        return liked_playlist
+    }
+}
+
+export const unlikePlaylist = playlist => async dispatch => {
+    const res = await fetch(`/api/playlists/${playlist.id}/likes`, {
+        method: 'DELETE',
+    });
+
+    if (res.ok) {
+        const liked_playlist = await res.json();
+        dispatch(unlike(playlist))
+        return liked_playlist
+    }
+}
 
 
 const initalState = {};
