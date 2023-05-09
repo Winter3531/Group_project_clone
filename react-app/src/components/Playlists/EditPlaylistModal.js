@@ -44,7 +44,6 @@ const EditPlaylistModal = () => {
         });
 
         if (updatedPlaylist) {
-            console.log(updatedPlaylist)
             await dispatch(PlaylistDetailsFetch(playlistId))
             history.push(`/playlists/${playlistId}`)
             closeModal()

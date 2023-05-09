@@ -16,7 +16,7 @@ like_2 = Like(
 like_3 = Like(
     user_id = 1,
     likable_type = 'album',
-    likable_id = 3
+    likable_id = 3 
 )
 
 like_4 = Like(

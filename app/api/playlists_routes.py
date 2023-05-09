@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models.playlist import Playlist, db
+from app.models.like import Like, db
 from app.forms.playlist_form import PlaylistForm;
 
 
@@ -21,6 +22,7 @@ def user_playlist():
 # Get details of a playlist by the id
 @playlists_routes.route('/<int:id>')
 def playlist_details(id):
+
     """
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
@@ -29,6 +31,7 @@ def playlist_details(id):
 
 # Create a playlist
 @playlists_routes.route('/new', methods=['POST'])
+@login_required
 def create_playlist():
     """
     Creates a new playlist and redirects them to the playlist details
@@ -80,3 +83,50 @@ def deletePlaylist(id):
     db.session.commit()
 
     return {'message': 'Playlist successfully deleted'}
+
+
+# Like/ Unlike / and Get all likes for a playlist
+
+@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST', 'DELETE'])
+@login_required
+def like_playlist(id):
+    user_id = current_user.get_id()
+    like_exists = Like.query.filter_by(user_id = user_id, likable_id = id, likable_type = 'playlist').first()
+
+    if request.method == 'GET':
+        if like_exists:
+            return like_exists.exists_to_dict()
+        return {'message': f'User {user_id} has not liked this playlist.'}
+
+    if request.method == 'DELETE':
+        if like_exists:
+            db.session.delete(like_exists)
+            db.session.commit()
+            return {"message": f"User {user_id}'s playlist like has been removed."}
+        return {"message": f"User {user_id} has not liked this song."}
+
+    if like_exists:
+        return like_exists.exists_to_dict()
+
+    liked_playlist = Like(
+        user_id = user_id,
+        likable_type = 'playlist',
+        likable_id = id
+    )
+
+    db.session.add(liked_playlist)
+    db.session.commit()
+    return liked_playlist.to_dict()
+
+# unlike a playlist
+@playlists_routes.route('/<int:id>/likes', methods=['DELETE'])
+@login_required
+def delete_like_playlist(id):
+    liked_playlist = Like.query.select_from(Playlist).filter(Playlist.id == id, Like.likable_type == 'playlist').first()
+
+    if liked_playlist:
+        db.session.delete(liked_playlist)
+        db.session.commit()
+        return {'message': 'You unliked this playlist'}
+
+    return {'message': 'You did not like this playlist yet'}
