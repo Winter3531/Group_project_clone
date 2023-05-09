@@ -13,6 +13,7 @@ import Navigation from "./components/Navigation";
 import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
+import SearchResult from "./components/Search";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route path="/songs">
             <SongsDisplay />
+          </Route>
+          <Route path="/search">
+            <SearchResult />
           </Route>
         </Switch>
       )}

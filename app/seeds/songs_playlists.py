@@ -1,36 +1,51 @@
-# from app.models import db, environment, song_playlist, SCHEMA
-# from sqlalchemy.sql import text
+from app.models.song_playlist import db, SongPlaylist , environment, SCHEMA
+from sqlalchemy.sql import text
 
-# songs_playlist_1 = song_playlist(
-#     playlist_id = 1,
-#     song_id = 1
-# )
+song_playlist_1 = SongPlaylist(
+    playlist_id = 1,
+    song_id = 1
+)
+song_playlist_2 = SongPlaylist(
+    playlist_id = 2,
+    song_id = 2
+)
+song_playlist_3 = SongPlaylist(
+    playlist_id = 3,
+    song_id = 3
+)
+song_playlist_4 = SongPlaylist(
+    playlist_id = 1,
+    song_id = 2
+)
+song_playlist_5 = SongPlaylist(
+    playlist_id = 2,
+    song_id = 3
+)
+song_playlist_6 = SongPlaylist(
+    playlist_id = 3,
+    song_id = 1
+)
 
-# songs_playlist_2 = song_playlist(
-#     playlist_id = 2,
-#     song_id = 3
-# )
+def seed_song_playlist():
+    db.session.add(song_playlist_1)
+    db.session.add(song_playlist_2)
+    db.session.add(song_playlist_3)
+    db.session.add(song_playlist_4)
+    db.session.add(song_playlist_5)
+    db.session.add(song_playlist_6)
+    db.session.commit()
 
-# songs_playlist_3 = song_playlist(
-#     playlist_id = 3,
-#     song_id = 2
-# )
+def undo_song_playlist():
 
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.song_playlist RESTART IDENTITY CASCADE #?? ;")
+    else:
+        db.session.delete(song_playlist_1)
+        db.session.delete(song_playlist_1)
+        db.session.delete(song_playlist_1)
+        db.session.delete(song_playlist_1)
+        db.session.delete(song_playlist_1)
+        db.session.delete(song_playlist_1)
+        db.session.execute(text("DELETE FROM song_playlist"))
 
-# def seed_songs_playlist():
-#     db.session.add(songs_playlist_1)
-#     db.session.add(songs_playlist_2)
-#     db.session.add(songs_playlist_3)
-#     db.session.commit()
-
-# def undo_songs_playlist():
-
-#     if environment == "production":
-#         db.session.execute(f"TRUNCATE table {SCHEMA}.songs RESTART IDENTITY CASCADE #?? ;")
-#     else:
-#         db.session.delete(songs_playlist_1)
-#         db.session.delete(songs_playlist_2)
-#         db.session.delete(songs_playlist_3)
-#         db.session.execute(text("DELETE FROM songs_playlist"))
-
-#     db.session.commit()
+    db.session.commit()

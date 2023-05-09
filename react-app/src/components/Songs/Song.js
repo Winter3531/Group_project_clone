@@ -17,7 +17,13 @@ export default function SongsDisplay() {
     const songLengthFunc = (data) => {
         const sec = data % 60
         const min = (data - sec) / 60
-        return`${min}:${sec}`
+        if (sec === 0){
+            return `${min}:00`
+        }
+        if (sec < 10){
+            return `${min}:0${sec}`
+        }
+        return `${min}:${sec}`
     }
 
     return (
@@ -39,9 +45,10 @@ export default function SongsDisplay() {
                         <div className="delete-song-button">
                             <OpenModalButton
                                 buttonText="Delete Song"
-                                modalComponent={<SongDeleteModal />}
-                            />
+                                modalComponent={<SongDeleteModal songId={song.id} />}
+                                />
                         </div>
+                        <br></br>
                     </div>
                 ))}
             </div>
