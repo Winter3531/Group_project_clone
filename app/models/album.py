@@ -30,8 +30,8 @@ class Album(db.Model):
             'year_recorded': self.year_recorded,
             'album_img': self.album_img,
             'user_id': self.user_id,
-            'likable_type': [like.likable_type for like in self.likes] if self.likes else 'No',
-            'likable_id': [like.id for like in self.likes] if self.likes else 'No'
+            'likable_type': [like.likable_type for like in self.likes] if self.likes else [],
+            'likable_id': [like.id for like in self.likes] if self.likes else []
         }
 
     def to_like(self):
@@ -42,10 +42,10 @@ class Album(db.Model):
             'album_img': self.album_img,
             'user_id': self.user_id,
             'username': self.owners.username,
-            'songs':[song.song_detail_dict() for song in self.songs] if self.songs else 'No Songs',
+            'songs':[song.song_detail_dict() for song in self.songs] if self.songs else [],
             # 'liked':[like.to_dict for like in self.likes] if self.likes else 'No like',
-            'likable_type': [like.likable_type for like in self.likes] if self.likes else 'No',
-            'likable_id': [like.id for like in self.likes] if self.likes else 'No'
+            'likable_type': [like.likable_type for like in self.likes] if self.likes else [],
+            'likable_id': [like.id for like in self.likes] if self.likes else []
         }
 
     def liked_album_dict(self):

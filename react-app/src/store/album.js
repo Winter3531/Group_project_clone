@@ -81,10 +81,9 @@ export const createAlbum = (album) => async dispatch => {
 }
 
 export const editAlbum = (album, albumId) => async disptach => {
-    console.log(album, 'this is album in edit ablum thunk')
     const { id, album_name, year_recorded, album_img } = album;
 
-    const response = await fetch(`/api/albums/${albumId}/`, {
+    const response = await fetch(`/api/albums/${album.id}/`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -131,7 +130,7 @@ export const likeAlbum = (album) => async dispatch => {
 }
 
 export const unLikeAlbum = album => async dispatch => {
-    console.log(album, 'this is album in like ablum thunk')
+    // console.log(album, 'this is album in like ablum thunk')
     const response = await fetch(`/api/albums/${album.id}/likes`, {
         method: 'DELETE',
     });
@@ -143,19 +142,6 @@ export const unLikeAlbum = album => async dispatch => {
     }
 }
 
-export const searchAlbum = album => async dispatch => {
-    const response = await fetch('/api/albums/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(album)
-    });
-
-    if (response.ok) {
-        const searched = await response.json();
-        dispatch(load(searched))
-        return searched
-    }
-}
 
 const initialState = {};
 

@@ -15,13 +15,12 @@ const AlbumDetials = () => {
     const { albumId } = useParams()
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
+    // const {songs , likable_type} = album
     const sessionUser = useSelector(state => state?.session.user);
     const [like, setLike] = useState(false);
 
-    // const liked = album[album_name]
-
     console.log(album, 'this is album in album details')
-    // console.log(likable_id, 'this is album in album details')
+
 
 
     const onChange = (e) => {
@@ -53,16 +52,17 @@ const AlbumDetials = () => {
             {album && sessionUser ?
                 (
                     <>
-                        <p className="id-section">album id: {album.id}</p>
+                        <p>album id: {album.id}</p>
                         <p>album name: {album.album_name}</p>
                         <p>year recorded: {album.year_recorded}</p>
                         <p>album img: {album.album_img}</p>
                         <p>user id: {album.user_id}</p>
                         <p>Username: {album.username}</p>
 
-                        {album.songs ? album.songs.map(song =>
-                            <div>{count += 1}. Name:{song.song_name} length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}</div>)
-                            : <div>No Songs </div>}
+                        {(album.songs ? album.songs?.map(song =>
+                            <div>{count += 1}. Name:{song.song_name}
+                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}</div>)
+                            : <div>No Songs </div>)}
 
 
                         {album.likable_type == 'album' ?
@@ -88,9 +88,10 @@ const AlbumDetials = () => {
                                 <OpenModalButton
                                     buttonText={"Delete Album"}
                                     modalComponent={<ConfirmDeleteAlbumModal albumId={album.id} />} />
+
                                 <OpenModalButton
                                     buttonText={"Edit Album"}
-                                    modalComponent={<EditAlbumFormModal album={album} />} />
+                                    modalComponent={<EditAlbumFormModal album={album} />}/>
 
                                 {/* {album.likable_type && (album.likable_type == 'album' ?
                                     <button type="button" onClick={handleCancelClick} >Unlike</button> :

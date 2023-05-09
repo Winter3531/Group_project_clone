@@ -3,18 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import PlaylistFormModal from "../Playlists/CreatePlaylistModal";
 import OpenModalButton from "../OpenModalButton";
 import CreateAlbumFormModal from "../AlbumCreate";
-import { searchAlbum } from "../../store/album";
 import './Sidebar.css'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { search } from "../../store/search";
 
 
 const SideNav = ({ isLoaded }) => {
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const [term, setTerm] = useState("")
+    const history = useHistory()
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(searchAlbum(term));
+        dispatch(search());
+        history.push('/search')
+
     }
 
 
