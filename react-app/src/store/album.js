@@ -4,6 +4,7 @@ const CREATE_ALBUM = 'album/CREATE_ALBUM'
 const EDIT_ALBUM = 'album/EDIT_ALBUM'
 const REMOVE_ALBUM = 'album/REMOVE_ALBUM'
 
+
 const load = (albums) => ({
     type: GET_ALBUMS,
     albums
@@ -101,9 +102,10 @@ export const deleteAlbum = albumId => async dispatch => {
     }
 }
 
-const initalState = {};
 
-export default function albumReducer(state = initalState, action) {
+const initialState = {};
+
+export default function albumReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALBUMS:
             return { ...state, ...action.albums };

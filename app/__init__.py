@@ -97,3 +97,11 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+
+# # Album name search
+# @app.route('/search', methods=['PUT'])
+# def search():
+#     data = request.json['input']
+#     albums = Album.queryfilter(Album.album_name.like(f'%{data}%')).all()
+#     return {'albums': [album.to_dict() for album in albums]}
