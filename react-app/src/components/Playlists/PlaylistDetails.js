@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PlaylistDetailsFetch } from "../../store/playlist";
 import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
@@ -9,6 +9,8 @@ import DeletePlaylistModal from "./DeletePlaylistModal";
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.playlists);
+    const sessionUser = useSelector(state=>state.session.user);
+    const [liked, setLike] = useState(false);
     const { playlistId } = useParams();
 
 
@@ -16,33 +18,48 @@ const PlaylistDetails = () => {
         dispatch(PlaylistDetailsFetch(playlistId));
     }, [dispatch, playlistId]);
 
+    const handleOnClick = async () => {
+        await dispatch()
+    }
+
+
+    const playlistLikes = playlist.likable_id
+
     return (
         <>
         <div>
-            <div>{playlist.id}</div>
+            <div>Playlist Id: {playlist.id}</div>
         </div>
         <div>
-            <div>{playlist.owner_id}</div>
+            <div>Playlist Owner Id: {playlist.owner_id}</div>
         </div>
         <div>
-            <div>{playlist.playlist_name}</div>
+            <div>Playlist Name: {playlist.playlist_name}</div>
         </div>
+        {playlistLikes && (
+            <div>
+                <div>Playlist Likes: {playlistLikes.length}</div>
+            </div>
+        )}
         <div>
-            <li>
+            {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                 <OpenModalButton
                     buttonText="Edit Playlist"
                     modalComponent={<EditPlaylistModal />}
                 />
-            </li>
+            )}
         </div>
         <div>
-            <li>
+            {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                 <OpenModalButton
                     buttonText="Delete Playlist"
                     modalComponent={<DeletePlaylistModal />}
                 />
-            </li>
+            )}
         </div>
+        {sessionUser !== undefined && sessionUser.id !== playlist.owner_id && (
+            <button type="button" onClick={handleOnClick}>Like</button>
+        )}
         </>
     );
 };
