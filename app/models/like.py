@@ -39,9 +39,9 @@ class Like(db.Model):
             'user_id': self.user_id,
             'likable_type': self.likable_type,
             'likable_id': self.likable_id,
-            'album_id' : [album.id for album in self.albums] if self.albums else 'No',
-            'album_name' : [album.album_name for album in self.albums] if self.albums else 'No',
-            'year_recorded' : [album.year_recorded for album in self.albums] if self.albums else 'No',
+            'album_id' : self.albums.id,
+            'album_name' : self.albums.album_name,
+            'year_recorded' : self.albums.year_recorded,
         }
 
     def to_dict(self):
