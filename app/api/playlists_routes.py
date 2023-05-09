@@ -84,28 +84,38 @@ def deletePlaylist(id):
     return {'message': 'Playlist successfully deleted'}
 
 
-# Like a playlist
+# Like/ Unlike / and Get all likes for a playlist
 
-@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST'])
+@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST', 'DELETE'])
 @login_required
 def like_playlist(id):
     user_id = current_user.get_id()
-    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id, Playlist.id == id).first()
+    like_exists = Like.query.filter_by(user_id = user_id, likable_id = id, likable_type = 'playlist').first()
 
-    if playlist and request.method == 'POST':
-        return 'You already liked this playlist'
-    elif playlist and request.method == 'GET':
-        return playlist.to_dict()
+    if request.method == 'GET':
+        if like_exists:
+            return like_exists.exists_to_dict()
+        return f"User {user_id} has not liked this playlist."
+
+    if request.method == 'DELETE':
+        if like_exists:
+            db.session.delete(like_exists)
+            db.session.commit()
+            return f"User {user_id}'s playlist like has been removed."
+        return f"User {user_id} has not liked this song."
+
+    if like_exists:
+        return like_exists.exists_to_dict()
 
     liked_playlist = Like(
         user_id = user_id,
         likable_type = 'playlist',
         likable_id = id
     )
+
     db.session.add(liked_playlist)
     db.session.commit()
-    # return liked_playlist.to_dict()
-    return playlist.to_dict()
+    return liked_playlist.to_dict()
 
 # unlike a playlist
 @playlists_routes.route('/<int:id>/likes', methods=['DELETE'])

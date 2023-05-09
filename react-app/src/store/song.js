@@ -11,7 +11,6 @@ export const allSongsFetch = () => async (dispatch) => {
 
     if (response.ok) {
         const songData = await response.json();
-        console.log(songData)
         dispatch(allSongs(songData));
         return songData;
     };
