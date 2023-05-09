@@ -15,6 +15,7 @@ const UserPlaylists = () => {
         {Object.values(playlists).map(playlist =>
             <div key={playlist.id}>
                 <div>{playlist.id}</div>
+                <div>{playlist.owner_id}</div>
                 <div>{playlist.playlist_name}</div>
             </div>
         )}

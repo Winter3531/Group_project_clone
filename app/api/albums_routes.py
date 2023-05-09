@@ -52,6 +52,7 @@ def album_detail(id):
 
 # Create an album
 @albums_routes.route('', methods=['POST'])
+@login_required
 def create_album():
     """
     create an album
@@ -77,6 +78,7 @@ def create_album():
 
 # Update an album
 @albums_routes.route('/<int:id>/', methods=["PUT"])
+@login_required
 def edit_album(id):
     """
     edit an album
@@ -113,6 +115,7 @@ def delete_album(id):
 
 # Like an album
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
+@login_required
 def like_album(id):
     user_id = current_user.get_id()
     albums = Album.query.select_from(Like).filter(Album.id == id, Like.likable_type == 'album', Like.likable_id == id).first()
@@ -136,6 +139,7 @@ def like_album(id):
 
 # Delete a liked ablum
 @albums_routes.route('/<int:id>/likes', methods=['DELETE'])
+@login_required
 def delete_like_album(id):
     liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id).first()
     if liked_album:
