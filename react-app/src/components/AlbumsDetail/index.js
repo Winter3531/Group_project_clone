@@ -27,23 +27,23 @@ const AlbumDetials = () => {
         setLike(e)
         dispatch(likeAlbum(album))
     }
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        dispatch(likeAlbum(album))
-        dispatch(getAlbumDetail(albumId))
+        await dispatch(likeAlbum(album))
+        await dispatch(getAlbumDetail(albumId))
         history.push(`/albums/${albumId}`)
     }
 
-    const handleCancelClick = (e) => {
+    const handleCancelClick = async (e) => {
         e.preventDefault();
-        dispatch(unLikeAlbum(album))
-        dispatch(getAlbumDetail(albumId))
+        await dispatch(unLikeAlbum(album))
+        await dispatch(getAlbumDetail(albumId))
         history.push(`/albums/${albumId}`)
     }
 
     useEffect(() => {
         dispatch(getAlbumDetail(albumId))
-    }, [dispatch])
+    }, [dispatch, albumId])
 
     let count = 0
 
@@ -61,7 +61,7 @@ const AlbumDetials = () => {
 
                         {(album.songs ? album.songs?.map(song =>
                             <div>{count += 1}. Name:{song.song_name}
-                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}</div>)
+                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}<button>Add to playlist</button></div>)
                             : <div>No Songs </div>)}
 
 
