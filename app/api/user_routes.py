@@ -36,9 +36,9 @@ def user_liked_users():
     if liked_users:
         for like in liked_users:
             id = like.likable_id
-            print("Like ID", like.likable_id)
-            print("User ID", like.user_id)
-            print("")
+            # print("Like ID", like.likable_id)
+            # print("User ID", like.user_id)
+            # print("")
             user = User.query.get(id)
             user_display.append(user.to_dict())
 

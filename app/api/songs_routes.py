@@ -7,14 +7,14 @@ songs_routes = Blueprint('songs', __name__)
 # api/songs/
 
 # THIS IS JUST TO VERIFY THE FUNCTIONALITY OF THE LIKES AND DELETES
-@songs_routes.route('/likes')
+@songs_routes.route('')
 def all_songs():
     songs = Song.query.all()
     print(songs)
-    return {song.id: song.to_dict() for song in songs}
+    return {song.id: song.song_detail_dict() for song in songs}
 
 # ADD OR REMOVE
-# is this going to happen under song or album/playlist
+
 
 # CREATE A LIKE/ DELETE A LIKE
 @songs_routes.route('/<int:song_id>/likes', methods=['POST','DELETE'])
