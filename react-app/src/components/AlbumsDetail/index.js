@@ -6,6 +6,8 @@ import { useEffect, useState, useRef } from "react";
 import EditAlbumFormModal from "../AlbumEdit";
 import OpenModalButton from "../OpenModalButton";
 import ConfirmDeleteAlbumModal from "../AlbumDeleteModal";
+import SongAddModal from "../Songs/SongAddModal";
+import SongDeleteModal from "../Songs/SongDeleteModal";
 import './AlbumsDetail.css'
 
 
@@ -22,22 +24,33 @@ const AlbumDetials = () => {
     console.log(album, 'this is album in album details')
 
 
+    const songLengthFunc = (data) => {
+        const sec = data % 60
+        const min = (data - sec) / 60
+        if (sec === 0) {
+            return `${min}:00`
+        }
+        if (sec < 10) {
+            return `${min}:0${sec}`
+        }
+        return `${min}:${sec}`
+    }
 
     const onChange = (e) => {
         setLike(e)
         dispatch(likeAlbum(album))
     }
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        dispatch(likeAlbum(album))
-        dispatch(getAlbumDetail(albumId))
+        await dispatch(likeAlbum(album))
+        await dispatch(getAlbumDetail(albumId))
         history.push(`/albums/${albumId}`)
     }
 
-    const handleCancelClick = (e) => {
+    const handleCancelClick = async (e) => {
         e.preventDefault();
-        dispatch(unLikeAlbum(album))
-        dispatch(getAlbumDetail(albumId))
+        await dispatch(unLikeAlbum(album))
+        await dispatch(getAlbumDetail(albumId))
         history.push(`/albums/${albumId}`)
     }
 
@@ -60,8 +73,17 @@ const AlbumDetials = () => {
                         <p>Username: {album.username}</p>
 
                         {(album.songs ? album.songs?.map(song =>
+                        <div>
                             <div>{count += 1}. Name:{song.song_name}
-                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}</div>)
+                                length:{songLengthFunc(song.song_length)}</div>
+                                <div className="delete-song-button">
+                                <OpenModalButton
+                                    buttonText="Delete Song"
+                                    modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
+                                    />
+                                </div>
+                        </div>
+                        )
                             : <div>No Songs </div>)}
 
 
@@ -91,7 +113,13 @@ const AlbumDetials = () => {
 
                                 <OpenModalButton
                                     buttonText={"Edit Album"}
-                                    modalComponent={<EditAlbumFormModal album={album} />}/>
+                                    modalComponent={<EditAlbumFormModal album={album} />} />
+                                <div>
+                                    <OpenModalButton
+                                        buttonText="New Song"
+                                        modalComponent={<SongAddModal albumId={album.id} />}
+                                    />
+                                </div>
 
                                 {/* {album.likable_type && (album.likable_type == 'album' ?
                                     <button type="button" onClick={handleCancelClick} >Unlike</button> :

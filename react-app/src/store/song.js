@@ -2,9 +2,9 @@ const ALL_SONGS = 'song/ALL_SONGS';
 const ADD_SONG = 'song/ADD_SONG';
 const DELETE_SONG = 'song/DELETE_SONG'
 
-export const deleteSong = (songId) => ({
+export const deleteSong = (songId, albumId) => ({
     type: DELETE_SONG,
-    songId
+    songId,
 })
 
 export const addSong = (songData) => ({
@@ -19,7 +19,8 @@ export const allSongs = (songs) => ({
 
 
 export const deleteSongThunk = (songId) => async (dispatch) => {
-    const response = await fetch(`api/albums/:albumId/songs/${songId}`, {
+    console.log(songId, 'this is album id in add song thunk')
+    const response = await fetch(`/api/albums/songs/${songId}`, {
         method: 'DELETE'
     })
 
@@ -31,7 +32,7 @@ export const deleteSongThunk = (songId) => async (dispatch) => {
 
 export const addNewSongFetch = (songData) => async (dispatch) => {
     const { song_name, song_length, song_src, album_id } = songData
-    const response = await fetch(`/api/albums/:albumId/songs`, {
+    const response = await fetch(`/api/albums/${album_id}/songs`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",

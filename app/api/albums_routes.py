@@ -173,7 +173,7 @@ def add_song(id):
     return "Error form did not validate"
 
 # DELETE SONG
-@albums_routes.route('/<int:album_id>/songs/<int:song_id>', methods=['DELETE'])
+@albums_routes.route('/songs/<int:song_id>', methods=['DELETE'])
 @login_required
 def delete_song(song_id):
     song = Song.query.get(song_id)

@@ -43,7 +43,7 @@ function App() {
           <Route path='/albums/:albumId/edit'>
             <EditAlbumForm />
           </Route>
-          <Route path="/albums/:albumId">
+          <Route exact path="/albums/:albumId">
             <AlbumDetials />
           </Route>
           <Route exact path="/playlists/current">

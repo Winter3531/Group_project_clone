@@ -45,6 +45,7 @@ class Song(db.Model):
             'song_name': self.song_name,
             'song_length': self.song_length,
             'song_src': self.song_src,
+            'album_id': self.album_id
         }
 
 
