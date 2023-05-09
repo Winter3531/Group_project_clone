@@ -19,7 +19,7 @@ export const allSongs = (songs) => ({
 
 
 export const deleteSongThunk = (songId) => async (dispatch) => {
-    const response = await fetch(`api/songs/${songId}`, {
+    const response = await fetch(`api/albums/:albumId/songs/${songId}`, {
         method: 'DELETE'
     })
 
@@ -31,7 +31,7 @@ export const deleteSongThunk = (songId) => async (dispatch) => {
 
 export const addNewSongFetch = (songData) => async (dispatch) => {
     const { song_name, song_length, song_src, album_id } = songData
-    const response = await fetch(`/api/songs/new`, {
+    const response = await fetch(`/api/albums/:albumId/songs`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",

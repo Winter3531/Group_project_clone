@@ -1,9 +1,10 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import Album, db, Like
+from app.models import Album, db, Like, Song
 from app.forms.album_form import CreateAlbumForm
 from app.forms.search_form import SearchForm
 from flask_login import current_user
+from app.forms.song_form import SongForm
 
 
 
@@ -142,3 +143,40 @@ def delete_like_album(id):
         db.session.commit()
         return liked_album.to_album()
     return album_detail(id)
+
+
+# CREATE A SONG
+@albums_routes.route('/<int:id>/songs', methods=['POST'])
+@login_required
+def add_song(id):
+    # print(request.json)
+    form = SongForm()
+    owner_id = current_user.get_id()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_song = Song(
+            song_name = form.data['song_name'],
+            song_length = form.data['song_length'],
+            song_src = form.data['song_src'],
+            album_id = id
+        )
+        db.session.add(new_song)
+        db.session.commit()
+        return new_song.song_detail_dict()
+
+    return "Error form did not validate"
+
+# DELETE SONG
+@albums_routes.route('/<int:album_id>/songs/<int:song_id>', methods=['DELETE'])
+@login_required
+def delete_song(song_id):
+    song = Song.query.get(song_id)
+
+    if song:
+        db.session.delete(song)
+        db.session.commit()
+        return song.to_dict()
+
+    return "Error song not found"
