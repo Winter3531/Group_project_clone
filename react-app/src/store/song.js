@@ -40,6 +40,7 @@ export const deleteSongThunk = (songId) => async (dispatch) => {
     const response = await fetch(`/api/albums/songs/${songId}`, {
         method: 'DELETE'
     })
+    console.log(response, 'this is response in delete song')
 
     if (response.ok){
         dispatch(deleteSong(songId))
@@ -131,8 +132,7 @@ export default function songReducer(state = initalState, action) {
 
         case DELETE_SONG:
             const removeState = {...state}
-            const song = action.songId
-            delete removeState[song]
+            delete removeState[action.songId]
             return removeState
         case LIKE_SONG:
             return {...state, ...action.songs}

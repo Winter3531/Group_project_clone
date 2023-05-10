@@ -55,7 +55,7 @@ def delete_song(song_id):
         db.session.commit()
         return song.to_dict()
 
-    return "Error song not found"
+    return song_detail(song_id)
 
 
 # # CREATE A LIKE/ DELETE A LIKE

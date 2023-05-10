@@ -20,7 +20,7 @@ class Song(db.Model):
 
     playlists_song = db.relationship('SongPlaylist', back_populates='songs')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs', cascade="all, delete-orphan")
 
 
 

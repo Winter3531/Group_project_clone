@@ -24,9 +24,6 @@ const AlbumDetials = () => {
     const sessionUser = useSelector(state => state?.session.user);
     const [like, setLike] = useState(false);
 
-    console.log(album, 'this is song in album details')
-
-
     const songLengthFunc = (data) => {
         const sec = data % 60
         const min = (data - sec) / 60
@@ -64,24 +61,45 @@ const AlbumDetials = () => {
             {album && sessionUser ?
                 (
                     <>
+                    {album.likable_type == 'album' ?
+                            <div className="like-input">
+                                <div
+                                    className="true"
+                                    onClick={handleCancelClick} >
+                                    <i className="fas fa-heart"></i>
+                                    Liked
+                                </div>
+                            </div>
+                            :
+                            <div className="like-input">
+                                <div
+                                    className="false"
+                                    onClick={handleClick} >
+                                    <i className="far fa-heart"></i>
+                                    Unlike
+                                </div>
+                            </div>
+                        }
                         <p>album name: {album.album_name}</p>
                         <p>year recorded: {album.year_recorded}</p>
                         <p>album img: {album.album_img}</p>
                         <p>Username: {album.username}</p>
                         <p>Likes: {album.likable_id ? album.likable_id.length : 0}</p>
-                        <p>Songs: {album.songs.length}</p>
+                        <p>Songs: {album.songs?.length}</p>
 
                         {(album.songs ? album.songs?.map(song =>
                         <div>
                             <div>{count += 1}. Name:{song.song_name}
                                 length:{songLengthFunc(song.song_length)}</div>
-                                <div className="delete-song-button">
+
+                                {sessionUser && sessionUser.id === album.user_id ?
+                                    <div className="delete-song-button">
                                 <OpenModalButton
                                     buttonText="Delete Song"
                                     modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                     />
-                                <SongLike song={song} albumId={albumId}/>
-                                </div>
+                                </div>: <></>}
+                                <div><SongLike song={song} albumId={albumId}/></div>
                         </div>
                         )
                             : <div>No Songs </div>)}
@@ -107,23 +125,6 @@ const AlbumDetials = () => {
                             }</div> */}
 
 
-                        {album.likable_type == 'album' ?
-                            <div className="like-input">
-                                <div
-                                    className="true"
-                                    onClick={handleCancelClick} >
-                                    <i className="fas fa-heart"></i>
-                                </div>
-                            </div>
-                            :
-                            <div className="like-input">
-                                <div
-                                    className="false"
-                                    onClick={handleClick} >
-                                    <i className="far fa-heart"></i>
-                                </div>
-                            </div>
-                        }
 
                         {sessionUser && sessionUser.id === album.user_id ?
                             <>

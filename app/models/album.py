@@ -19,7 +19,7 @@ class Album(db.Model):
     owners = db.relationship('User', back_populates='albums')
 
     likes = db.relationship(
-        'Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)', back_populates='albums')
+        'Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)', back_populates='albums', cascade="all, delete-orphan")
 
     songs = db.relationship('Song', back_populates='albums')
 

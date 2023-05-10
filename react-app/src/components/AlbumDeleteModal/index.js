@@ -15,8 +15,8 @@ const ConfirmDeleteAlbumModal = ({ albumId }) => {
     e.preventDefault();
     await dispatch(albumActions.deleteAlbum(albumId));
     closeModal();
-    await dispatch(albumActions.currentUserAlbums());
-    await history.push('/albums/current')
+    dispatch(albumActions.currentUserAlbums());
+    history.push('/albums/current')
   };
 
   return (

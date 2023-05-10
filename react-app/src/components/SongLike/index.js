@@ -14,13 +14,15 @@ const SongLike = ({song, albumId}) => {
     const handleLikeSong = async (e) => {
         e.preventDefault()
         await dispatch(likeSong(song.id))
-        await dispatch(getSongDetail(song.id))
+
+        dispatch(getAlbumDetail(albumId))
     }
 
     const handleUnlikeSong = async (e) => {
         e.preventDefault()
         await dispatch(unLikeSong(song.id))
-        await dispatch(getSongDetail(song.id))
+
+        dispatch(getAlbumDetail(albumId))
     }
 
     useEffect(() => {
@@ -34,6 +36,7 @@ const SongLike = ({song, albumId}) => {
                 className="true"
                 onClick={handleUnlikeSong} >
                 <i className="fas fa-heart"></i>
+                Liked
             </div>
         </div> :
             <div className="like-input">
@@ -41,6 +44,7 @@ const SongLike = ({song, albumId}) => {
                 className="false"
                 onClick={handleLikeSong} >
                 <i className="far fa-heart"></i>
+                Unlike
             </div>
         </div>
         }</div>
