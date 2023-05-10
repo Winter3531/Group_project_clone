@@ -44,12 +44,14 @@ export const currentUserPlaylists = () => async (dispatch) => {
     if (res.ok) {
         const playlists = await res.json();
         dispatch(load(playlists));
+        console.log(playlists)
         return playlists;
     };
 };
 
 
 export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
+    // console.log('playlistId', playlistId)
     const res = await fetch(`/api/playlists/${playlistId}`);
 
     if (res.ok) {
@@ -102,21 +104,22 @@ export const EditPlaylist = (playlist, id) => async (dispatch) => {
 export const DeletePlaylist = (playlistId) => async (dispatch) => {
     const res = await fetch(`/api/playlists/${playlistId}`, {
         method: 'DELETE'
-
     });
 
     if (res.ok) {
+        const playlist = await res.json();
         dispatch(remove(playlistId));
-        return res
+        return playlist;
     }
 };
 
-export const likePlaylist = (playlist) => async dispatch => {
-    const res = await fetch(`/api/playlists/${playlist.id}/likes`, {
+export const likePlaylist = (playlistId) => async (dispatch) => {
+    const res = await fetch(`/api/playlists/${playlistId}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(playlist)
     });
+
+    // console.log(res, 'here is the res')
 
     if (res.ok) {
         const liked_playlist = await res.json();
@@ -125,14 +128,14 @@ export const likePlaylist = (playlist) => async dispatch => {
     }
 }
 
-export const unlikePlaylist = playlist => async dispatch => {
-    const res = await fetch(`/api/playlists/${playlist.id}/likes`, {
+export const unlikePlaylist = (playlistId) => async (dispatch) => {
+    const res = await fetch(`/api/playlists/${playlistId}/likes`, {
         method: 'DELETE',
     });
 
     if (res.ok) {
         const liked_playlist = await res.json();
-        dispatch(unlike(playlist))
+        dispatch(unlike(liked_playlist))
         return liked_playlist
     }
 }

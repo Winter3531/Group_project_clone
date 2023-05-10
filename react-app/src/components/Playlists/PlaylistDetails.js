@@ -5,6 +5,7 @@ import { PlaylistDetailsFetch, likePlaylist, unlikePlaylist } from "../../store/
 import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
+import RemoveSongModal from "./RemoveSongModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const PlaylistDetails = () => {
@@ -21,17 +22,17 @@ const PlaylistDetails = () => {
 
     const likeClick = async (e) => {
         e.preventDefault();
-        await dispatch(likePlaylist(playlist))
+        await dispatch(likePlaylist(playlistId))
         await dispatch(PlaylistDetailsFetch(playlistId))
         history.push(`/playlists/${playlistId}`)
-    }
+    };
 
     const unlikeClick = async (e) => {
         e.preventDefault();
-        await dispatch(unlikePlaylist(playlist))
+        await dispatch(unlikePlaylist(playlistId))
         await dispatch(PlaylistDetailsFetch(playlistId))
         history.push(`/playlists/${playlistId}`)
-    }
+    };
 
 
     const playlistLikes = playlist.likable_id
@@ -50,8 +51,13 @@ const PlaylistDetails = () => {
         </div>
         <div>
         {(playlist.songs ? playlist.songs?.map(song =>
-                            <div>{count += 1}. Name:{song.song_name}
-                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60} <button>Remove Song</button></div>)
+                            <div>
+                                {count += 1}. Name:{song.song_name}
+                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}
+                                <OpenModalButton
+                                buttonText="Remove Song"
+                                modalComponent={<RemoveSongModal id={song.id}/>}/>
+                            </div>)
                             : <div>No Songs </div>)}
         </div>
         <div>
@@ -83,7 +89,7 @@ const PlaylistDetails = () => {
             {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                 <OpenModalButton
                     buttonText="Edit Playlist"
-                    modalComponent={<EditPlaylistModal />}
+                    modalComponent={<EditPlaylistModal playlistId={playlistId} />}
                 />
             )}
         </div>
@@ -91,7 +97,7 @@ const PlaylistDetails = () => {
             {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                 <OpenModalButton
                     buttonText="Delete Playlist"
-                    modalComponent={<DeletePlaylistModal />}
+                    modalComponent={<DeletePlaylistModal playlistId={playlistId} />}
                 />
             )}
         </div>

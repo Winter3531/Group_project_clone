@@ -82,31 +82,23 @@ def deletePlaylist(id):
     db.session.delete(playlist)
     db.session.commit()
 
-    return {'message': 'Playlist successfully deleted'}
+    return playlist.to_dict()
 
 
-# Like/ Unlike / and Get all likes for a playlist
+# Like/Get all likes for a playlist.
 
-@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST', 'DELETE'])
+@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST'])
 @login_required
 def like_playlist(id):
     user_id = current_user.get_id()
-    like_exists = Like.query.filter_by(user_id = user_id, likable_id = id, likable_type = 'playlist').first()
+    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id).first()
 
-    if request.method == 'GET':
-        if like_exists:
-            return like_exists.exists_to_dict()
-        return {'message': f'User {user_id} has not liked this playlist.'}
+    if playlist and request.method == 'GET':
+        if playlist:
+            return playlist.to_dict()
 
-    if request.method == 'DELETE':
-        if like_exists:
-            db.session.delete(like_exists)
-            db.session.commit()
-            return {"message": f"User {user_id}'s playlist like has been removed."}
-        return {"message": f"User {user_id} has not liked this song."}
-
-    if like_exists:
-        return like_exists.exists_to_dict()
+    if playlist and request.method == 'POST':
+        return laylist.exists_to_dict()
 
     liked_playlist = Like(
         user_id = user_id,
@@ -127,6 +119,12 @@ def delete_like_playlist(id):
     if liked_playlist:
         db.session.delete(liked_playlist)
         db.session.commit()
-        return {'message': 'You unliked this playlist'}
+        return liked_playlist.to_dict()
 
-    return {'message': 'You did not like this playlist yet'}
+    return playlist_details(id)
+
+# Add/Remove playlist song by id.
+# @playlists_routes.route('/<int:id>/songs/<int:id>', methods=['POST', 'DELETE'])
+# @login_required
+# def playlist_song():
+#     playlist_song = Playlist.query.select_from(Song)

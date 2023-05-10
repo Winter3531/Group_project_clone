@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { EditPlaylist, PlaylistDetailsFetch } from "../../store/playlist";
 
-const EditPlaylistModal = () => {
+const EditPlaylistModal = ({playlistId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const playlist = useSelector(state=>state.playlists);
@@ -12,7 +12,6 @@ const EditPlaylistModal = () => {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
 
-    const playlistId = playlist.id
 
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
@@ -45,7 +44,6 @@ const EditPlaylistModal = () => {
 
         if (updatedPlaylist) {
             await dispatch(PlaylistDetailsFetch(playlistId))
-            history.push(`/playlists/${playlistId}`)
             closeModal()
         }
     };
