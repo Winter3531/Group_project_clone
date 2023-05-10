@@ -12,6 +12,8 @@ const UserAlbums = () => {
         dispatch(currentUserAlbums())
     }, [dispatch])
 
+
+
     return (
         <>
         {albums && Object.values(albums).map(album =>
@@ -21,7 +23,7 @@ const UserAlbums = () => {
                 <div>year recorded: {album.year_recorded}</div>
                 <div>album img: {album.album_img}</div>
                 <div>user id: {album.user_id}</div>
-                <div>likes: {album.likes}</div>
+                <div>likes: {album.likable_id.length}</div>
             </div>
         )}
         </>

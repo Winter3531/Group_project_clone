@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
 import { getAlbumDetail, likeAlbum, unLikeAlbum } from '../../store/album'
+import { allSongsFetch, likeSong, unLikeSong } from "../../store/song";
 import { useEffect, useState, useRef } from "react";
 import EditAlbumFormModal from "../AlbumEdit";
 import OpenModalButton from "../OpenModalButton";
@@ -9,6 +10,7 @@ import ConfirmDeleteAlbumModal from "../AlbumDeleteModal";
 import SongAddModal from "../Songs/SongAddModal";
 import SongDeleteModal from "../Songs/SongDeleteModal";
 import './AlbumsDetail.css'
+import SongLike from "../SongLike";
 
 
 
@@ -17,11 +19,12 @@ const AlbumDetials = () => {
     const { albumId } = useParams()
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
+    // let songs = useSelector(state => state.songs)
     // const {songs , likable_type} = album
     const sessionUser = useSelector(state => state?.session.user);
     const [like, setLike] = useState(false);
 
-    console.log(album, 'this is album in album details')
+    console.log(album, 'this is song in album details')
 
 
     const songLengthFunc = (data) => {
@@ -36,10 +39,6 @@ const AlbumDetials = () => {
         return `${min}:${sec}`
     }
 
-    const onChange = (e) => {
-        setLike(e)
-        dispatch(likeAlbum(album))
-    }
     const handleClick = async (e) => {
         e.preventDefault();
         await dispatch(likeAlbum(album))
@@ -65,12 +64,12 @@ const AlbumDetials = () => {
             {album && sessionUser ?
                 (
                     <>
-                        <p>album id: {album.id}</p>
                         <p>album name: {album.album_name}</p>
                         <p>year recorded: {album.year_recorded}</p>
                         <p>album img: {album.album_img}</p>
-                        <p>user id: {album.user_id}</p>
                         <p>Username: {album.username}</p>
+                        <p>Likes: {album.likable_id ? album.likable_id.length : 0}</p>
+                        <p>Songs: {album.songs.length}</p>
 
                         {(album.songs ? album.songs?.map(song =>
                         <div>
@@ -81,10 +80,31 @@ const AlbumDetials = () => {
                                     buttonText="Delete Song"
                                     modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                     />
+                                <SongLike song={song} albumId={albumId}/>
                                 </div>
                         </div>
                         )
                             : <div>No Songs </div>)}
+                            {/* <div>{Object.values(songs).map((song) =>
+                            Object.values(song.likes).map((like) => (like.user_id)))
+                        }
+                            </div> */}
+                        {/* <div>{Object.values(songs.likes).map((like) => like.user_id) == sessionUser.id ?
+                                <div className="like-input">
+                                <div
+                                    className="true"
+                                    onClick={handleUnlikeSong} >
+                                    <i className="fas fa-heart"></i>
+                                </div>
+                            </div> :
+                                <div className="like-input">
+                                <div
+                                    className="false"
+                                    onClick={handleLikeSong} >
+                                    <i className="far fa-heart"></i>
+                                </div>
+                            </div>
+                            }</div> */}
 
 
                         {album.likable_type == 'album' ?

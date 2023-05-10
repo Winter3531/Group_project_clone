@@ -48,6 +48,16 @@ class Song(db.Model):
             'album_id': self.album_id
         }
 
+    def song_like_dict(self):
+        return {
+            'id': self.id,
+            'song_name': self.song_name,
+            'song_length': self.song_length,
+            'song_src': self.song_src,
+            'album_id': self.album_id,
+            'likes': [like.to_dict() for like in self.likes] if self.likes else []
+        }
+
 
     # def to_dict(self):
     #     return {

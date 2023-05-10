@@ -42,6 +42,16 @@ const unlike = (album) => ({
     album
 })
 
+export const getAllAlbums = () => async (dispatch) => {
+    const response = await fetch(`/api/albums`);
+
+    if (response.ok) {
+        const albums = await response.json();
+        dispatch(load(albums))
+        return albums
+    }
+}
+
 export const currentUserAlbums = () => async (dispatch) => {
     const res = await fetch('/api/albums/current')
     if (res.ok) {
@@ -115,7 +125,7 @@ export const deleteAlbum = albumId => async dispatch => {
 }
 
 export const likeAlbum = (album) => async dispatch => {
-    // console.log(album, 'this is album in like ablum thunk')
+    console.log(album, 'this is album in like ablum thunk')
     const response = await fetch(`/api/albums/${album.id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
