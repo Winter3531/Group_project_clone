@@ -62,26 +62,23 @@ const SideNav = ({ isLoaded }) => {
                         placeholder="Search..."
                     />
                     <div className="search-results hidden">
-                        {songs && (songs.length > 0  && input?.length > 0 ? (
-                            albums.map((song) => (
-                                <div key={song.id} className="search-card" onMouseDown={() => reset(song.id)}>
-                                    <p>{song.song_name}</p>
-                                    <div>{song?.song_src}</div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="search-none">No Song Match.</div>
-                        ))}
+                        {songs && albums && (albums.length && songs.length > 0  && input?.length > 0 ?
+                            songs.map((song) => (
+                                <div key={song.id} className="search-card" onMouseDown={() => reset(song.album_id)}>
+                                    <p>Song</p>
+                                    <div>{song?.song_name}</div>
+                                </div>))
+                        : <div className="search-none">No Song Match.</div>)}
                     </div>
                     <div className="search-results hidden">
-                        {albums && (albums.length > 0  && input?.length > 0 ? (
+                        {albums && (albums.length > 0  && input?.length > 0 ?
+                        (
                             albums.map((album) => (
                                 <div key={album.id} className="search-card" onMouseDown={() => reset(album.id)}>
                                     <p>Album</p>
                                     <div>{album.album_name}</div>
                                     <img className="search-image" src={reset.image} alt="" />
-                                </div>
-                            ))
+                                </div>))
                         ) : (
                             <div className="search-none">No Results.</div>
                         ))}
