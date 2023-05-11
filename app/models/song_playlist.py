@@ -26,3 +26,4 @@ class SongPlaylist(db.Model):
             "song_src": self.songs.song_src,
             "playlist_name": self.playlists.playlist_name,
         }
+

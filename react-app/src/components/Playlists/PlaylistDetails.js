@@ -11,9 +11,9 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory()
-    const playlist = useSelector(state=>state.playlists);
     const sessionUser = useSelector(state=>state.session.user);
     const { playlistId } = useParams();
+    const playlist = useSelector(state=>state.playlists[playlistId]);
 
 
     useEffect(() => {
@@ -35,10 +35,10 @@ const PlaylistDetails = () => {
     };
 
 
-    const playlistLikes = playlist.likable_id
+    const playlistLikes = playlist?.likable_id
     let count = 0
 
-    return (
+    return playlist ? (
         <>
         <div>
             <div>Playlist Id: {playlist.id}</div>
@@ -102,7 +102,7 @@ const PlaylistDetails = () => {
             )}
         </div>
         </>
-    );
+    ) :  null;
 };
 
 
