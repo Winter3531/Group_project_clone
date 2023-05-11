@@ -15,6 +15,7 @@ import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 import SearchResult from "./components/Search";
+import Player from "./components/MusicPlayer";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Player />
     </>
   );
 }

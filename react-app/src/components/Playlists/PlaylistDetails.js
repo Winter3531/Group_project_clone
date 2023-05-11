@@ -5,6 +5,7 @@ import { PlaylistDetailsFetch, likePlaylist, unlikePlaylist } from "../../store/
 import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
+import Player from "../MusicPlayer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const PlaylistDetails = () => {
@@ -32,7 +33,6 @@ const PlaylistDetails = () => {
         await dispatch(PlaylistDetailsFetch(playlistId))
         history.push(`/playlists/${playlistId}`)
     }
-
 
     const playlistLikes = playlist.likable_id
     let count = 0
