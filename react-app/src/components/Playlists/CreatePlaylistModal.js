@@ -38,7 +38,6 @@ const PlaylistFormModal = () => {
         });
 
         if (playlist) {
-            await dispatch(PlaylistDetailsFetch(playlist.id))
             history.push(`/playlists/${playlist.id}`)
             closeModal()
         }
