@@ -1,17 +1,23 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import Album, db, Like
+from app.models import Album, db, Like, Song
 from app.forms.album_form import CreateAlbumForm
 from app.forms.search_form import SearchForm
 from flask_login import current_user
+from app.forms.song_form import SongForm
 
 
 
 
 albums_routes = Blueprint('albums', __name__)
 
-# Get all playlist for the current user.
+# Get All albums
+@albums_routes.route('')
+def all_albums():
+    albums = Album.query.all()
+    return {album.id: album.liked_album_dict() for album in albums}
 
+# Get all playlist for the current user.
 @albums_routes.route('/current')
 @login_required
 def user_albums():
@@ -42,8 +48,8 @@ def user_albums():
 # Get details of an album by the id.
 @albums_routes.route('/<int:id>')
 def album_detail(id):
-
-    album = Album.query.get(id)
+    user_id = current_user.get_id()
+    album = Album.query.select_from(Like).filter(Like.user_id == user_id , Album.id == id).first()
     if album:
         return album.to_like()
     return "Album does not exsit"
@@ -106,11 +112,10 @@ def edit_album(id):
 @albums_routes.route('/<int:id>/', methods=['DELETE'])
 def delete_album(id):
     album = Album.query.get(id)
-    print(album)
     db.session.delete(album)
     db.session.commit()
 
-    return album.to_dict()
+    return user_albums()
 
 # Like an album
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
@@ -140,9 +145,47 @@ def like_album(id):
 @albums_routes.route('/<int:id>/likes', methods=['DELETE'])
 @login_required
 def delete_like_album(id):
-    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id).first()
+    user_id = current_user.get_id()
+    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id, Like.user_id == user_id ).first()
     if liked_album:
         db.session.delete(liked_album)
         db.session.commit()
         return liked_album.to_album()
     return album_detail(id)
+
+
+# CREATE A SONG
+@albums_routes.route('/<int:id>/songs', methods=['POST'])
+@login_required
+def add_song(id):
+    # print(request.json)
+    form = SongForm()
+    owner_id = current_user.get_id()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        new_song = Song(
+            song_name = form.data['song_name'],
+            song_length = form.data['song_length'],
+            song_src = form.data['song_src'],
+            album_id = id
+        )
+        db.session.add(new_song)
+        db.session.commit()
+        return new_song.song_detail_dict()
+
+    return "Error form did not validate"
+
+# DELETE SONG
+@albums_routes.route('/songs/<int:song_id>', methods=['DELETE'])
+@login_required
+def delete_song(song_id):
+    song = Song.query.get(song_id)
+
+    if song:
+        db.session.delete(song)
+        db.session.commit()
+        return song.to_dict()
+
+    return "Error song not found"

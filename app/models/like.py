@@ -25,7 +25,7 @@ class Like(db.Model):
         'Album', primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)')
 
     playlists = db.relationship(
-        'Playlist', primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='likes')
+        'Playlist', primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)')
 
     songs = db.relationship(
         'Song', primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)')
@@ -61,9 +61,13 @@ class Like(db.Model):
             'Exists': 'True'
         }
 
-    def album_dict(self):
+    def song_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'likable_id': self.likable_id
+            'likable_id': self.likable_id,
+            'song_id': self.songs.id,
+            'song_name': self.songs.song_name,
+            'song_length': self.songs.song_length,
+            'song_src' : self.songs.song_src
         }

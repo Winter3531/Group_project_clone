@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editAlbum } from "../../store/album";
+import { editAlbum, getAlbumDetail } from "../../store/album";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useModal } from "../../context/Modal";
@@ -30,8 +30,9 @@ const EditAlbumFormModal = ({album}) => {
 
         let updatedAlbum = await dispatch(editAlbum(newAlbum));
         if (updatedAlbum) {
-            history.push(`/albums/${updatedAlbum.id}`);
             closeModal();
+            dispatch(getAlbumDetail(album.id))
+            // history.push(`/albums/${updatedAlbum.id}`);
         }
     };
 

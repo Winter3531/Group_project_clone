@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useModal } from "../../context/Modal";
 import { addNewSongFetch } from "../../store/song";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { getAlbumDetail } from "../../store/album";
 
 
 
-export default function SongAddModal(){
+export default function SongAddModal({albumId}){
     const dispatch = useDispatch();
+    const history = useHistory();
+    // const { albumId } = useParams()
     const [song_name, setSongName] = useState('')
     const [song_src, setSongSrc] = useState('')
     const [song_length, setSongLength] = useState('')
-    const [album_id, setAlbumId] = useState('')
+    // const [album_id, setAlbumId] = useState('')
     const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState([])
     const {closeModal} = useModal();
@@ -19,7 +23,7 @@ export default function SongAddModal(){
         song_name,
         song_src,
         song_length,
-        album_id
+        album_id: albumId
     }
 
     const handleSubmit = async (e) => {
@@ -29,12 +33,14 @@ export default function SongAddModal(){
         if (!song_name) validationErrors.push(['Song name is required.'])
         if (!song_src) validationErrors.push(['Song source is required.'])
         if (!song_length) validationErrors.push(['Song length in seconds is required.'])
-        if (!album_id) validationErrors.push(['Album ID is temporarily required.'])
+        // if (!album_id) validationErrors.push(['Album ID is temporarily required.'])
         if (validationErrors.length) return setErrors(validationErrors)
 
         setErrors([])
-        dispatch(addNewSongFetch(newSongData))
-        return closeModal()
+        await dispatch(addNewSongFetch(newSongData))
+        await dispatch(getAlbumDetail(albumId))
+        closeModal()
+        history.push(`/albums/${albumId}`)
     }
 
     return (
@@ -59,12 +65,12 @@ export default function SongAddModal(){
                     onChange={(e) => setSongLength(e.target.value)}
                     placeholder='Song Length in Seconds'
                 />
-                <input
+                {/* <input
                     type="integer"
                     value={album_id}
                     onChange={(e) => setAlbumId(e.target.value)}
                     placeholder='Album ID'
-                />
+                /> */}
                 <button
                     type="submit"
                     id="update-spot-submit"
