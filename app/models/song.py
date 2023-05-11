@@ -20,7 +20,7 @@ class Song(db.Model):
 
     playlists_song = db.relationship('SongPlaylist', back_populates='songs')
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs', cascade="all, delete-orphan")
 
 
 
@@ -45,6 +45,17 @@ class Song(db.Model):
             'song_name': self.song_name,
             'song_length': self.song_length,
             'song_src': self.song_src,
+            'album_id': self.album_id
+        }
+
+    def song_like_dict(self):
+        return {
+            'id': self.id,
+            'song_name': self.song_name,
+            'song_length': self.song_length,
+            'song_src': self.song_src,
+            'album_id': self.album_id,
+            'likes': [like.to_dict() for like in self.likes] if self.likes else []
         }
 
 

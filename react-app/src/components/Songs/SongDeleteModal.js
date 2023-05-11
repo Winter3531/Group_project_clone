@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useModal } from "../../context/Modal";
 import { deleteSongThunk } from "../../store/song";
+import { getAlbumDetail } from "../../store/album";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function SongDeleteModal({ songId }){
+export default function SongDeleteModal({ songId, albumId }){
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const history = useHistory();
 
     const handleDelete = async (e) => {
         e.preventDefault();
         await dispatch(deleteSongThunk(songId))
-            .then(closeModal())
+        await dispatch(getAlbumDetail(albumId))
+        closeModal()
+        history.push(`/albums/${albumId}`)
     }
 
     return (

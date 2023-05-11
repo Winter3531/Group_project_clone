@@ -19,7 +19,7 @@ class Album(db.Model):
     owners = db.relationship('User', back_populates='albums')
 
     likes = db.relationship(
-        'Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)', back_populates='albums')
+        'Like', lazy=True, primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)', back_populates='albums', cascade="all, delete-orphan")
 
     songs = db.relationship('Song', back_populates='albums')
 
@@ -42,7 +42,7 @@ class Album(db.Model):
             'album_img': self.album_img,
             'user_id': self.user_id,
             'username': self.owners.username,
-            'songs':[song.song_detail_dict() for song in self.songs] if self.songs else [],
+            'songs':[song.song_like_dict() for song in self.songs] if self.songs else [],
             # 'liked':[like.to_dict for like in self.likes] if self.likes else 'No like',
             'likable_type': [like.likable_type for like in self.likes] if self.likes else [],
             'likable_id': [like.id for like in self.likes] if self.likes else []

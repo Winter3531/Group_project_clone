@@ -61,9 +61,13 @@ class Like(db.Model):
             'Exists': 'True'
         }
 
-    def album_dict(self):
+    def song_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'likable_id': self.likable_id
+            'likable_id': self.likable_id,
+            'song_id': self.songs.id,
+            'song_name': self.songs.song_name,
+            'song_length': self.songs.song_length,
+            'song_src' : self.songs.song_src
         }

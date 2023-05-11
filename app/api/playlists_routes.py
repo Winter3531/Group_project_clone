@@ -22,7 +22,6 @@ def user_playlist():
 # Get details of a playlist by the id
 @playlists_routes.route('/<int:id>')
 def playlist_details(id):
-
     """
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
@@ -96,14 +95,14 @@ def like_playlist(id):
     if request.method == 'GET':
         if like_exists:
             return like_exists.exists_to_dict()
-        return {'message': f'User {user_id} has not liked this playlist.'}
+        return f"User {user_id} has not liked this playlist."
 
     if request.method == 'DELETE':
         if like_exists:
             db.session.delete(like_exists)
             db.session.commit()
-            return {"message": f"User {user_id}'s playlist like has been removed."}
-        return {"message": f"User {user_id} has not liked this song."}
+            return f"User {user_id}'s playlist like has been removed."
+        return f"User {user_id} has not liked this song."
 
     if like_exists:
         return like_exists.exists_to_dict()
@@ -140,5 +139,5 @@ def player_route(playlist_id):
 
     if (playlist):
         return playlist.player_dict()
-    
+
     return 'Playlist not found'

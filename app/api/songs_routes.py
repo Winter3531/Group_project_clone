@@ -13,7 +13,13 @@ songs_routes = Blueprint('songs', __name__)
 def all_songs():
     songs = Song.query.all()
     print(songs)
-    return {song.id: song.song_detail_dict() for song in songs}
+    return {song.id: song.song_like_dict() for song in songs}
+
+@songs_routes.route('/<int:id>')
+def song_detail(id):
+    user_id = current_user.get_id()
+    song = Song.query.get(id)
+    return song.song_detail_dict()
 
 # CREATE A SONG
 @songs_routes.route('/new', methods=['POST'])
@@ -49,38 +55,72 @@ def delete_song(song_id):
         db.session.commit()
         return song.to_dict()
 
-    return "Error song not found"
+    return song_detail(song_id)
 
 
-# CREATE A LIKE/ DELETE A LIKE
-@songs_routes.route('/<int:song_id>/likes', methods=['GET','POST','DELETE'])
+# # CREATE A LIKE/ DELETE A LIKE
+# @songs_routes.route('/<int:song_id>/likes', methods=['GET','POST','DELETE'])
+# @login_required
+# def song_likes(song_id):
+#     # print(id, "Song_id", current_user.get_id(), "user_id")
+#     user_id = current_user.id
+#     like_exists = Like.query.filter_by(user_id = user_id, likable_id = song_id, likable_type = 'song').first()
+
+#     if request.method == 'GET':
+#         if like_exists:
+#             return like_exists.exists_to_dict()
+#         return like_exists.song_dict()
+
+#     if request.method == 'DELETE':
+#         if like_exists:
+#             db.session.delete(like_exists)
+#             db.session.commit()
+#             return like_exists.song_dict()
+#         return like_exists.song_dict()
+
+#     if like_exists:
+#         return like_exists.exists_to_dict()
+
+#     new_like = Like(
+#         user_id = user_id,
+#         likable_type = 'song',
+#         likable_id = song_id
+#     )
+
+#     db.session.add(new_like)
+#     db.session.commit()
+#     return new_like.song_dict()
+
+# Like an song
+@songs_routes.route('/<int:id>/likes', methods=['GET','POST'])
 @login_required
-def song_likes(song_id):
-    # print(id, "Song_id", current_user.get_id(), "user_id")
-    user_id = current_user.id
-    like_exists = Like.query.filter_by(user_id = user_id, likable_id = song_id, likable_type = 'song').first()
+def like_song(id):
+    user_id = current_user.get_id()
+    songs = Song.query.select_from(Like).filter(Song.id == id, Like.likable_type == 'song', Like.likable_id == id).first()
+    if songs and request.method == 'POST':
+        return songs.song_like_dict()
+    elif songs and request.method == 'GET':
+        return songs.song_like_dict()
 
-    if request.method == 'GET':
-        if like_exists:
-            return like_exists.exists_to_dict()
-        return f"User {user_id} has not liked this song."
 
-    if request.method == 'DELETE':
-        if like_exists:
-            db.session.delete(like_exists)
-            db.session.commit()
-            return f"User {user_id}'s song like has been removed."
-        return f"User {user_id} has not liked this song."
-
-    if like_exists:
-        return like_exists.exists_to_dict()
-
-    new_like = Like(
-        user_id = user_id,
-        likable_type = 'song',
-        likable_id = song_id
+    liked_album = Like(
+        user_id=user_id,
+        likable_type='song',
+        likable_id=id
     )
-
-    db.session.add(new_like)
+    db.session.add(liked_album)
     db.session.commit()
-    return new_like.to_dict()
+    return liked_album.song_dict()
+
+
+# Delete a liked ablum
+@songs_routes.route('/<int:id>/likes', methods=['DELETE'])
+@login_required
+def delete_like_song(id):
+    user_id = current_user.get_id()
+    liked_song = Like.query.select_from(Song).filter(Song.id == id, Like.likable_type =='song', Like.likable_id == id, Like.user_id == user_id ).first()
+    if liked_song:
+        db.session.delete(liked_song)
+        db.session.commit()
+        return liked_song.song_dict()
+    return song_detail(id)
