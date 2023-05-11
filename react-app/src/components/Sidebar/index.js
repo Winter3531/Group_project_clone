@@ -83,8 +83,6 @@ const SideNav = ({ isLoaded }) => {
                             <div className="search-none">No Results.</div>
                         ))}
                     </div>
-
-
             </div>
             {/* <div className="search-bar">
                 <form onSubmit={submitHandler}>
