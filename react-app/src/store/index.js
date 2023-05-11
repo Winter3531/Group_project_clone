@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   albums: albumReducer,
   playlists: playlistReducer,
   songs: songReducer,
-  search: searchReducer
+  search: searchReducer,
   player: playerReducer,
 });
 
