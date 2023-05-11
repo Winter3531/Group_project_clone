@@ -112,11 +112,10 @@ def edit_album(id):
 @albums_routes.route('/<int:id>/', methods=['DELETE'])
 def delete_album(id):
     album = Album.query.get(id)
-    print(album)
     db.session.delete(album)
     db.session.commit()
 
-    return album.to_dict()
+    return user_albums()
 
 # Like an album
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])

@@ -25,9 +25,9 @@ const SongLike = ({song, albumId}) => {
         dispatch(getAlbumDetail(albumId))
     }
 
-    useEffect(() => {
-        dispatch(getSongDetail(song.id))
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(getSongDetail(song.id))
+    // }, [dispatch])
 
     return (
         <div>{Object.values(song.likes).map((like) => like.user_id) == sessionUser.id ?
