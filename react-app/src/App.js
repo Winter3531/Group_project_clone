@@ -14,6 +14,8 @@ import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 import SearchResult from "./components/Search";
+import Player from "./components/MusicPlayer";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/collection">
+            <ProfilePage />
           </Route>
           <Route exact path='/albums/new'>
             <CreateAlbumForm />
@@ -60,6 +65,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Player />
     </>
   );
 }

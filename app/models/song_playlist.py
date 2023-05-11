@@ -26,3 +26,8 @@ class SongPlaylist(db.Model):
             "song_src": self.songs.song_src,
             "playlist_name": self.playlists.playlist_name,
         }
+
+    def player_dict(self):
+        return {
+            "song_src": self.songs.song_src,
+        }

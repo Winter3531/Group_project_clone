@@ -126,6 +126,18 @@ def delete_like_playlist(id):
     if liked_playlist:
         db.session.delete(liked_playlist)
         db.session.commit()
-        return 'You unliked this playlist'
+        return {'message': 'You unliked this playlist'}
 
-    return 'You did not like this playlist yet'
+    return {'message': 'You did not like this playlist yet'}
+
+
+# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+@playlists_routes.route('<int:playlist_id>/player')
+@login_required
+def player_route(playlist_id):
+    playlist = Playlist.query.get(playlist_id)
+
+    if (playlist):
+        return playlist.player_dict()
+
+    return 'Playlist not found'

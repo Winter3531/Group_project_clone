@@ -5,6 +5,8 @@ import { PlaylistDetailsFetch } from "../../store/playlist";
 import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
+import Player from "../MusicPlayer";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
@@ -21,7 +23,6 @@ const PlaylistDetails = () => {
     const handleOnClick = async () => {
         await dispatch()
     }
-
 
     const playlistLikes = playlist.likable_id
 
