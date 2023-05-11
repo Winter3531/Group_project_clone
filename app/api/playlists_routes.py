@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models.playlist import Playlist, db
-from app.models.like import Like, db
+from app.models import Playlist, Like, db
+from app.models.song_playlist import SongPlaylist, db
 from app.forms.playlist_form import PlaylistForm;
 
 
@@ -128,4 +128,23 @@ def delete_like_playlist(id):
         db.session.commit()
         return 'You unliked this playlist'
 
-    return 'You did not like this playlist yet'
+    return playlist_details(id)
+
+# Add/Remove playlist song by id.
+# @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
+# @login_required
+def playlist_song(playlist_id, song_id):
+    playlist = Playlist.query.get(playlist_id)
+    for song in playlist.songs:
+        if song.get('id') == song_id:
+            playlist.songs.remove(song)
+            db.session.delete(song)
+            db.session.commit()
+            return playlist
+
+
+    # if playlist:
+    #     db.session.delete(playlist_song)
+    #     db.session.commit()
+    #     return playlist_song.to_dict()
+    # return playlist_details(playlist_details)

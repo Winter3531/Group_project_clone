@@ -36,11 +36,42 @@ const PlaylistDetails = () => {
         <div>
             <div>Playlist Name: {playlist.playlist_name}</div>
         </div>
-        {playlistLikes && (
-            <div>
-                <div>Playlist Likes: {playlistLikes.length}</div>
-            </div>
-        )}
+        <div>
+        {(playlist.songs ? playlist.songs?.map(song =>
+                            <div>
+                                {count += 1}. Name:{song.song_name}
+                                length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}
+                                <OpenModalButton
+                                buttonText="Remove Song"
+                                modalComponent={<RemoveSongModal id={song.id}/>}/>
+                            </div>)
+                            : <div>No Songs </div>)}
+        </div>
+        <div>
+            {playlistLikes && (
+                <div>
+                    <div>Playlist Likes: {playlistLikes.length}</div>
+                </div>
+            )}
+
+            {playlist.likable_type == "playlist" ?
+                <div className="like-input">
+                    <div
+                        className="true"
+                        onClick={unlikeClick} >
+                        <i className="fas fa-heart"></i>
+                    </div>
+                </div>
+                :
+                <div className="like-input">
+                    <div
+                        className="false"
+                        onClick={likeClick} >
+                        <i className="far fa-heart"></i>
+                    </div>
+                </div>
+            }
+        </div>
         <div>
             {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                 <OpenModalButton
