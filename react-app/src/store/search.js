@@ -27,7 +27,6 @@ const initialState = {};
 export default function searchReducer(state = initialState, action) {
     switch(action.type) {
         case LOAD_RESULT:
-            console.log(action.results.albums, 'this is action')
             return {...state, ...action.results}
         default:
             return state

@@ -96,7 +96,7 @@ const AlbumDetials = () => {
                                 <>
                                 <div className="delete-song-button">
                                 <OpenModalButton
-                                    buttonText="Delete"
+                                    buttonText="Delete Song"
                                     modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                     />
                                 </div>

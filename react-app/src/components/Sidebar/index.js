@@ -19,7 +19,7 @@ const SideNav = ({ isLoaded }) => {
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
-    console.log(albums, 'this is albums in search page')
+    console.log(songs, 'this is songs in search page')
 
     useEffect(() => {
         if (input.length > 0) {
@@ -55,8 +55,6 @@ const SideNav = ({ isLoaded }) => {
     return (
         <ul>
             <div className="search-container" onBlur={(e) => hide(e)}>
-                <from onSubmit={submitHandler}>
-
                     <input
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
@@ -64,20 +62,32 @@ const SideNav = ({ isLoaded }) => {
                         placeholder="Search..."
                     />
                     <div className="search-results hidden">
+                        {songs && (songs.length > 0  && input?.length > 0 ? (
+                            albums.map((song) => (
+                                <div key={song.id} className="search-card" onMouseDown={() => reset(song.id)}>
+                                    <p>{song.song_name}</p>
+                                    <div>{song?.song_src}</div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="search-none">No Song Match.</div>
+                        ))}
+                    </div>
+                    <div className="search-results hidden">
                         {albums && (albums.length > 0  && input?.length > 0 ? (
                             albums.map((album) => (
                                 <div key={album.id} className="search-card" onMouseDown={() => reset(album.id)}>
-                                    <p>albums</p>
+                                    <p>Album</p>
                                     <div>{album.album_name}</div>
                                     <img className="search-image" src={reset.image} alt="" />
                                 </div>
                             ))
                         ) : (
-                            <div className="search-none">No results.</div>
+                            <div className="search-none">No Results.</div>
                         ))}
                     </div>
-                    <button type='submit'><i className="fa fa-search"> </i></button>
-                </from>
+
+
             </div>
             {/* <div className="search-bar">
                 <form onSubmit={submitHandler}>
