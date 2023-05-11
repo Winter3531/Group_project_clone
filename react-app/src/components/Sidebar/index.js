@@ -16,8 +16,10 @@ const SideNav = ({ isLoaded }) => {
     const history = useHistory()
     const [input, setInput] = useState("")
 
-    const results = useSelector((state) => state.search?.results)
-    console.log(results, 'this is result in search')
+    const results = useSelector((state) => state.search)
+    const albums = results.albums
+    const songs = results.songs
+    console.log(albums, 'this is albums in search page')
 
     useEffect(() => {
         if (input.length > 0) {
@@ -32,7 +34,7 @@ const SideNav = ({ isLoaded }) => {
     };
 
     const hide = (e) => {
-        if (!e.currentTarget.contain(e.relatedTarget)) {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
             document.querySelector(".search-results").classList.add('hidden');
         };
     };
@@ -62,15 +64,17 @@ const SideNav = ({ isLoaded }) => {
                         placeholder="Search..."
                     />
                     <div className="search-results hidden">
-                        {results?.albums.length > 0  && input?.length > 0 ? (
-                            results?.albums.map((album) => (
-                                <div className="search-card" onMouseDown={() => reset(album.id)}>
+                        {albums && (albums.length > 0  && input?.length > 0 ? (
+                            albums.map((album) => (
+                                <div key={album.id} className="search-card" onMouseDown={() => reset(album.id)}>
+                                    <p>albums</p>
                                     <div>{album.album_name}</div>
+                                    <img className="search-image" src={reset.image} alt="" />
                                 </div>
                             ))
                         ) : (
                             <div className="search-none">No results.</div>
-                        )}
+                        ))}
                     </div>
                     <button type='submit'><i className="fa fa-search"> </i></button>
                 </from>

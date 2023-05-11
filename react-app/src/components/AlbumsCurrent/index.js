@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { currentUserAlbums } from '../../store/album'
+import { currentUserAlbums, deleteAlbum } from '../../store/album'
 
 
 const UserAlbums = () => {
@@ -10,7 +10,7 @@ const UserAlbums = () => {
 
     useEffect(() => {
         dispatch(currentUserAlbums())
-    }, [dispatch])
+    }, [dispatch, deleteAlbum])
 
 
 

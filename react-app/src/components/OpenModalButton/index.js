@@ -16,7 +16,7 @@ function OpenModalButton({
   };
 
   return (
-    <button onClick={onClick}>{buttonText}</button>
+    buttonText === 'Delete' ? <i onClick={onClick} className="fa fa-trash"/> : <button onClick={onClick}>{buttonText}</button>
   );
 }
 

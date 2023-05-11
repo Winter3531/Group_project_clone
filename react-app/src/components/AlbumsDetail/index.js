@@ -93,12 +93,15 @@ const AlbumDetials = () => {
                                 length:{songLengthFunc(song.song_length)}</div>
 
                                 {sessionUser && sessionUser.id === album.user_id ?
-                                    <div className="delete-song-button">
+                                <>
+                                <div className="delete-song-button">
                                 <OpenModalButton
-                                    buttonText="Delete Song"
+                                    buttonText="Delete"
                                     modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                     />
-                                </div>: <></>}
+                                </div>
+                                </>
+                                : <></>}
                                 <div><SongLike song={song} albumId={albumId}/></div>
                         </div>
                         )
@@ -129,7 +132,7 @@ const AlbumDetials = () => {
                         {sessionUser && sessionUser.id === album.user_id ?
                             <>
                                 <OpenModalButton
-                                    buttonText={"Delete Album"}
+                                    buttonText={"Delete"}
                                     modalComponent={<ConfirmDeleteAlbumModal albumId={album.id} />} />
 
                                 <OpenModalButton
