@@ -1,19 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useModal } from "../../context/Modal";
-import { DeletePlaylist } from "../../store/playlist";
+import { DeletePlaylist, currentUserPlaylists } from "../../store/playlist";
 import { useHistory } from "react-router-dom";
 
 
-const DeletePlaylistModal = () => {
+const DeletePlaylistModal = ({playlistId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
-    const playlist = useSelector(state=>state.playlists)
 
-    const handleClick = async () => {
-        await dispatch(DeletePlaylist(playlist.id));
-        history.push(`/playlists/current`);
+    const handleClick = async (e) => {
+        e.preventDefault();
+        await dispatch(DeletePlaylist(playlistId));
+        // await dispatch(currentUserPlaylists());
+        history.push('/playlists/current');
         closeModal();
     }
 

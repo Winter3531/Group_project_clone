@@ -4,27 +4,27 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { EditPlaylist, PlaylistDetailsFetch } from "../../store/playlist";
 
-const EditPlaylistModal = () => {
+const EditPlaylistModal = ({playlistId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const playlist = useSelector(state=>state.playlists);
+    const playlist = useSelector(state=>state.playlists[playlistId]);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
 
-    const playlistId = playlist.id
 
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
     }, [dispatch, playlistId]);
 
     const [playlist_name, setPlaylistName] = useState(playlist.playlist_name);
+    console.log(playlist)
 
     useEffect(() => {
-        if (playlist_name.length > 1) {
-            setIsButtonDisabled(false)
-        } else {
+        if (playlist_name.length < 1) {
             setIsButtonDisabled(true)
+        } else {
+            setIsButtonDisabled(false)
         }
     }, [playlist_name]);
 
@@ -45,7 +45,6 @@ const EditPlaylistModal = () => {
 
         if (updatedPlaylist) {
             await dispatch(PlaylistDetailsFetch(playlistId))
-            history.push(`/playlists/${playlistId}`)
             closeModal()
         }
     };

@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
 import { currentUserPlaylists } from '../../store/playlist'
 
+
 const UserPlaylists = () => {
     const dispatch = useDispatch();
-    const playlists = useSelector(state=>state.playlists)
+    const playlists = useSelector(state=>state?.playlists)
 
     useEffect(() => {
         dispatch(currentUserPlaylists())
@@ -12,13 +13,17 @@ const UserPlaylists = () => {
 
     return (
         <>
-        {Object.values(playlists).map(playlist =>
-            <div key={playlist.id}>
-                <div>{playlist.id}</div>
-                <div>{playlist.owner_id}</div>
-                <div>{playlist.playlist_name}</div>
-            </div>
-        )}
+            {Object.values(playlists).map((playlist, idx) => {
+                console.log(playlist, "line 17")
+                if (playlist) {
+                    {console.log("inside the if statement")}
+                    return <div key={idx}>
+                        <div>Playlist Id: {playlist?.id}</div>
+                        <div>Playlist Owner Id: {playlist?.owner_id}</div>
+                        <div>Playlist Name: {playlist?.playlist_name}</div>
+                    </div>
+                }
+            })}
         </>
     )
 }
