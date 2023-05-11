@@ -25,7 +25,7 @@ class Like(db.Model):
         'Album', primaryjoin='and_(Like.likable_type=="album", foreign(Like.likable_id)==Album.id)')
 
     playlists = db.relationship(
-        'Playlist', primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)')
+        'Playlist', primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='likes')
 
     songs = db.relationship(
         'Song', primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)')
