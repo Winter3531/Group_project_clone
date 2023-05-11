@@ -1,6 +1,6 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Playlist, Like, db
+from app.models import Playlist, Like, Song, db
 from app.models.song_playlist import SongPlaylist, db
 from app.forms.playlist_form import PlaylistForm;
 
@@ -124,20 +124,23 @@ def delete_like_playlist(id):
     return playlist_details(id)
 
 # Add/Remove playlist song by id.
-# @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
-# @login_required
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
+@login_required
 def playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
-    for song in playlist.songs:
-        if song.get('id') == song_id:
-            playlist.songs.remove(song)
-            db.session.delete(song)
-            db.session.commit()
-            return playlist
+    song = Song.query.get(song_id)
 
+    if not playlist or not song:
+        return jsonify({'error': 'Playlist or song not found.'}), 404
 
-    # if playlist:
-    #     db.session.delete(playlist_song)
-    #     db.session.commit()
-    #     return playlist_song.to_dict()
-    # return playlist_details(playlist_details)
+    song_playlist = SongPlaylist.query.filter_by(
+        playlist_id=playlist_id, song_id=song_id
+    ).first()
+
+    if not song_playlist:
+        return jsonify({'error': 'Song not found in playlist.'}), 404
+
+    playlist.songs_playlist.remove(song_playlist)
+    db.session.delete(song_playlist)
+    db.session.commit()
+    return playlist.to_dict()

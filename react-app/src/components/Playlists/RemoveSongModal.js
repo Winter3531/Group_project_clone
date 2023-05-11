@@ -1,17 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useModal } from "../../context/Modal";
-import { PlaylistDetailsFetch } from "../../store/playlist";
+import { PlaylistDetailsFetch, RemoveSong } from "../../store/playlist";
 
 
-const RemoveSongModal = ({id}) => {
+const RemoveSongModal = ({songId, playlistId}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const playlist = useSelector(state=>state.playlists)
+    const playlist = useSelector(state=>state.playlists[playlistId])
+
 
     const handleClick = async (e) => {
         e.preventDefault();
-        // await dispatch(RemoveSong(playlist.id, id));
+        await dispatch(RemoveSong(playlist.id, songId));
         await dispatch(PlaylistDetailsFetch(playlist.id));
         closeModal();
     }

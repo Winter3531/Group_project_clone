@@ -140,6 +140,19 @@ export const unlikePlaylist = (playlistId) => async (dispatch) => {
     }
 }
 
+export const RemoveSong = (playlistId, songId) => async (dispatch) => {
+    const res = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
+        method: 'DELETE'
+    });
+
+    if (res.ok) {
+        const deletedSong = await res.json();
+        console.log(deletedSong)
+        // dispatch(removeSong())
+        return deletedSong;
+    }
+}
+
 
 const initalState = {};
 
