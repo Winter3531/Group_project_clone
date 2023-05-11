@@ -1,10 +1,22 @@
 import { useDispatch, useSelector } from "react-redux"
+<<<<<<< HEAD
 import { useEffect } from "react";
 import { NavLink } from 'react-router-dom'
 
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
+=======
+import { useEffect, useState } from "react";
+import { NavLink } from 'react-router-dom'
+
+import { PlaylistDetailsFetch, currentUserPlaylists } from "../../store/playlist";
+import { currentUserAlbums } from "../../store/album";
+import { likedUserThunk } from "../../store/session";
+import Player from "../MusicPlayer";
+import OpenModalButton from "../OpenModalButton";
+import { currentTracksFetch } from '../../store/playerState';
+>>>>>>> 51164f4c994bbc92a09836efc30077787be18ec1
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
@@ -17,6 +29,7 @@ export default function ProfilePage() {
         dispatch(currentUserAlbums())
     },[dispatch])
 
+<<<<<<< HEAD
     return(
         <>
             <h1>Profile Page</h1>
@@ -30,6 +43,42 @@ export default function ProfilePage() {
                     </div>
                 ))}
             </div>
+=======
+    const handleClickPlaylist = (e) => {
+        e.preventDefault()
+        dispatch(currentTracksFetch('playlists', 1))
+    }
+
+    const handleClickAlbum = (e) => {
+        e.preventDefault()
+
+        dispatch(currentTracksFetch('albums', 1))
+    }
+
+    return(
+        <>
+            <h1>Profile Page</h1>
+                {playlists &&
+                    <div className="playlist-display">
+                            <h2>{user.username}'s Playlists</h2>
+                            {Object.values(playlists).map( playlist => (
+                                <div className="playlist-card" key={playlist.id}>
+                                    <NavLink to={`/playlists/${playlist.id}`} >
+                                        <p>{playlist.playlist_name}</p>
+                                    </NavLink>
+                                    <br></br>
+                                    {/* <OpenModalButton
+                                        buttonText="Play"
+                                        modalComponent={<Player type='playlists' id={playlist.id} />}
+                                    /> */}
+                                    <button onClick={handleClickPlaylist } >
+                                        play
+                                    </button>
+                                </div>
+                            ))}
+                    </div>
+                }
+>>>>>>> 51164f4c994bbc92a09836efc30077787be18ec1
             <div className="album-display">
                 <h2>{user.username}'s Albums</h2>
                 {Object.values(albums).map( album => (
@@ -37,6 +86,12 @@ export default function ProfilePage() {
                         <NavLink to={`/albums/${album.id}`} >
                             <p>{album.album_name}</p>
                         </NavLink>
+<<<<<<< HEAD
+=======
+                        <button onClick={handleClickAlbum} >
+                            play
+                        </button>
+>>>>>>> 51164f4c994bbc92a09836efc30077787be18ec1
                     </div>
                 ))}
             </div>

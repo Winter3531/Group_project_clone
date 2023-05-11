@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
 import RemoveSongModal from "./RemoveSongModal";
+import Player from "../MusicPlayer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const PlaylistDetails = () => {
@@ -37,6 +38,7 @@ const PlaylistDetails = () => {
 
     const playlistLikes = playlist?.likable_id
     let count = 0
+
 
     return playlist ? (
         <>

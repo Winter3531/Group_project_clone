@@ -29,3 +29,8 @@ class Playlist(db.Model):
             'user_id': [like.user_id for like in self.likes] if self.likes else None,
             'songs': [song.to_dict() for song in self.songs_playlist] if self.songs_playlist else None,
         }
+
+    def player_dict(self):
+        return {
+            'songs': [song.player_dict() for song in self.songs_playlist] if self.songs_playlist else []
+        }

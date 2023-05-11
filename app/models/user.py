@@ -42,5 +42,9 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+<<<<<<< HEAD
             'Follow': [user.to_dict() for user in self.user_likes] if self.user_likes else []
+=======
+            'Follow': [user.to_dict() for user in self.likes] if self.likes else []
+>>>>>>> 51164f4c994bbc92a09836efc30077787be18ec1
         }
