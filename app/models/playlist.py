@@ -14,9 +14,9 @@ class Playlist(db.Model):
 
     owner = db.relationship('User', back_populates='playlists')
 
-    songs_playlist = db.relationship('SongPlaylist', back_populates='playlists')
+    songs_playlist = db.relationship('SongPlaylist', back_populates='playlists', cascade="all, delete-orphan")
 
-    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='playlists')
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="playlist", foreign(Like.likable_id)==Playlist.id)', back_populates='playlists', cascade="all, delete-orphan")
 
 
     def to_dict(self):

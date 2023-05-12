@@ -94,18 +94,18 @@ const SideNav = ({ isLoaded }) => {
             </div> */}
             {isLoaded && sessionUser && (
                 <div>
-                    <li>
+                    <div>
                         <OpenModalButton
                             buttonText="Create Playlist"
                             modalComponent={<PlaylistFormModal />}
-                        />
-                    </li>
-                    <li>
+                        /> Create Playlist
+                    </div>
+                    <div>
                         <OpenModalButton
                             buttonText="Create Album"
                             modalComponent={<CreateAlbumFormModal />}
-                        />
-                    </li>
+                        /> Create Album
+                    </div>
                 </div>
             )}
 

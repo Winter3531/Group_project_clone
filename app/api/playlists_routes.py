@@ -79,6 +79,7 @@ def deletePlaylist(id):
     Query for playlist by id and remove from database
     """
     playlist = Playlist.query.get(id)
+    playlist.songs_playlist.clear()
     db.session.delete(playlist)
     db.session.commit()
 
@@ -123,10 +124,21 @@ def delete_like_playlist(id):
 
     return playlist_details(id)
 
-# Add/Remove playlist song by id.
+# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+@playlists_routes.route('<int:playlist_id>/player')
+@login_required
+def player_route(playlist_id):
+    playlist = Playlist.query.get(playlist_id)
+
+    if (playlist):
+        return playlist.player_dict()
+
+    return 'Playlist not found'
+
+# Remove playlist song by id.
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
 @login_required
-def playlist_song(playlist_id, song_id):
+def remove_playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
     song = Song.query.get(song_id)
 
@@ -140,18 +152,34 @@ def playlist_song(playlist_id, song_id):
     if not song_playlist:
         return jsonify({'error': 'Song not found in playlist.'}), 404
 
+
     playlist.songs_playlist.remove(song_playlist)
     db.session.delete(song_playlist)
     db.session.commit()
     return playlist.to_dict()
 
-# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
-@playlists_routes.route('<int:playlist_id>/player')
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
 @login_required
-def player_route(playlist_id):
+def add_playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
+    song = Song.query.get(song_id)
 
-    if (playlist):
-        return playlist.player_dict()
+    if not playlist or not song:
+        return jsonify({'error': 'Playlist or song not found.'}), 404
 
-    return 'Playlist not found'
+    song_playlist = SongPlaylist.query.filter_by(
+        playlist_id=playlist_id, song_id=song_id
+    ).first()
+
+    if song_playlist:
+        return jsonify({'error': 'Song was already added'})
+
+    new_song = SongPlaylist(
+        playlist_id = playlist_id,
+        song_id = song_id
+    )
+
+    playlist.songs_playlist.append(new_song)
+    db.session.add(new_song)
+    db.session.commit()
+    return playlist.to_dict()

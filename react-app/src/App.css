@@ -1,0 +1,15 @@
+.whole-page {
+    display: flex;
+    color: white;
+}
+
+.pages {
+    flex: 1 0 auto;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: black;
+}

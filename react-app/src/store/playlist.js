@@ -4,6 +4,8 @@ const CREATE_PLAYLIST = 'playlist/CREATE_PLAYLIST';
 const REMOVE_PLAYLIST = 'playlist/REMOVE_PLAYLIST';
 const LIKE_PLAYLIST = 'playlist/LIKE_PLAYLIST';
 const UNLIKE_PLAYLIST = 'playlist/UNLIKE_PLAYLIST';
+const REMOVE_SONG = 'playlist/REMOVE_SONG';
+const ADD_SONG = 'playlist/ADD_SONG';
 
 
 const load = (playlists) => ({
@@ -35,6 +37,16 @@ const unlike = (album) => ({
     type: UNLIKE_PLAYLIST,
     album
 });
+
+const removeSong = (songId, playlistId) => ({
+    type: REMOVE_SONG,
+    songId, playlistId
+});
+
+const addSong = (songId, playlistId) => ({
+    type: ADD_SONG,
+    songId, playlistId
+})
 
 
 
@@ -126,7 +138,7 @@ export const likePlaylist = (playlistId) => async (dispatch) => {
         dispatch(like(liked_playlist))
         return liked_playlist
     }
-}
+};
 
 export const unlikePlaylist = (playlistId) => async (dispatch) => {
     const res = await fetch(`/api/playlists/${playlistId}/likes`, {
@@ -138,18 +150,31 @@ export const unlikePlaylist = (playlistId) => async (dispatch) => {
         dispatch(unlike(liked_playlist))
         return liked_playlist
     }
-}
+};
 
 export const RemoveSong = (playlistId, songId) => async (dispatch) => {
     const res = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
         method: 'DELETE'
     });
 
+
     if (res.ok) {
         const deletedSong = await res.json();
         // console.log(deletedSong)
         // dispatch(removeSong())
         return deletedSong;
+    }
+};
+
+export const AddSongFetch = (playlistId, songId) => async (dispatch) => {
+    const res = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
+        method: 'POST'
+    });
+
+    if (res.ok) {
+        const addedSong = await res.json();
+        dispatch(addSong(playlistId, songId));
+        return addedSong;
     }
 }
 
@@ -168,6 +193,13 @@ export default function playlistReducer(state = initalState, action) {
             const newState = {...state};
             delete newState[action.playlistId]
             return newState
+        case REMOVE_SONG:
+            const updatedPlaylist = { ...state[action.playlistId] };
+            const updatedSongs = updatedPlaylist.songs ? updatedPlaylist.songs.filter(
+                song => song.id !== action.songId
+              ) : [];
+            updatedPlaylist.songs = updatedSongs;
+            return { ...state, [action.playlistId]: updatedPlaylist };
         default:
             return state
     }

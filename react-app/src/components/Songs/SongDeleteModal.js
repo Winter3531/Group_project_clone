@@ -3,6 +3,8 @@ import { useModal } from "../../context/Modal";
 import { deleteSongThunk } from "../../store/song";
 import { getAlbumDetail } from "../../store/album";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import './SongDeleteModal.css'
+
 
 export default function SongDeleteModal({ songId, albumId }){
     const dispatch = useDispatch();
@@ -20,19 +22,11 @@ export default function SongDeleteModal({ songId, albumId }){
     return (
         <>
             <div className="delete-confirmation-form">
-                <h1>Confirm Delete</h1>
-                <p>Are you sure you want to remove this song?</p>
-                <div>
-                    <button
-                        onClick={handleDelete}
-                    >
-                        Yes
-                    </button>
-                    <button
-                        onClick={closeModal}
-                    >
-                        No
-                    </button>
+                <h1 className="delete-title">Confirm Delete</h1>
+                <div className="delete-confirm">Are you sure you want to remove this song?</div>
+                <div className="delete-buttons">
+                    <button className="delete-button" onClick={handleDelete}>Yes</button>
+                    <button className="delete-button" onClick={closeModal}>No</button>
                 </div>
             </div>
         </>
