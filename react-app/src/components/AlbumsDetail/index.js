@@ -44,12 +44,7 @@ const AlbumDetials = () => {
         history.push(`/albums/${albumId}`)
     }
 
-    // let songlength =  0
-    // if (album.songs.length > 0) {
-
-    //     let songlength = album?.songs.map((song) => song.song_length).reduce((acc, el) => acc + el)
-    // }
-
+    let songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
 
     const handleCancelClick = async (e) => {
         e.preventDefault();
@@ -81,7 +76,7 @@ const AlbumDetials = () => {
                                 <p><span >{album.year_recorded}</span>
                                     <span className="album-description">{album.username}</span>
                                     <span className="album-description">{album.songs?.length} songs</span>
-                                    {/* <span className="album-description">About {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span> */}
+                                    <span className="album-description">About {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span>
                                 </p>
                                 <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
                             </div>
@@ -105,7 +100,10 @@ const AlbumDetials = () => {
                                         buttonText={"Edit Album"}
                                         modalComponent={<EditAlbumFormModal album={album} />} />
                                     <OpenModalButton
-                                        buttonText="New Song"
+                                        buttonText={"Delete Album"}
+                                        modalComponent={<ConfirmDeleteAlbumModal albumId={album.id} />} />
+                                    <OpenModalButton
+                                        buttonText={"Add song"}
                                         modalComponent={<SongAddModal albumId={album.id} />}
                                     />
                                 </> : <></>
@@ -120,7 +118,7 @@ const AlbumDetials = () => {
                                 <th></th>
                             </tr>
                             {(album.songs ? album.songs?.map(song =>
-                                <tr >
+                                <tr id={song.id}>
                                     <td>{count += 1}.</td>
                                     <td>{song.song_name}</td>
                                     <td>{album.album_name}</td>
@@ -128,20 +126,20 @@ const AlbumDetials = () => {
                                     <td className="song-button">
                                         <span><SongLike song={song} albumId={albumId} /></span>
                                         {sessionUser && sessionUser.id === album.user_id ?
-                                        <>
-                                            <span className="delete-song-button">
-                                                <OpenModalButton
-                                                    buttonText={"Delete song"}
-                                                    modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
-                                                />
-                                            </span>
-                                            <div className="add-song-button">
-                                                <OpenModalButton
-                                                     buttonText="Add Song to Playlist"
-                                                     modalComponent={<AddSongModal songId={song.id} />}
-                                                />
-                                            </div>
-                                        </>
+                                            <>
+                                                <span className="delete-song-button">
+                                                    <OpenModalButton
+                                                        buttonText={"Delete song"}
+                                                        modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
+                                                    />
+                                                </span>
+                                                <div className="add-song-button">
+                                                    <OpenModalButton
+                                                        buttonText="Add Song to Playlist"
+                                                        modalComponent={<AddSongModal songId={song.id} />}
+                                                    />
+                                                </div>
+                                            </>
                                             : <></>}
                                     </td>
                                 </tr>)
