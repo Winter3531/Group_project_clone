@@ -144,3 +144,14 @@ def playlist_song(playlist_id, song_id):
     db.session.delete(song_playlist)
     db.session.commit()
     return playlist.to_dict()
+
+# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+@playlists_routes.route('<int:playlist_id>/player')
+@login_required
+def player_route(playlist_id):
+    playlist = Playlist.query.get(playlist_id)
+
+    if (playlist):
+        return playlist.player_dict()
+
+    return 'Playlist not found'
