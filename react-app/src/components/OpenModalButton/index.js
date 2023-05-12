@@ -27,7 +27,7 @@ function OpenModalButton({
   } else if (buttonText === 'Add song') {
     return (<i onClick={onClick} className="fa fa-plus" />)
   } else if (buttonText === 'Delete song') {
-    return (<i onClick={onClick} className="far fa-trash-alt" />)
+    return (<i onClick={onClick} className="fas fa-times" />)
   }
   return (<button onClick={onClick}>{buttonText}</button>);
 }
