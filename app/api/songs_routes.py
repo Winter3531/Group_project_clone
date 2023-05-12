@@ -12,7 +12,7 @@ songs_routes = Blueprint('songs', __name__)
 @songs_routes.route('')
 def all_songs():
     songs = Song.query.all()
-    print(songs)
+    # print(songs)
     return {song.id: song.song_like_dict() for song in songs}
 
 @songs_routes.route('/<int:id>')
