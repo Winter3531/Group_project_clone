@@ -33,7 +33,7 @@ def seed_albums():
 def undo_albums():
 
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.albums RESTART IDENTITY CASCADE #?? ;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.albums RESTART IDENTITY CASCADE;")
     else:
         db.session.delete(album_1)
         db.session.delete(album_2)
