@@ -123,6 +123,17 @@ def delete_like_playlist(id):
 
     return playlist_details(id)
 
+# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+@playlists_routes.route('<int:playlist_id>/player')
+@login_required
+def player_route(playlist_id):
+    playlist = Playlist.query.get(playlist_id)
+
+    if (playlist):
+        return playlist.player_dict()
+
+    return 'Playlist not found'
+
 # Add/Remove playlist song by id.
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
 @login_required
