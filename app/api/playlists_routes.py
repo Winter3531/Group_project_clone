@@ -79,6 +79,7 @@ def deletePlaylist(id):
     Query for playlist by id and remove from database
     """
     playlist = Playlist.query.get(id)
+    playlist.songs_playlist.clear()
     db.session.delete(playlist)
     db.session.commit()
 
@@ -134,7 +135,7 @@ def player_route(playlist_id):
 
     return 'Playlist not found'
 
-# Add/Remove playlist song by id.
+# Remove playlist song by id.
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
 @login_required
 def remove_playlist_song(playlist_id, song_id):
@@ -157,16 +158,7 @@ def remove_playlist_song(playlist_id, song_id):
     db.session.commit()
     return playlist.to_dict()
 
-<<<<<<< HEAD
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
-# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
-@playlists_routes.route('<int:playlist_id>/player')
->>>>>>> bbaf65005e5a8c6fbc2205957ea12133995015d6
 @login_required
 def add_playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
@@ -175,12 +167,19 @@ def add_playlist_song(playlist_id, song_id):
     if not playlist or not song:
         return jsonify({'error': 'Playlist or song not found.'}), 404
 
-    song_playlist = SongPlaylist(
+    song_playlist = SongPlaylist.query.filter_by(
+        playlist_id=playlist_id, song_id=song_id
+    ).first()
+
+    if song_playlist:
+        return jsonify({'error': 'Song was already added'})
+
+    new_song = SongPlaylist(
         playlist_id = playlist_id,
         song_id = song_id
     )
 
-    playlist.songs_playlist.append(song_playlist)
-    db.session.add(song_playlist)
+    playlist.songs_playlist.append(new_song)
+    db.session.add(new_song)
     db.session.commit()
     return playlist.to_dict()

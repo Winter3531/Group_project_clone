@@ -9,6 +9,7 @@ import RemoveSongModal from "./RemoveSongModal";
 import Player from "../MusicPlayer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
+
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory()
@@ -56,9 +57,11 @@ const PlaylistDetails = () => {
                             <div>
                                 {count += 1}. Name:{song.song_name}
                                 length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}
-                                <OpenModalButton
-                                buttonText="Remove Song"
-                                modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
+                                <div className="delete-song-button">
+                                    <OpenModalButton
+                                    buttonText="Remove Song"
+                                    modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
+                                </div>
                             </div>)
                             : <div>No Songs </div>)}
         </div>
