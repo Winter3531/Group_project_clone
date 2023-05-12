@@ -4,10 +4,11 @@ import { useModal } from "../../context/Modal";
 import { addNewSongFetch } from "../../store/song";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { getAlbumDetail } from "../../store/album";
+import './SongAddModal.css'
 
 
 
-export default function SongAddModal({albumId}){
+export default function SongAddModal({ albumId }) {
     const dispatch = useDispatch();
     const history = useHistory();
     // const { albumId } = useParams()
@@ -17,7 +18,7 @@ export default function SongAddModal({albumId}){
     // const [album_id, setAlbumId] = useState('')
     const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState([])
-    const {closeModal} = useModal();
+    const { closeModal } = useModal();
 
     const newSongData = {
         song_name,
@@ -44,40 +45,49 @@ export default function SongAddModal({albumId}){
     }
 
     return (
-        <>
-            <h1 className="new-song-modal-header">Add New Song</h1>
+        <div className="add-song-form">
             <form className="new-song-modal-form" onSubmit={handleSubmit} >
-                <input
-                    type="text"
-                    value={song_name}
-                    onChange={(e) => setSongName(e.target.value)}
-                    placeholder='Song Name'
-                />
-                <input
-                    type="text"
-                    value={song_src}
-                    onChange={(e) => setSongSrc(e.target.value)}
-                    placeholder='Song Source'
-                />
-                <input
-                    type="integer"
-                    value={song_length}
-                    onChange={(e) => setSongLength(e.target.value)}
-                    placeholder='Song Length in Seconds'
-                />
+                <div>
+                    <h1 className="new-song-modal-header">Add New Song</h1>
+                </div>
+                <div>
+                    <input
+                        className="input-box"
+                        type="text"
+                        value={song_name}
+                        onChange={(e) => setSongName(e.target.value)}
+                        placeholder='Song Name'
+                    />
+                </div>
+                <div>
+                    <input
+                        className="input-box"
+                        type="text"
+                        value={song_src}
+                        onChange={(e) => setSongSrc(e.target.value)}
+                        placeholder='Song Source'
+                    />
+                </div>
+                <div>
+                    <input
+                        className="input-box"
+                        type="integer"
+                        value={song_length}
+                        onChange={(e) => setSongLength(e.target.value)}
+                        placeholder='Song Length in Seconds'
+                    />
+                </div>
                 {/* <input
                     type="integer"
                     value={album_id}
                     onChange={(e) => setAlbumId(e.target.value)}
                     placeholder='Album ID'
                 /> */}
-                <button
-                    type="submit"
-                    id="update-spot-submit"
-                >
-                    Add Song
-                </button>
+                <div className="add-buttons">
+                    <button className="add-button" type="submit" >Add Song</button>
+                    <button className="add-button" onClick={closeModal}>No </button>
+                </div>
             </form>
-        </>
+        </div>
     )
 }

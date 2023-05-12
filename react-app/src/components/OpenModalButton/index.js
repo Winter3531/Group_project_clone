@@ -1,5 +1,6 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
+import './OpenModalButton.css'
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
@@ -15,10 +16,20 @@ function OpenModalButton({
     if (onButtonClick) onButtonClick();
   };
 
-  return (
-    buttonText === 'Delete Song' ? <i onClick={onClick} className="fa fa-trash"/> : <button onClick={onClick}>{buttonText}</button>
-
-  );
+  if (buttonText === 'Create Album') {
+    return (<i onClick={onClick} className="fa fa-plus" />)
+  } else if (buttonText === 'Create Playlist') {
+    return (<i onClick={onClick} className="fa fa-plus" />)
+  } else if (buttonText === 'Edit Album') {
+    return (<i onClick={onClick} className="fa fa-edit" />)
+  } else if (buttonText === 'Delete Album') {
+    return (<i onClick={onClick} className="fas fa-times" />)
+  } else if (buttonText === 'Add song') {
+    return (<i onClick={onClick} className="fa fa-plus" />)
+  } else if (buttonText === 'Delete song') {
+    return (<i onClick={onClick} className="far fa-trash-alt" />)
+  }
+  return (<button onClick={onClick}>{buttonText}</button>);
 }
 
-export default OpenModalButton;
+          export default OpenModalButton;

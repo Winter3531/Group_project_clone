@@ -157,7 +157,16 @@ def remove_playlist_song(playlist_id, song_id):
     db.session.commit()
     return playlist.to_dict()
 
+<<<<<<< HEAD
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
+# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+@playlists_routes.route('<int:playlist_id>/player')
+>>>>>>> bbaf65005e5a8c6fbc2205957ea12133995015d6
 @login_required
 def add_playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
