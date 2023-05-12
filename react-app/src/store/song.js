@@ -36,10 +36,18 @@ const unlike = (song) => ({
 
 
 export const deleteSongThunk = (songId) => async (dispatch) => {
+<<<<<<< HEAD
 
     const response = await fetch(`/api/albums/songs/${songId}`, {
         method: 'DELETE'
     })
+=======
+    // console.log(songId, 'this is album id in add song thunk')
+    const response = await fetch(`/api/albums/songs/${songId}`, {
+        method: 'DELETE'
+    })
+    // console.log(response, 'this is response in delete song')
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
 
     if (response.ok){
         dispatch(deleteSong(songId))
@@ -96,6 +104,10 @@ export const likeSong = (song) => async dispatch => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(song)
     });
+<<<<<<< HEAD
+=======
+    // console.log(song, 'this is song in song like thunk')
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
 
     if (response.ok) {
         const liked_song = await response.json();
@@ -105,7 +117,11 @@ export const likeSong = (song) => async dispatch => {
 };
 
 export const unLikeSong = (song) => async dispatch => {
+<<<<<<< HEAD
 
+=======
+    // console.log(song, 'this is song in song unlike thunk')
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
     const response = await fetch(`/api/songs/${song}/likes`, {
         method: 'DELETE',
     })

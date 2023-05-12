@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .song_playlist import SongPlaylist
 from .like import Like
 
@@ -14,7 +14,7 @@ class Song(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     song_length = db.Column(db.Integer, nullable=False)
     song_src = db.Column(db.String, nullable=False)
-    album_id = db.Column(db.Integer, db.ForeignKey("albums.id"), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("albums.id")), nullable=False)
 
     albums = db.relationship('Album', back_populates='songs')
 
@@ -56,6 +56,11 @@ class Song(db.Model):
             'song_src': self.song_src,
             'album_id': self.album_id,
             'likes': [like.to_dict() for like in self.likes] if self.likes else []
+        }
+
+    def player_dict(self):
+        return {
+            "song_src": self.song_src,
         }
 
 

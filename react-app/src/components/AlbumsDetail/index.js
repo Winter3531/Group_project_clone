@@ -11,6 +11,7 @@ import SongAddModal from "../Songs/SongAddModal";
 import SongDeleteModal from "../Songs/SongDeleteModal";
 import './AlbumsDetail.css'
 import SongLike from "../SongLike";
+import OpenPlayer from "../MusicPlayer/OpenPlayer"
 
 
 
@@ -60,9 +61,21 @@ const AlbumDetials = () => {
             {album && sessionUser ?
                 (
                     <>
+<<<<<<< HEAD
                         <div className="album-header">
                             <div>
                                 <img id="album-image" src={album.album_img} alt="" />
+=======
+                    <OpenPlayer type='albums' typeId={album.id} />
+                    {album.likable_type == 'album' ?
+                            <div className="like-input">
+                                <div
+                                    className="true"
+                                    onClick={handleCancelClick} >
+                                    <i className="fas fa-heart"></i>
+                                    Liked
+                                </div>
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
                             </div>
                             <div className="album-details">
                                 <p>Album</p>

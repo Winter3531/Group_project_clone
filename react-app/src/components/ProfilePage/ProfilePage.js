@@ -2,12 +2,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom'
 
-import { PlaylistDetailsFetch, currentUserPlaylists } from "../../store/playlist";
+import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
-import Player from "../MusicPlayer";
-import OpenModalButton from "../OpenModalButton";
-import { currentTracksFetch } from '../../store/playerState';
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
+
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
@@ -19,17 +18,6 @@ export default function ProfilePage() {
         dispatch(currentUserPlaylists())
         dispatch(currentUserAlbums())
     },[dispatch])
-
-    const handleClickPlaylist = (e) => {
-        e.preventDefault()
-        dispatch(currentTracksFetch('playlists', 1))
-    }
-
-    const handleClickAlbum = (e) => {
-        e.preventDefault()
-
-        dispatch(currentTracksFetch('albums', 1))
-    }
 
     return(
         <>
@@ -43,13 +31,7 @@ export default function ProfilePage() {
                                         <p>{playlist.playlist_name}</p>
                                     </NavLink>
                                     <br></br>
-                                    {/* <OpenModalButton
-                                        buttonText="Play"
-                                        modalComponent={<Player type='playlists' id={playlist.id} />}
-                                    /> */}
-                                    <button onClick={handleClickPlaylist } >
-                                        play
-                                    </button>
+                                    <OpenPlayer type='playlists' typeId={playlist.id} />
                                 </div>
                             ))}
                     </div>
@@ -61,9 +43,7 @@ export default function ProfilePage() {
                         <NavLink to={`/albums/${album.id}`} >
                             <p>{album.album_name}</p>
                         </NavLink>
-                        <button onClick={handleClickAlbum} >
-                            play
-                        </button>
+                        <OpenPlayer type='albums' typeId={album.id} />
                     </div>
                 ))}
             </div>

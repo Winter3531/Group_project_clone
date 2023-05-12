@@ -14,7 +14,7 @@ class Album(db.Model):
     album_name = db.Column(db.String, nullable=False)
     year_recorded = db.Column(db.Integer, nullable=False)
     album_img = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
 
     owners = db.relationship('User', back_populates='albums')
 
@@ -54,4 +54,9 @@ class Album(db.Model):
             'album_name': self.album_name,
             'year_recorded': self.year_recorded,
             'album_img': self.album_img,
+        }
+
+    def player_dict(self):
+        return {
+            'songs': [song.player_dict() for song in self.songs] if self.songs else []
         }
