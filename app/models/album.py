@@ -55,3 +55,8 @@ class Album(db.Model):
             'year_recorded': self.year_recorded,
             'album_img': self.album_img,
         }
+
+    def player_dict(self):
+        return {
+            'songs': [song.player_dict() for song in self.songs] if self.songs else []
+        }

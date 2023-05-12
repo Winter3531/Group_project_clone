@@ -58,6 +58,11 @@ class Song(db.Model):
             'likes': [like.to_dict() for like in self.likes] if self.likes else []
         }
 
+    def player_dict(self):
+        return {
+            "song_src": self.song_src,
+        }
+
 
     # def to_dict(self):
     #     return {
