@@ -19,7 +19,6 @@ const SideNav = ({ isLoaded }) => {
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
-    console.log(songs, 'this is songs in search page')
 
     useEffect(() => {
         if (input.length > 0) {
@@ -94,18 +93,18 @@ const SideNav = ({ isLoaded }) => {
             </div> */}
             {isLoaded && sessionUser && (
                 <div>
-                    <li>
+                    <div>
                         <OpenModalButton
                             buttonText="Create Playlist"
                             modalComponent={<PlaylistFormModal />}
-                        />
-                    </li>
-                    <li>
+                        /> Create Playlist
+                    </div>
+                    <div>
                         <OpenModalButton
                             buttonText="Create Album"
                             modalComponent={<CreateAlbumFormModal />}
-                        />
-                    </li>
+                        /> Create Album
+                    </div>
                 </div>
             )}
 
