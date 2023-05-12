@@ -14,9 +14,7 @@ const UserPlaylists = () => {
     return (
         <>
             {Object.values(playlists).map((playlist, idx) => {
-                console.log(playlist, "line 17")
                 if (playlist) {
-                    {console.log("inside the if statement")}
                     return <div key={idx}>
                         <div>Playlist Id: {playlist?.id}</div>
                         <div>Playlist Owner Id: {playlist?.owner_id}</div>

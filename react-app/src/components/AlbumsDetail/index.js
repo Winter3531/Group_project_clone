@@ -11,6 +11,7 @@ import SongAddModal from "../Songs/SongAddModal";
 import SongDeleteModal from "../Songs/SongDeleteModal";
 import './AlbumsDetail.css'
 import SongLike from "../SongLike";
+import AddSongModal from "../Playlists/AddSongModal";
 
 
 
@@ -97,6 +98,10 @@ const AlbumDetials = () => {
                                 <OpenModalButton
                                     buttonText="Delete Song"
                                     modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
+                                    />
+                                <OpenModalButton
+                                    buttonText="Add Song To Playlist"
+                                    modalComponent={<AddSongModal songId={song.id} />}
                                     />
                                 </div>
                                 </>

@@ -126,7 +126,7 @@ def delete_like_playlist(id):
 # Add/Remove playlist song by id.
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
 @login_required
-def playlist_song(playlist_id, song_id):
+def remove_playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
     song = Song.query.get(song_id)
 
@@ -140,7 +140,27 @@ def playlist_song(playlist_id, song_id):
     if not song_playlist:
         return jsonify({'error': 'Song not found in playlist.'}), 404
 
+
     playlist.songs_playlist.remove(song_playlist)
     db.session.delete(song_playlist)
+    db.session.commit()
+    return playlist.to_dict()
+
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
+@login_required
+def add_playlist_song(playlist_id, song_id):
+    playlist = Playlist.query.get(playlist_id)
+    song = Song.query.get(song_id)
+
+    if not playlist or not song:
+        return jsonify({'error': 'Playlist or song not found.'}), 404
+
+    song_playlist = SongPlaylist(
+        playlist_id = playlist_id,
+        song_id = song_id
+    )
+
+    playlist.songs_playlist.append(song_playlist)
+    db.session.add(song_playlist)
     db.session.commit()
     return playlist.to_dict()

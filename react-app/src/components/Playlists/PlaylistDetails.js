@@ -58,7 +58,7 @@ const PlaylistDetails = () => {
                                 length:{Math.floor(song.song_length / 60)}: {song.song_length % 60}
                                 <OpenModalButton
                                 buttonText="Remove Song"
-                                modalComponent={<RemoveSongModal songId={song.id} playlistId={playlistId} />}/>
+                                modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
                             </div>)
                             : <div>No Songs </div>)}
         </div>
