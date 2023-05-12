@@ -145,6 +145,10 @@ def playlist_song(playlist_id, song_id):
     db.session.commit()
     return playlist.to_dict()
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1c4ce28a9e4009df5c578507a12d00d4cf395417
 # ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
 @playlists_routes.route('<int:playlist_id>/player')
 @login_required

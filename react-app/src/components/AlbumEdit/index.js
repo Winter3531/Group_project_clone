@@ -4,8 +4,9 @@ import { editAlbum, getAlbumDetail } from "../../store/album";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useModal } from "../../context/Modal";
+import './AlbumEdit.css'
 
-const EditAlbumFormModal = ({album}) => {
+const EditAlbumFormModal = ({ album }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -22,7 +23,7 @@ const EditAlbumFormModal = ({album}) => {
         e.preventDefault()
 
         const newAlbum = {
-            id : album.id,
+            id: album.id,
             album_name,
             year_recorded,
             album_img,
@@ -37,39 +38,42 @@ const EditAlbumFormModal = ({album}) => {
     };
 
     return (
-        <section>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <div>Album Name</div>
-                    <input
-                        type="text"
-                        placeholder="Album Name"
-                        required
-                        value={album_name}
-                        onChange={updateAlbumName} />
-                </div>
-                <div>
-                    <div>Year Recorded</div>
-                    <input
-                        type="number"
-                        placeholder="Year Recorded"
-                        required
-                        value={year_recorded}
-                        onChange={updateYearRecorded} />
-                </div>
-                <div>
-                    <div>Album Image</div>
-                    <input
-                        type="text"
-                        placeholder="Album Image"
-                        required
-                        value={album_img}
-                        onChange={updateAlbumImg} />
-                </div>
-                <button type="submit">Update Album</button>
-
-            </form>
-        </section>
+        <form className="edit-form" onSubmit={handleSubmit}>
+            <div>
+                <h1>Edit Album</h1>
+            </div>
+            <div>
+                <div>Album Name</div>
+                <input
+                    type="text"
+                    placeholder="Album Name"
+                    required
+                    value={album_name}
+                    onChange={updateAlbumName} />
+            </div>
+            <div>
+                <div>Year Recorded</div>
+                <input
+                    type="number"
+                    placeholder="Year Recorded"
+                    required
+                    value={year_recorded}
+                    onChange={updateYearRecorded} />
+            </div>
+            <div>
+                <div>Album Image</div>
+                <input
+                    type="text"
+                    placeholder="Album Image"
+                    required
+                    value={album_img}
+                    onChange={updateAlbumImg} />
+            </div>
+            <div className="edit-buttons">
+                <button className="edit-button" type="submit">Update Album</button>
+                <button className="edit-button" onClick={closeModal}>No </button>
+            </div>
+        </form>
     )
 }
 
