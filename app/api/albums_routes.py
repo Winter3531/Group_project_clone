@@ -190,13 +190,13 @@ def delete_song(song_id):
 
     return "Error song not found"
 
-# ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
-@albums_routes.route('<int:album_id>/player')
-@login_required
-def player_route(album_id):
-    playlist = Album.query.get(album_id)
+# # ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
+# @albums_routes.route('<int:album_id>/player')
+# @login_required
+# def player_route(album_id):
+#     playlist = Album.query.get(album_id)
 
-    if (playlist):
-        return playlist.player_dict()
+#     if (playlist):
+#         return playlist.player_dict()
 
-    return 'Playlist not found'
+#     return 'Playlist not found'
