@@ -8,12 +8,14 @@ import AlbumDetials from "./components/AlbumsDetail";
 import UserPlaylists from "./components/Playlists/Playlists"
 import PlaylistDetails from "./components/Playlists/PlaylistDetails";
 import SongsDisplay from "./components/Songs/Song";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 import SearchResult from "./components/Search";
+import Player from "./components/MusicPlayer";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/collection">
+            <ProfilePage />
           </Route>
           <Route exact path='/albums/new'>
             <CreateAlbumForm />
@@ -60,6 +65,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Player />
     </>
   );
 }

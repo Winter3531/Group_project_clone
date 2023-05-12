@@ -35,7 +35,6 @@ const AlbumDetials = () => {
         }
         return `${min}:${sec}`
     }
-
     const handleClick = async (e) => {
         e.preventDefault();
         await dispatch(likeAlbum(album))
@@ -52,7 +51,7 @@ const AlbumDetials = () => {
 
     useEffect(() => {
         dispatch(getAlbumDetail(albumId))
-    }, [dispatch])
+    }, [dispatch, albumId])
 
     let count = 0
 

@@ -1,6 +1,6 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Playlist, Like, db
+from app.models import Playlist, Like, Song, db
 from app.models.song_playlist import SongPlaylist, db
 from app.forms.playlist_form import PlaylistForm;
 
@@ -22,6 +22,7 @@ def user_playlist():
 # Get details of a playlist by the id
 @playlists_routes.route('/<int:id>')
 def playlist_details(id):
+
     """
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
@@ -81,31 +82,23 @@ def deletePlaylist(id):
     db.session.delete(playlist)
     db.session.commit()
 
-    return {'message': 'Playlist successfully deleted'}
+    return playlist.to_dict()
 
 
-# Like/ Unlike / and Get all likes for a playlist
+# Like/Get all likes for a playlist.
 
-@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST', 'DELETE'])
+@playlists_routes.route('/<int:id>/likes', methods=['GET', 'POST'])
 @login_required
 def like_playlist(id):
     user_id = current_user.get_id()
-    like_exists = Like.query.filter_by(user_id = user_id, likable_id = id, likable_type = 'playlist').first()
+    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id).first()
 
-    if request.method == 'GET':
-        if like_exists:
-            return like_exists.exists_to_dict()
-        return f"User {user_id} has not liked this playlist."
+    if playlist and request.method == 'GET':
+        if playlist:
+            return playlist.to_dict()
 
-    if request.method == 'DELETE':
-        if like_exists:
-            db.session.delete(like_exists)
-            db.session.commit()
-            return f"User {user_id}'s playlist like has been removed."
-        return f"User {user_id} has not liked this song."
-
-    if like_exists:
-        return like_exists.exists_to_dict()
+    if playlist and request.method == 'POST':
+        return playlist.exists_to_dict()
 
     liked_playlist = Like(
         user_id = user_id,
@@ -126,25 +119,28 @@ def delete_like_playlist(id):
     if liked_playlist:
         db.session.delete(liked_playlist)
         db.session.commit()
-        return 'You unliked this playlist'
+        return liked_playlist.to_dict()
 
     return playlist_details(id)
 
 # Add/Remove playlist song by id.
-# @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
-# @login_required
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
+@login_required
 def playlist_song(playlist_id, song_id):
     playlist = Playlist.query.get(playlist_id)
-    for song in playlist.songs:
-        if song.get('id') == song_id:
-            playlist.songs.remove(song)
-            db.session.delete(song)
-            db.session.commit()
-            return playlist
+    song = Song.query.get(song_id)
 
+    if not playlist or not song:
+        return jsonify({'error': 'Playlist or song not found.'}), 404
 
-    # if playlist:
-    #     db.session.delete(playlist_song)
-    #     db.session.commit()
-    #     return playlist_song.to_dict()
-    # return playlist_details(playlist_details)
+    song_playlist = SongPlaylist.query.filter_by(
+        playlist_id=playlist_id, song_id=song_id
+    ).first()
+
+    if not song_playlist:
+        return jsonify({'error': 'Song not found in playlist.'}), 404
+
+    playlist.songs_playlist.remove(song_playlist)
+    db.session.delete(song_playlist)
+    db.session.commit()
+    return playlist.to_dict()
