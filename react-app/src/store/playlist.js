@@ -50,6 +50,7 @@ export const currentUserPlaylists = () => async (dispatch) => {
     if (res.ok) {
         const playlists = await res.json();
         dispatch(load(playlists));
+        // console.log(playlists)
         return playlists;
     };
 };
@@ -153,7 +154,8 @@ export const RemoveSong = (playlistId, songId) => async (dispatch) => {
 
     if (res.ok) {
         const deletedSong = await res.json();
-        dispatch(removeSong(playlistId, songId))
+        // console.log(deletedSong)
+        // dispatch(removeSong())
         return deletedSong;
     }
 };

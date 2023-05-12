@@ -27,7 +27,7 @@ def seed_playlists():
 
 def undo_playlists():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.playlists RESTART IDENTITY CASCADE #?? ;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.playlists RESTART IDENTITY CASCADE;")
     else:
         db.session.delete(playlist_1)
         db.session.delete(playlist_2)

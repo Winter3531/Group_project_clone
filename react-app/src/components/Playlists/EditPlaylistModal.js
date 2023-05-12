@@ -18,6 +18,7 @@ const EditPlaylistModal = ({playlistId}) => {
     }, [dispatch, playlistId]);
 
     const [playlist_name, setPlaylistName] = useState(playlist.playlist_name);
+    // console.log(playlist)
 
     useEffect(() => {
         if (playlist_name.length < 1) {

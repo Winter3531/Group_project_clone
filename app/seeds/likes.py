@@ -16,7 +16,7 @@ like_2 = Like(
 like_3 = Like(
     user_id = 1,
     likable_type = 'album',
-    likable_id = 3 
+    likable_id = 3
 )
 
 like_4 = Like(
@@ -37,7 +37,7 @@ def seed_likes():
 def undo_likes():
 
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.likes RESTART IDENTITY CASCADE #?? ;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.likes RESTART IDENTITY CASCADE;")
     else:
         db.session.delete(like_1)
         db.session.delete(like_2)

@@ -125,7 +125,7 @@ export const deleteAlbum = albumId => async dispatch => {
 }
 
 export const likeAlbum = (album) => async dispatch => {
-
+    // console.log(album, 'this is album in like ablum thunk')
     const response = await fetch(`/api/albums/${album.id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

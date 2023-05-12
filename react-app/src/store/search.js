@@ -6,6 +6,8 @@ const load = (results) => ({
 })
 
 export const search = (input) => async dispatch => {
+
+    // console.log(input, 'this is input in search thunk')
     const response = await fetch('/api/search/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -14,6 +16,7 @@ export const search = (input) => async dispatch => {
 
     if (response.ok) {
         const searched = await response.json();
+        // console.log(searched, 'this is searched in search thunk')
         dispatch(load(searched))
         return searched
     }

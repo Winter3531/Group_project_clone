@@ -19,7 +19,7 @@ const SideNav = ({ isLoaded }) => {
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
-
+    // console.log(songs, 'this is songs in search page')
 
     useEffect(() => {
         if (input.length > 0) {
