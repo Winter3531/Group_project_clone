@@ -12,6 +12,7 @@ import SongDeleteModal from "../Songs/SongDeleteModal";
 import './AlbumsDetail.css'
 import SongLike from "../SongLike";
 import OpenPlayer from "../MusicPlayer/OpenPlayer"
+import AddSongModal from "../Playlists/AddSongModal";
 
 
 
@@ -86,6 +87,37 @@ const AlbumDetials = () => {
                                     </p>
                                 <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
                             </div>
+<<<<<<< HEAD
+                        }
+                        <p>album name: {album.album_name}</p>
+                        <p>year recorded: {album.year_recorded}</p>
+                        <p>album img: {album.album_img}</p>
+                        <p>Username: {album.username}</p>
+                        <p>Likes: {album.likable_id ? album.likable_id.length : 0}</p>
+                        <p>Songs: {album.songs?.length}</p>
+
+                        {(album.songs ? album.songs?.map(song =>
+                        <div>
+                            <div>{count += 1}. Name:{song.song_name}
+                                length:{songLengthFunc(song.song_length)}</div>
+
+                                {sessionUser && sessionUser.id === album.user_id ?
+                                <>
+                                <div className="delete-song-button">
+                                <OpenModalButton
+                                    buttonText="Delete Song"
+                                    modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
+                                    />
+                                <OpenModalButton
+                                    buttonText="Add Song To Playlist"
+                                    modalComponent={<AddSongModal songId={song.id} />}
+                                    />
+                                </div>
+                                </>
+                                : <></>}
+                                <div><SongLike song={song} albumId={albumId}/></div>
+=======
+>>>>>>> bbaf65005e5a8c6fbc2205957ea12133995015d6
                         </div>
                         <div className="album-buttons">
                             {album.likable_type == 'album' ?
