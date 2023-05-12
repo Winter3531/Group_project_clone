@@ -36,11 +36,11 @@ const unlike = (song) => ({
 
 
 export const deleteSongThunk = (songId) => async (dispatch) => {
-    console.log(songId, 'this is album id in add song thunk')
+    // console.log(songId, 'this is album id in add song thunk')
     const response = await fetch(`/api/albums/songs/${songId}`, {
         method: 'DELETE'
     })
-    console.log(response, 'this is response in delete song')
+    // console.log(response, 'this is response in delete song')
 
     if (response.ok){
         dispatch(deleteSong(songId))
@@ -97,7 +97,7 @@ export const likeSong = (song) => async dispatch => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(song)
     });
-    console.log(song, 'this is song in song like thunk')
+    // console.log(song, 'this is song in song like thunk')
 
     if (response.ok) {
         const liked_song = await response.json();
@@ -107,7 +107,7 @@ export const likeSong = (song) => async dispatch => {
 };
 
 export const unLikeSong = (song) => async dispatch => {
-    console.log(song, 'this is song in song unlike thunk')
+    // console.log(song, 'this is song in song unlike thunk')
     const response = await fetch(`/api/songs/${song}/likes`, {
         method: 'DELETE',
     })
