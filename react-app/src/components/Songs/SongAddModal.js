@@ -83,9 +83,9 @@ export default function SongAddModal({ albumId }) {
                     onChange={(e) => setAlbumId(e.target.value)}
                     placeholder='Album ID'
                 /> */}
-                <div className="edit-buttons">
-                    <button className="edit-button" type="submit" >Add Song</button>
-                    <button className="edit-button" onClick={closeModal}>No </button>
+                <div className="add-buttons">
+                    <button className="add-button" type="submit" >Add Song</button>
+                    <button className="add-button" onClick={closeModal}>No </button>
                 </div>
             </form>
         </div>
