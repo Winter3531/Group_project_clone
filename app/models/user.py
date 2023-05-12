@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .like import Like
 
 
 class User(db.Model, UserMixin):
@@ -13,7 +14,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(255), nullable=False)
+    date_of_birth = db.Column(db.Date(), nullable=False)
+    user_image = db.Column(db.String)
 
+    user_likes = db.relationship('Like', back_populates='users', cascade="all, delete-orphan")
+
+    albums = db.relationship('Album', back_populates='owners')
+
+    likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="user", foreign(Like.likable_id)==User.id)', back_populates='user_follow')
+
+    playlists = db.relationship('Playlist', back_populates='owner' )
     @property
     def password(self):
         return self.hashed_password
@@ -29,5 +41,6 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'Follow': [user.to_dict() for user in self.likes] if self.likes else []
         }

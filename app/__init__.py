@@ -7,6 +7,11 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.albums_routes import albums_routes
+from .api.playlists_routes import playlists_routes
+from .api.songs_routes import songs_routes
+from .api.likes_routes import likes_routes
+from .api.search_routes import search_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -28,6 +33,11 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(albums_routes, url_prefix='/api/albums')
+app.register_blueprint(playlists_routes, url_prefix='/api/playlists')
+app.register_blueprint(songs_routes, url_prefix='/api/songs')
+app.register_blueprint(likes_routes, url_prefix='/api/likes')
+app.register_blueprint(search_routes, url_prefix='/api/search')
 db.init_app(app)
 Migrate(app, db)
 
@@ -89,3 +99,11 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+
+# # Album name search
+# @app.route('/search', methods=['PUT'])
+# def search():
+#     data = request.json['input']
+#     albums = Album.queryfilter(Album.album_name.like(f'%{data}%')).all()
+#     return {'albums': [album.to_dict() for album in albums]}
