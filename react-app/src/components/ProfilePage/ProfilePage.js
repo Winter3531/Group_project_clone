@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
-import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import OpenPlayer from '../MusicPlayer/openPLayer';
 
 
 export default function ProfilePage() {
