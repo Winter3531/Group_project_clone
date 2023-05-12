@@ -15,6 +15,7 @@ import SongLike from "../SongLike";
 
 
 
+
 const AlbumDetials = () => {
     const dispatch = useDispatch();
     const { albumId } = useParams()
@@ -43,6 +44,13 @@ const AlbumDetials = () => {
         history.push(`/albums/${albumId}`)
     }
 
+    let songlength =  0
+    if (album.songs.length > 0) {
+
+        let songlength = album?.songs.map((song) => song.song_length).reduce((acc, el) => acc + el)
+    }
+
+
     const handleCancelClick = async (e) => {
         e.preventDefault();
         await dispatch(unLikeAlbum(album))
@@ -62,101 +70,76 @@ const AlbumDetials = () => {
             {album && sessionUser ?
                 (
                     <>
-                    {album.likable_type == 'album' ?
-                            <div className="like-input">
-                                <div
-                                    className="true"
-                                    onClick={handleCancelClick} >
-                                    <i className="fas fa-heart"></i>
-                                    Liked
-                                </div>
+                        <div className="album-header">
+                            <div>
+                                <img id="album-image" src={album.album_img} alt="" />
                             </div>
-                            :
-                            <div className="like-input">
-                                <div
-                                    className="false"
-                                    onClick={handleClick} >
-                                    <i className="far fa-heart"></i>
-                                    Unlike
-                                </div>
+                            <div className="album-details">
+                                <p>Album</p>
+
+                                <h1>{album.album_name}</h1>
+                                <p><span >{album.year_recorded}</span>
+                                    <span className="album-description">{album.username}</span>
+                                    <span className="album-description">{album.songs?.length} songs</span>
+                                    <span className="album-description">About {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span>
+                                </p>
+                                <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
                             </div>
-                        }
-                        <p>album name: {album.album_name}</p>
-                        <p>year recorded: {album.year_recorded}</p>
-                        <p>album img: {album.album_img}</p>
-                        <p>Username: {album.username}</p>
-                        <p>Likes: {album.likable_id ? album.likable_id.length : 0}</p>
-                        <p>Songs: {album.songs?.length}</p>
-
-                        {(album.songs ? album.songs?.map(song =>
-                        <div>
-                            <div>{count += 1}. Name:{song.song_name}
-                                length:{songLengthFunc(song.song_length)}</div>
-
-                                {sessionUser && sessionUser.id === album.user_id ?
-                                <>
-                                <div className="delete-song-button">
-                                <OpenModalButton
-                                    buttonText="Delete Song"
-                                    modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
-                                    />
-                                </div>
-                                <div className="add-song-button">
-                                <OpenModalButton
-                                    buttonText="Add Song to Playlist"
-                                    modalComponent={<AddSongModal songId={song.id} />}
-                                    />
-                                </div>
-                                </>
-                                : <></>}
-                                <div><SongLike song={song} albumId={albumId}/></div>
                         </div>
-                        )
-                            : <div>No Songs </div>)}
-                            {/* <div>{Object.values(songs).map((song) =>
-                            Object.values(song.likes).map((like) => (like.user_id)))
-                        }
-                            </div> */}
-                        {/* <div>{Object.values(songs.likes).map((like) => like.user_id) == sessionUser.id ?
-                                <div className="like-input">
-                                <div
-                                    className="true"
-                                    onClick={handleUnlikeSong} >
-                                    <i className="fas fa-heart"></i>
-                                </div>
-                            </div> :
-                                <div className="like-input">
-                                <div
-                                    className="false"
-                                    onClick={handleLikeSong} >
-                                    <i className="far fa-heart"></i>
-                                </div>
-                            </div>
-                            }</div> */}
 
-
-
-                        {sessionUser && sessionUser.id === album.user_id ?
-                            <>
-                                <OpenModalButton
-                                    buttonText={"Delete"}
-                                    modalComponent={<ConfirmDeleteAlbumModal albumId={album.id} />} />
-
-                                <OpenModalButton
-                                    buttonText={"Edit Album"}
-                                    modalComponent={<EditAlbumFormModal album={album} />} />
-                                <div>
+                        <div className="album-buttons">
+                            {album.likable_type == 'album' ?
+                                <span className="like-input">
+                                    <i className="fas fa-heart true"
+                                        onClick={handleCancelClick}></i>
+                                </span>
+                                :
+                                <span className="like-input">
+                                    <i className="far fa-heart false"
+                                        onClick={handleClick}></i>
+                                </span>
+                            }
+                            {sessionUser && sessionUser.id === album.user_id ?
+                                <>
+                                    <OpenModalButton
+                                        buttonText={"Edit Album"}
+                                        modalComponent={<EditAlbumFormModal album={album} />} />
                                     <OpenModalButton
                                         buttonText="New Song"
                                         modalComponent={<SongAddModal albumId={album.id} />}
                                     />
-                                </div>
+                                </> : <></>
+                            }
+                        </div>
+                        <table className="album-table">
+                            <tr className="song-header">
+                                <th >#</th>
+                                <th >Title</th>
+                                <th >Album</th>
+                                <th ><i className="far fa-clock"></i></th>
+                                <th></th>
+                            </tr>
+                            {(album.songs ? album.songs?.map(song =>
+                                <tr >
+                                    <td>{count += 1}.</td>
+                                    <td>{song.song_name}</td>
+                                    <td>{album.album_name}</td>
+                                    <td className="">{songLengthFunc(song.song_length)}</td>
+                                    <td className="song-button">
+                                        <span><SongLike song={song} albumId={albumId} /></span>
+                                        {sessionUser && sessionUser.id === album.user_id ?
+                                            <span className="delete-song-button">
+                                                <OpenModalButton
+                                                    buttonText={"Delete song"}
+                                                    modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
+                                                />
+                                            </span>
+                                            : <></>}
+                                    </td>
+                                </tr>)
+                                : <div>No Songs </div>)}
 
-                                {/* {album.likable_type && (album.likable_type == 'album' ?
-                                    <button type="button" onClick={handleCancelClick} >Unlike</button> :
-                                    <button type="button" onClick={handleClick} >LIKE</button>)} */}
-                            </> : <></>
-                        }
+                        </table>
                     </>
                 ) :
                 <p>Can't Read</p>
@@ -164,7 +147,6 @@ const AlbumDetials = () => {
         </div>
     )
 }
-
 
 
 export default AlbumDetials
