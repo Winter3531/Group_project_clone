@@ -33,6 +33,7 @@ def playlist_details(id):
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
     playlist = Playlist.query.get(id)
+    print(playlist)
     return playlist.to_dict()
 
 # Create a playlist
