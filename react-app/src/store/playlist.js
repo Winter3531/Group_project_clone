@@ -71,7 +71,6 @@ export const currentUserPlaylists = () => async (dispatch) => {
 
 
 export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
-
     const res = await fetch(`/api/playlists/${playlistId}`);
 
     if (res.ok) {
@@ -201,8 +200,9 @@ export default function playlistReducer(state = initalState, action) {
             return newState
         case REMOVE_SONG:
             const updatedPlaylist = { ...state[action.playlistId] };
-            const updatedSongs = updatedPlaylist.songs ? updatedPlaylist.songs.filter(
-                song => song.id !== action.songId
+            const updatedSongs = updatedPlaylist.songs ?
+            updatedPlaylist.songs.filter(
+                song => console.log(song.id)
               ) : [];
             updatedPlaylist.songs = updatedSongs;
             return { ...state, [action.playlistId]: updatedPlaylist };
