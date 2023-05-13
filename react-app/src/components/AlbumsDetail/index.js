@@ -16,7 +16,6 @@ import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 
 
-
 const AlbumDetials = () => {
     const dispatch = useDispatch();
     const { albumId } = useParams()
