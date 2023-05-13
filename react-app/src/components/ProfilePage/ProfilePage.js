@@ -24,8 +24,9 @@ export default function ProfilePage() {
         if (user){
             dispatch(currentUserPlaylists());
             dispatch(currentUserAlbums());
+        } else {
+            dispatch(getAllAlbums())
         }
-        dispatch(getAllAlbums())
     },[dispatch])
 
     async function clickAttempt(){
