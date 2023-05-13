@@ -12,8 +12,8 @@ const RemoveSongModal = ({songId, playlistId}) => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        await dispatch(RemoveSong(playlist.id, songId));
-        await dispatch(PlaylistDetailsFetch(playlist.id));
+        await dispatch(RemoveSong(playlistId, songId));
+        await dispatch(PlaylistDetailsFetch(playlistId));
         closeModal();
     }
 

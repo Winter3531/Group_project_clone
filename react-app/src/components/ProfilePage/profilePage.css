@@ -1,31 +1,86 @@
 .no-profile {
+    padding: 60px;
+}
+
+.no-user-all-albums {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+
 }
 
 .profile-page-whole {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin-left: 60px;
+    text-decoration: none;
 }
 
-.playlist-display {
-    /* display: flex; */
+/* ************** */
+.profile-page-header {
+    display: flex;
 }
+
+#user-img {
+    border-radius: 60px;
+    margin-top: 60px;
+    margin-right: 60px;
+    margin-bottom: 60px;
+}
+
+.user-data {
+    margin-top: 80px;
+}
+
+/* *************** */
+
 .play-button {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
+#link-to-item {
+    padding: 10px;
+}
+
+/* ***************** */
+.playlist-display h3 {
+    padding-bottom: 30px;
+    border-bottom: solid white 2px;
+    margin-right: 75%;
+}
+
+.profile-playlist-img {
+    border-radius: 5px;
+}
+
 .playlist-card {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 20px;
+}
+
+/* ****************** */
+.album-display h3 {
+    padding-bottom: 30px;
+    border-bottom: solid white 2px;
+    margin-right: 75%;
+}
+
+#album-img {
+    border-radius: 5px;
+}
+
+.album-display {
+    display: flex;
+    flex-direction: column;
 }
 
 .album-card {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 20px;
 }

@@ -48,6 +48,15 @@ const addSong = (songId, playlistId) => ({
     songId, playlistId
 })
 
+export const getAllPlaylists = () => async (dispatch) => {
+    const response = await fetch(`/api/playlists`);
+
+    if (response.ok) {
+        const playlists = await response.json();
+        dispatch(load(playlists))
+        return playlists
+    }
+}
 
 
 export const currentUserPlaylists = () => async (dispatch) => {
@@ -56,14 +65,12 @@ export const currentUserPlaylists = () => async (dispatch) => {
     if (res.ok) {
         const playlists = await res.json();
         dispatch(load(playlists));
-        // console.log(playlists)
         return playlists;
     };
 };
 
 
 export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
-    // console.log('playlistId', playlistId)
     const res = await fetch(`/api/playlists/${playlistId}`);
 
     if (res.ok) {
@@ -131,8 +138,6 @@ export const likePlaylist = (playlistId) => async (dispatch) => {
         headers: { 'Content-Type': 'application/json' },
     });
 
-    // console.log(res, 'here is the res')
-
     if (res.ok) {
         const liked_playlist = await res.json();
         dispatch(like(liked_playlist))
@@ -153,6 +158,7 @@ export const unlikePlaylist = (playlistId) => async (dispatch) => {
 };
 
 export const RemoveSong = (playlistId, songId) => async (dispatch) => {
+    console.log(playlistId, songId, 'this is data in remove song thunk')
     const res = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
         method: 'DELETE'
     });
@@ -160,8 +166,7 @@ export const RemoveSong = (playlistId, songId) => async (dispatch) => {
 
     if (res.ok) {
         const deletedSong = await res.json();
-        // console.log(deletedSong)
-        // dispatch(removeSong())
+        dispatch(removeSong())
         return deletedSong;
     }
 };
@@ -195,8 +200,9 @@ export default function playlistReducer(state = initalState, action) {
             return newState
         case REMOVE_SONG:
             const updatedPlaylist = { ...state[action.playlistId] };
-            const updatedSongs = updatedPlaylist.songs ? updatedPlaylist.songs.filter(
-                song => song.id !== action.songId
+            const updatedSongs = updatedPlaylist.songs ?
+            updatedPlaylist.songs.filter(
+                song => console.log(song.id)
               ) : [];
             updatedPlaylist.songs = updatedSongs;
             return { ...state, [action.playlistId]: updatedPlaylist };

@@ -7,6 +7,12 @@ from app.forms.playlist_form import PlaylistForm;
 
 playlists_routes = Blueprint('playlists', __name__)
 
+#Get all playlists
+@playlists_routes.route('')
+def all_playlists():
+    playlists = Playlist.query.all()
+    return {playlist.id: playlist.to_dict() for playlist in playlists}
+
 # Get all playlist for the current user.
 @playlists_routes.route('/current')
 @login_required
@@ -27,6 +33,7 @@ def playlist_details(id):
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
     playlist = Playlist.query.get(id)
+    print(playlist)
     return playlist.to_dict()
 
 # Create a playlist
@@ -136,27 +143,17 @@ def player_route(playlist_id):
     return 'Playlist not found'
 
 # Remove playlist song by id.
-@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_playlist_id>', methods=['DELETE'])
 @login_required
-def remove_playlist_song(playlist_id, song_id):
-    playlist = Playlist.query.get(playlist_id)
-    song = Song.query.get(song_id)
-
-    if not playlist or not song:
-        return jsonify({'error': 'Playlist or song not found.'}), 404
-
-    song_playlist = SongPlaylist.query.filter_by(
-        playlist_id=playlist_id, song_id=song_id
-    ).first()
+def remove_playlist_song(song_playlist_id):
+    song_playlist = SongPlaylist.query.get(song_playlist_id)
 
     if not song_playlist:
         return jsonify({'error': 'Song not found in playlist.'}), 404
 
-
-    playlist.songs_playlist.remove(song_playlist)
     db.session.delete(song_playlist)
     db.session.commit()
-    return playlist.to_dict()
+    return {'message': 'Sucessfully Deleted'}
 
 @playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['POST'])
 @login_required

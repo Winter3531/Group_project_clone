@@ -6,8 +6,13 @@ import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
 import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import ProfileButton from '../Navigation/ProfileButton'
 
 import './profilePage.css'
+import { allSongsFetch } from "../../store/song";
+import { getAllAlbums } from "../../store/album";
+import OpenModalButton from "../OpenModalButton";
+import { getAllPlaylists } from "../../store/playlist";
 
 
 export default function ProfilePage() {
@@ -16,29 +21,51 @@ export default function ProfilePage() {
     const albums = useSelector(state=>state.albums)
     const {user} = useSelector(state=>state.session)
 
+    let userAlbums =[]
+    if (user) {
+        userAlbums = Object.values(albums).filter((album) => album.user_id == user.id)
+    }
+
+    let userPlaylists = []
+    if (user) {
+        userPlaylists = Object.values(playlists).filter((playlists) => playlists.owner_id == user.id)
+    }
+
+
     useEffect(()=> {
-        dispatch(currentUserPlaylists())
-        dispatch(currentUserAlbums())
-    },[dispatch])
+        if (user){
+            dispatch(currentUserPlaylists());
+            dispatch(currentUserAlbums());
+        } else {
+            dispatch(getAllAlbums())
+            dispatch(getAllPlaylists)
+        }
+    },[dispatch, user])
+
+    async function clickAttempt(){
+    }
 
     return(
         <>
         {user ?
         <div className='profile-page-whole'>
             <div className="profile-page-header">
-                <img  src={user.image} alt={`userimg${user.id}`} id="user-img" height={120} width={120}/>
-                <h1>{user.username}'s Profile</h1>
-                <p>{user.first_name} {user.last_name}</p>
+                <img  src={user.user_image} alt={`userimg${user.id}`} id="user-img" height={200} width={200}/>
+                <div className="user-data">
+                    <h2>{user.username}'s Profile</h2>
+                    <p>{user.first_name} {user.last_name}</p>
+                </div>
             </div>
-            {playlists &&
+            {userPlaylists &&
                 <div className="playlist-display">
                         <h3>Playlists</h3>
                         <div className="playlist-bar" >
-                            {Object.values(playlists).map( playlist => (
+                            {userPlaylists.map( playlist => (
                                 <div className="playlist-card" key={playlist.id}>
+                                    <img className="profile-playlist-img" src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90}/>
                                     <p>
                                         <NavLink to={`/playlists/${playlist.id}`} >
-                                            <p>{playlist.playlist_name}</p>
+                                            <p id='link-to-item' >{playlist.playlist_name}</p>
                                         </NavLink>
                                     </p>
                                     <p className="play-button">
@@ -51,13 +78,14 @@ export default function ProfilePage() {
             }
                 <div className="album-display">
                     <h3>Albums</h3>
+                    {/* <hr className="line-break"></hr> */}
                     <div className="album-bar">
-                        {Object.values(albums).map( album => (
+                        {userAlbums.map( album => (
                             <div className="album-card" key={album.id}>
                                 <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
                                 <p>
                                     <NavLink to={`/albums/${album.id}`} >
-                                        <p>{album.album_name}</p>
+                                        <p id='link-to-item' >{album.album_name}</p>
                                     </NavLink>
                                 </p>
                                 <p className="play-button">
@@ -70,7 +98,24 @@ export default function ProfilePage() {
         </div>
         :
         <div className='no-profile'>
-            <h2>Create an account to continue</h2>
+            <h2>All Albums</h2>
+            <div className="no-user-all-albums" onClick={clickAttempt}>
+                {Object.values(albums).map( album => (
+                    <div className="album-card" key={album.id}>
+                        <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
+                        <p>{album.album_name}</p>
+                    </div>
+                ))}
+            </div>
+            <h2>All Playlists</h2>
+            <div className="no-user-all-albums" onClick={clickAttempt}>
+                {Object.values(playlists).map( playlist => (
+                    <div className="album-card" key={playlist.id}>
+                        <img height={90} width={90} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg"/>
+                        <p>{playlist.playlist_name}</p>
+                    </div>
+                ))}
+            </div>
         </div>
         }
         </>

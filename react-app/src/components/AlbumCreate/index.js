@@ -69,7 +69,7 @@ const CreateAlbumFormModal = () => {
                     value={album_img}
                     onChange={updateAlbumImg} />
             </div>
-            <div className="create-buttons">
+            <div className="creates">
                 <button className="create-button" type="submit">Create</button>
                 <button className="create-button" onClick={closeModal}>No </button>
             </div>

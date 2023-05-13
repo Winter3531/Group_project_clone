@@ -18,21 +18,18 @@ export default function Player() {
     },[dispatch, playlist])
 
     const handleClickNext = () => {
-        // console.log('click next', currentTrack)
         setTrackIndex((currentTrack) =>
               currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
       };
 
     const handleClickPrev = () => {
-        // console.log('click last', currentTrack)
         setTrackIndex((currentTrack) =>
             currentTrack > 0 ? currentTrack - 1 : 0
         )
     }
 
     const handleEnd = () => {
-        // console.log('end', currentTrack)
         setTrackIndex((currentTrack) =>
               currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );

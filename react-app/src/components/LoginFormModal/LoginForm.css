@@ -1,0 +1,10 @@
+.login-form-modal {
+    padding: 10px;
+    color: white;
+    border: 1px solid rgb(248, 249, 219);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+}

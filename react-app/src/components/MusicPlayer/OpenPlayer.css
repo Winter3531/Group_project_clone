@@ -1,6 +1,7 @@
 .player-button {
     background-color: rgba(0, 0, 0, 0.0);
     border: none;
+    font-size: 35px;
 }
 .fa-play-circle {
     color: rgb(133, 242, 111)
