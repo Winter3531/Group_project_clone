@@ -15,8 +15,6 @@ const SidebarList = () => {
         dispatch(currentUserPlaylists())
     }, [dispatch]);
 
-    console.log(albums, 'this si albums in side bar list ')
-    console.log(playlists, 'this si albums in side bar list ')
     return (
         <div>
             <h3 className="album-list-header">Albums</h3>

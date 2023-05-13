@@ -7,6 +7,12 @@ from app.forms.playlist_form import PlaylistForm;
 
 playlists_routes = Blueprint('playlists', __name__)
 
+#Get all playlists
+@playlists_routes.route('')
+def all_playlists():
+    playlists = Playlist.query.all()
+    return {playlist.id: playlist.to_dict() for playlist in playlists}
+
 # Get all playlist for the current user.
 @playlists_routes.route('/current')
 @login_required
@@ -27,6 +33,7 @@ def playlist_details(id):
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
     playlist = Playlist.query.get(id)
+    print(playlist)
     return playlist.to_dict()
 
 # Create a playlist

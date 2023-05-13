@@ -45,12 +45,12 @@ export default function SongAddModal({ albumId }) {
     }
 
     return (
-        <div className="add-song-form">
             <form className="new-song-modal-form" onSubmit={handleSubmit} >
                 <div>
                     <h1 className="new-song-modal-header">Add New Song</h1>
                 </div>
                 <div>
+                    <div>Song Name</div>
                     <input
                         className="input-box"
                         type="text"
@@ -60,6 +60,7 @@ export default function SongAddModal({ albumId }) {
                     />
                 </div>
                 <div>
+                    <div>Song Source</div>
                     <input
                         className="input-box"
                         type="text"
@@ -69,6 +70,7 @@ export default function SongAddModal({ albumId }) {
                     />
                 </div>
                 <div>
+                    <div>Song Length</div>
                     <input
                         className="input-box"
                         type="integer"
@@ -88,6 +90,5 @@ export default function SongAddModal({ albumId }) {
                     <button className="add-button" onClick={closeModal}>No </button>
                 </div>
             </form>
-        </div>
     )
 }

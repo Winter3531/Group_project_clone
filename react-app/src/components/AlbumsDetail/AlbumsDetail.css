@@ -117,3 +117,7 @@ th {
 td {
     padding-top: 10px;
 }
+
+.play-button {
+    font-size: 30px;
+}
