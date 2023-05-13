@@ -72,7 +72,9 @@ function App() {
           )}
         </div>
       </div>
-      <Player />
+      <div className="player">
+          <Player />
+      </div>
     </>
   );
 }

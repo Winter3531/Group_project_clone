@@ -1,14 +1,13 @@
-
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { currentTracksFetch } from '../../store/playerState';
+import './OpenPlayer.css'
 
-
-const OpenPlayer = ({
+export default function OpenPlayer ({
     type,
     typeId
-}) => {
+}) {
     const dispatch = useDispatch();
 
     const onClick = (e) => {
@@ -17,8 +16,6 @@ const OpenPlayer = ({
     }
 
     return (
-        <button onClick={onClick}> <i className="fas fa-play-circle"></i> </button>
+        <button className='player-button' onClick={onClick}> <i className="fas fa-play-circle"></i> </button>
     )
 }
-
-export default OpenPlayer

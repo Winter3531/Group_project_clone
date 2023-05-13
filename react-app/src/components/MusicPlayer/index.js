@@ -13,6 +13,10 @@ export default function Player() {
     const playlist = useSelector(state=>state.player?.songs)
     const [currentTrack, setTrackIndex] = useState(0)
 
+    useEffect(() => {
+        setTrackIndex(0)
+    },[dispatch, playlist])
+
     const handleClickNext = () => {
         // console.log('click next', currentTrack)
         setTrackIndex((currentTrack) =>
@@ -45,6 +49,7 @@ export default function Player() {
                 onClickPrevious={handleClickPrev}
                 onEnded={handleEnd}
                 // Try other props!
+                autoPlay={true}
                 />
             }
         </>

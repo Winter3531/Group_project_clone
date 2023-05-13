@@ -12,6 +12,7 @@ import SongDeleteModal from "../Songs/SongDeleteModal";
 import AddSongModal from "../Playlists/AddSongModal";
 import './AlbumsDetail.css'
 import SongLike from "../SongLike";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 
 
@@ -108,6 +109,7 @@ const AlbumDetials = () => {
                                         buttonText="New Song"
                                         modalComponent={<SongAddModal albumId={album.id} />}
                                     />
+                                    <OpenPlayer type='albums' typeId={album.id} />
                                 </> : <></>
                             }
                         </div>
