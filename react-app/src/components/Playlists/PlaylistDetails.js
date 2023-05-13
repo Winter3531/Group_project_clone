@@ -55,7 +55,6 @@ const PlaylistDetails = () => {
     if (playlistLikes == null) {
         playlistLikes = 0
     }
-    // console.log(playlistLikes)
     let count = 0
 
 

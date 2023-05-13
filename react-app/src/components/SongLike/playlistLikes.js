@@ -22,8 +22,6 @@ const PlaylistSongLike = ({song, playlistId}) => {
         dispatch(PlaylistDetailsFetch(playlistId))
     }
 
-    // console.log(song, "song")
-    // console.log(playlistId, "playlistId")
 
     // useEffect(() => {
     //     dispatch(getSongDetail(song.id))

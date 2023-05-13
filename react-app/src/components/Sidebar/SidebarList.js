@@ -10,6 +10,19 @@ const SidebarList = () => {
     const albums = useSelector(state=> state?.albums)
     const playlists = useSelector(state=> state?.playlists)
 
+    const {user} = useSelector(state=>state.session)
+
+    let userAlbums =[]
+    if (user) {
+        userAlbums = Object.values(albums).filter((album) => album.user_id == user.id)
+    }
+
+    let userPlaylists = []
+    if (user) {
+        userPlaylists = Object.values(playlists).filter((playlists) => playlists.owner_id == user.id)
+    }
+
+    console.log(userPlaylists, "this is playlis")
     useEffect(() => {
         dispatch(currentUserAlbums())
         dispatch(currentUserPlaylists())
@@ -18,7 +31,7 @@ const SidebarList = () => {
     return (
         <div>
             <h3 className="album-list-header">Albums</h3>
-            {albums && (albums ? Object.values(albums).map((album) => (
+            {userAlbums && (userAlbums ? userAlbums.map((album) => (
                 <table className="album-list">
                 <NavLink to={`/albums/${album.id}`}>
                 <td>
@@ -31,7 +44,7 @@ const SidebarList = () => {
                 </table>
             )) : <></>)}
             <h3 className="album-list-header">Playlists</h3>
-            {playlists && (playlists ? Object.values(playlists).map((playlist) => (
+            {userPlaylists && (userPlaylists ? userPlaylists.map((playlist) => (
                 <>
                 <NavLink to={`/playlists/${playlist.id}`}>
                 <div className="list-name">

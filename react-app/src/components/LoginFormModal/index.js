@@ -25,8 +25,8 @@ function LoginFormModal() {
   };
 
   const createDemo = () => {
-    setEmail('demo@aa.io');
-    setPassword('password');
+    setEmail('demo@aa.io')
+    setPassword('password')
     return dispatch(login(email, password)).then(closeModal)
   }
 

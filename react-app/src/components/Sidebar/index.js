@@ -21,7 +21,6 @@ const SideNav = ({ isLoaded }) => {
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
-    // console.log(albumId, 'this is songs in search page')
 
     useEffect(() => {
         if (input.length > 0) {
@@ -66,8 +65,8 @@ const SideNav = ({ isLoaded }) => {
                                 <p>Song</p>
                                 <div>{song?.song_name}</div>
                             </div>))
-                        : (input?.length > 0 ? <div className="search-none">Nothing.....</div> :
-                            <div className="search-none hidden">Nothing.....</div>)
+                        : (input?.length > 0 ? <div className="search-none">No Songs</div> :
+                            <div className="search-none hidden">No Songs</div>)
                     )}
                     {albums && (albums.length > 0 && input?.length > 0 ?
                         (
@@ -76,8 +75,8 @@ const SideNav = ({ isLoaded }) => {
                                     <p>Album</p>
                                     <div>{album.album_name}</div>
                                 </div>))
-                        ) : (input?.length > 0 ? <div className="search-none">Nothing.....</div> :
-                            <div className="search-none hidden">Nothing.....</div>))}
+                        ) : (input?.length > 0 ? <div className="search-none">No Albums</div> :
+                            <div className="search-none hidden">No Albums</div>))}
                 </div>
 
             </div>

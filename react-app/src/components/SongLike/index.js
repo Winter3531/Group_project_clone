@@ -30,6 +30,8 @@ const SongLike = ({song, albumId}) => {
     // }, [dispatch])
 
     return (
+
+
         <div>{Object.values(song.likes).map((like) => like.user_id) == sessionUser.id ?
             <div className="like-input">
             <div

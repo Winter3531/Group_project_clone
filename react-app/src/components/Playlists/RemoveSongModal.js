@@ -5,7 +5,6 @@ import { PlaylistDetailsFetch, RemoveSong } from "../../store/playlist";
 
 
 const RemoveSongModal = ({songId, playlistId}) => {
-    console.log(songId, 'songId')
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const playlist = useSelector(state=>state.playlists[playlistId])
