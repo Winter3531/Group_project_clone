@@ -63,7 +63,7 @@ export const currentUserPlaylists = () => async (dispatch) => {
 
 
 export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
-    // console.log('playlistId', playlistId)
+    console.log('playlistId', playlistId)
     const res = await fetch(`/api/playlists/${playlistId}`);
 
     if (res.ok) {

@@ -19,12 +19,7 @@ class SongPlaylist(db.Model):
     def to_dict(self):
         return {
             "id" : self.id,
-            "playlist_id" : self.playlist_id,
-            "song_id" : self.song_id,
-            "song_name": self.songs.song_name,
-            "song_length": self.songs.song_length,
-            "song_src": self.songs.song_src,
-            "playlist_name": self.playlists.playlist_name,
+            "songs" : self.songs.playlist_song_like_dict()
         }
 
     def player_dict(self):
