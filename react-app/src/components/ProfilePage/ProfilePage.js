@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
-// import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 import './profilePage.css'
 
@@ -42,7 +42,7 @@ export default function ProfilePage() {
                                         </NavLink>
                                     </p>
                                     <p className="play-button">
-                                        {/* <OpenPlayer type='playlists' typeId={playlist.id} /> */}
+                                        <OpenPlayer type='playlists' typeId={playlist.id} />
                                     </p>
                                 </div>
                             ))}
@@ -61,7 +61,7 @@ export default function ProfilePage() {
                                     </NavLink>
                                 </p>
                                 <p className="play-button">
-                                    {/* <OpenPlayer type='albums' typeId={album.id} /> */}
+                                    <OpenPlayer type='albums' typeId={album.id} />
                                 </p>
                             </div>
                         ))}

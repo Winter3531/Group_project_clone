@@ -48,6 +48,15 @@ const addSong = (songId, playlistId) => ({
     songId, playlistId
 })
 
+export const getAllPlaylists = () => async (dispatch) => {
+    const response = await fetch(`/api/playlists`);
+
+    if (response.ok) {
+        const playlists = await response.json();
+        dispatch(load(playlists))
+        return playlists
+    }
+}
 
 
 export const currentUserPlaylists = () => async (dispatch) => {

@@ -16,7 +16,6 @@ import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 
 
-
 const AlbumDetials = () => {
     const dispatch = useDispatch();
     const { albumId } = useParams()
@@ -58,10 +57,9 @@ const AlbumDetials = () => {
     let count = 0
 
 
-    // let songlength = 0
-    // if (album.songs) {
-    //     songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
-    // }
+    const songLengthsArr = album?.songs?.map(song => song.song_length);
+    const summedSongs = songLengthsArr?.reduce((total, length) => total + length, null);
+    const albumSeconds = songLengthFunc(summedSongs)
 
     return (
         <div id="detail-page">
@@ -79,15 +77,28 @@ const AlbumDetials = () => {
                                 <p><span >{album.year_recorded}</span>
                                     <span className="album-description">{album.username}</span>
                                     <span className="album-description">{album.songs?.length} songs</span>
-                                    {/* <span className="album-description">About
-                                    {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span> */}
+                                    {album?.songs ? (
+                                        <>
+                                            <span className="album-description">
+                                                {Math.floor(summedSongs / 3600)} hr {Math.floor(summedSongs / 60)} min {summedSongs % 60} sec
+                                            </span>
+                                        </>
+                                    ) : null}
                                 </p>
-                                <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
+                                <p>{album?.length >= 2 ? (
+                                    <div>
+                                        <div>{album.length} Likes</div>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div>{album.length || 0} Like</div>
+                                    </div>
+                                )}</p>
                             </div>
                         </div>
 
                         <div className="album-buttons">
-                        <OpenPlayer type='albums' typeId={album.id} />
+                            <OpenPlayer type='albums' typeId={album.id} />
                             {album.likable_type == 'album' ?
                                 <span className="like-input">
                                     <i className="fas fa-heart true"
