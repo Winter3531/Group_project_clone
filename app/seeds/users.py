@@ -5,11 +5,11 @@ from datetime import datetime
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password', first_name='T', last_name='J', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
+        username='Demo', email='demo@aa.io', password='password', first_name='T', last_name='J',user_image='https://res.cloudinary.com/dtcuw5i2e/image/upload/v1684000820/Demo_i4g1cz.png', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password', first_name='S', last_name='C', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
+        username='marnie', email='marnie@aa.io', password='password', first_name='S', last_name='C',user_image='https://res.cloudinary.com/dtcuw5i2e/image/upload/v1684001098/marnie_kg64zg.jpg', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password', first_name='H', last_name='D', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
+        username='bobbie', email='bobbie@aa.io', password='password', first_name='H', last_name='D',user_image='https://res.cloudinary.com/dtcuw5i2e/image/upload/v1684001100/bobbie_a7bzoi.png', date_of_birth=datetime.strptime('1988/02/02', '%Y/%m/%d').date())
 
     db.session.add(demo)
     db.session.add(marnie)

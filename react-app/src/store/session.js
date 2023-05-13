@@ -73,7 +73,7 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (username, email, last_name, first_name, date_of_birth, user_image, password) => async (dispatch) => {
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		headers: {
@@ -82,6 +82,10 @@ export const signUp = (username, email, password) => async (dispatch) => {
 		body: JSON.stringify({
 			username,
 			email,
+			last_name,
+			first_name,
+			date_of_birth,
+			user_image,
 			password,
 		}),
 	});
@@ -100,26 +104,12 @@ export const signUp = (username, email, password) => async (dispatch) => {
 	}
 };
 
-// export const likedUserThunk = () => async (dispatch) => {
-// 	const response = await fetch("/api/users/likes")
-
-// 	if (response.ok){
-// 		const likedUsersRes = response.json();
-// 		console.log(likedUsersRes)
-// 		dispatch(likedUsers(likedUsersRes))
-// 		return likedUsersRes
-// 	}
-// }
-
 export default function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
-		// case LIKED_USER:
-		// 	const newState = {...state, liked_users: []}
-		// 	return newState
 		default:
 			return state;
 	}

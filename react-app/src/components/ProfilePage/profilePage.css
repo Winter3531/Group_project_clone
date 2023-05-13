@@ -1,6 +1,11 @@
 .no-profile {
+    padding: 60px;
+}
+
+.no-user-all-albums {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+
 }
 
 .profile-page-whole {
@@ -28,4 +33,5 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 20px;
 }
