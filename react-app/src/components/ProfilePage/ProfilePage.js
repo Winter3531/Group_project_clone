@@ -12,6 +12,7 @@ import './profilePage.css'
 import { allSongsFetch } from "../../store/song";
 import { getAllAlbums } from "../../store/album";
 import OpenModalButton from "../OpenModalButton";
+import { getAllPlaylists } from "../../store/playlist";
 
 
 export default function ProfilePage() {
@@ -20,12 +21,24 @@ export default function ProfilePage() {
     const albums = useSelector(state=>state.albums)
     const {user} = useSelector(state=>state.session)
 
+    let userAlbums =[]
+    if (user) {
+        userAlbums = Object.values(albums).filter((album) => album.user_id == user.id)
+    }
+
+    let userPlaylists = []
+    if (user) {
+        userPlaylists = Object.values(playlists).filter((playlists) => playlists.owner_id == user.id)
+    }
+
+
     useEffect(()=> {
         if (user){
             dispatch(currentUserPlaylists());
             dispatch(currentUserAlbums());
         }
         dispatch(getAllAlbums())
+        dispatch(getAllPlaylists)
     },[dispatch])
 
     async function clickAttempt(){
@@ -40,11 +53,11 @@ export default function ProfilePage() {
                 <h1>{user.username}'s Profile</h1>
                 <p>{user.first_name} {user.last_name}</p>
             </div>
-            {playlists &&
+            {userPlaylists &&
                 <div className="playlist-display">
                         <h3>Playlists</h3>
                         <div className="playlist-bar" >
-                            {Object.values(playlists).map( playlist => (
+                            {userPlaylists.map( playlist => (
                                 <div className="playlist-card" key={playlist.id}>
                                     <p>
                                         <NavLink to={`/playlists/${playlist.id}`} >
@@ -62,7 +75,7 @@ export default function ProfilePage() {
                 <div className="album-display">
                     <h3>Albums</h3>
                     <div className="album-bar">
-                        {Object.values(albums).map( album => (
+                        {userAlbums.map( album => (
                             <div className="album-card" key={album.id}>
                                 <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
                                 <p>

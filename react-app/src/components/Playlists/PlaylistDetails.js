@@ -55,7 +55,7 @@ const PlaylistDetails = () => {
     if (playlistLikes == null) {
         playlistLikes = 0
     }
-    console.log(playlistLikes)
+
     let count = 0
 
 
@@ -143,7 +143,7 @@ const PlaylistDetails = () => {
                                 <span className="delete-song-button">
                                     <OpenModalButton
                                         buttonText={"Delete song"}
-                                        modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
+                                        modalComponent={<RemoveSongModal songId={song.id} playlistId={playlistId} />}/>
                                 </span>
                             ): null}
                         </td>

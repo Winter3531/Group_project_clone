@@ -133,7 +133,7 @@ const AlbumDetials = () => {
                                 <th ><i className="far fa-clock"></i></th>
                                 <th></th>
                             </tr>
-                            {(album.songs ? album.songs?.map(song =>
+                            {(album.songs ? album?.songs.map(song =>
                                 <tr >
                                     <td>{count += 1}.</td>
                                     <td>{song.song_name}</td>
