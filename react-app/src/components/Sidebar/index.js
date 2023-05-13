@@ -25,8 +25,6 @@ const SideNav = ({ isLoaded }) => {
 
     useEffect(() => {
         if (input.length > 0) {
-            dispatch(allSongsFetch());
-            dispatch(getAllAlbums());
             dispatch(search(input));
         }
     }, [dispatch, input])

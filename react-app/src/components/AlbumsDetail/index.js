@@ -22,8 +22,6 @@ const AlbumDetials = () => {
     const { albumId } = useParams()
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
-    // let songs = useSelector(state => state.songs)
-    // const {songs , likable_type} = album
     const sessionUser = useSelector(state => state?.session.user);
     const [like, setLike] = useState(false);
 
@@ -62,7 +60,7 @@ const AlbumDetials = () => {
 
     // let songlength = 0
     // if (album.songs) {
-    //     return songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
+    //     songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
     // }
 
     return (
@@ -113,7 +111,6 @@ const AlbumDetials = () => {
                                         buttonText={"Add song"}
                                         modalComponent={<SongAddModal albumId={album.id} />}
                                     />
-                                    <OpenPlayer type='albums' typeId={album.id} />
                                 </> : <></>
                             }
                         </div>
