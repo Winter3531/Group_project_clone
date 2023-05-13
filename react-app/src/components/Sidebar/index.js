@@ -4,10 +4,11 @@ import PlaylistFormModal from "../Playlists/CreatePlaylistModal";
 import OpenModalButton from "../OpenModalButton";
 import CreateAlbumFormModal from "../AlbumCreate";
 import './Sidebar.css'
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { search } from "../../store/search";
 import { allSongsFetch } from "../../store/song";
 import { getAlbumDetail, getAllAlbums } from "../../store/album";
+import SidebarList from "./SidebarList";
 
 
 const SideNav = ({ isLoaded }) => {
@@ -15,11 +16,12 @@ const SideNav = ({ isLoaded }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [input, setInput] = useState("")
+    const {albumId} = useParams()
 
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
-    // console.log(songs, 'this is songs in search page')
+    console.log(albumId, 'this is songs in search page')
 
     useEffect(() => {
         if (input.length > 0) {
@@ -45,24 +47,20 @@ const SideNav = ({ isLoaded }) => {
         history.push(`/albums/${id}`);
         setInput("")
     }
-    const submitHandler = (e) => {
-        e.preventDefault();
-        dispatch(search(input));
-
-    }
 
 
     return (
-        <ul>
+        <div className="navi-drawer">
             <div className="search-container" onBlur={(e) => hide(e)}>
                     <input
+                        className="search-input"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onFocus={() => show()}
                         placeholder="Search..."
                     />
                     <div className="search-results hidden">
-                        {songs && albums && (albums.length && songs.length > 0  && input?.length > 0 ?
+                        {songs  && ( songs.length > 0  && input?.length > 0 ?
                             songs.map((song) => (
                                 <div key={song.id} className="search-card" onMouseDown={() => reset(song.album_id)}>
                                     <p>Song</p>
@@ -84,14 +82,6 @@ const SideNav = ({ isLoaded }) => {
                         ))}
                     </div>
             </div>
-            {/* <div className="search-bar">
-                <form onSubmit={submitHandler}>
-                    <input type='text' value={term}
-                        placeholder="Search..."
-                            onChange={(e) => setTerm(e.target.value)} />
-                    <button type='submit'><i className="fa fa-search"> </i></button>
-                </form>
-            </div> */}
             {isLoaded && sessionUser && (
                 <div>
                     <div>
@@ -106,11 +96,12 @@ const SideNav = ({ isLoaded }) => {
                             modalComponent={<CreateAlbumFormModal />}
                         /> Create Album
                     </div>
+                    <div><SidebarList /></div>
                 </div>
             )}
 
 
-        </ul>
+        </div>
     )
 };
 

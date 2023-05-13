@@ -15,7 +15,7 @@ albums_routes = Blueprint('albums', __name__)
 @albums_routes.route('')
 def all_albums():
     albums = Album.query.all()
-    return {album.id: album.liked_album_dict() for album in albums}
+    return {album.id: album.to_like() for album in albums}
 
 # Get all playlist for the current user.
 @albums_routes.route('/current')

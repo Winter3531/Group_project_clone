@@ -35,7 +35,7 @@ function ProfileButton({ user }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
-    history.push('/')
+    history.push('/home')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -43,17 +43,16 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+        <i className="fas fa-user-circle" onClick={openMenu} />
+
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+            <div>User: {user.username}</div>
+            <div>Email: {user.email}</div>
+            <div>
+              <button className="logout" onClick={handleLogout}>Log Out</button>
+            </div>
           </>
         ) : (
           <>
