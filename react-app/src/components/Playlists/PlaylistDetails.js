@@ -20,8 +20,6 @@ const PlaylistDetails = () => {
     const { playlistId } = useParams();
     const playlist = useSelector(state=>state?.playlists[playlistId]);
 
-
-    console.log(playlist, 'this is playlist in playlist')
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
     }, [dispatch, playlistId]);
@@ -61,7 +59,7 @@ const PlaylistDetails = () => {
     let count = 0
 
 
-    const songLengthsArr = playlist?.songs?.map(song => song.song_length);
+    const songLengthsArr = playlist?.songs?.map(song => song.songs.song_length);
     const summedSongs = songLengthsArr?.reduce((total, length) => total + length, null);
     const playlistSeconds = songLengthFunc(summedSongs)
 
@@ -137,16 +135,18 @@ const PlaylistDetails = () => {
                 {(playlist.songs ? playlist.songs?.map(song =>
                     <tr >
                         <td>{count += 1}.</td>
-                        <td>{song.song_name}</td>
-                        <td>{songLengthFunc(song.song_length)}</td>
+                        <td>{song.songs.song_name}</td>
+                        <td>{songLengthFunc(song.songs.song_length)}</td>
                         <td className="song-button">
-                        {/* <span><PlaylistSongLike song={song} playlistId={playlistId} /></span> */}
+                            <span><PlaylistSongLike song={song.songs} playlistId={playlistId} /></span>
+                            {sessionUser && sessionUser.id === playlist.owner_id ? (
+                                <span className="delete-song-button">
+                                    <OpenModalButton
+                                        buttonText={"Delete song"}
+                                        modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
+                                </span>
+                            ): null}
                         </td>
-                        <div className="delete-song-button">
-                            <OpenModalButton
-                                buttonText={"Delete song"}
-                                modalComponent={<RemoveSongModal songId={song.song_id} playlistId={playlistId} />}/>
-                        </div>
                     </tr>)
                     : <div>No Songs </div>)}
                 </table>

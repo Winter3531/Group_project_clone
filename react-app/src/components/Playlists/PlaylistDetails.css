@@ -66,3 +66,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.song-button {
+    display: flex;
+}
