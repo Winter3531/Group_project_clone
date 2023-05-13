@@ -64,7 +64,6 @@ class Song(db.Model):
             'song_name': self.song_name,
             'song_length': self.song_length,
             'song_src': self.song_src,
-            'playlist_id': self.playlists_song[0].playlist_id if self.playlists_song else None,
             'likes': [like.to_dict() for like in self.likes] if self.likes else []
         }
 

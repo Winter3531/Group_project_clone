@@ -21,6 +21,7 @@ const PlaylistDetails = () => {
     const playlist = useSelector(state=>state?.playlists[playlistId]);
 
 
+    console.log(playlist, 'this is playlist in playlist')
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
     }, [dispatch, playlistId]);
