@@ -5,6 +5,7 @@ import { PlaylistDetailsFetch, RemoveSong } from "../../store/playlist";
 
 
 const RemoveSongModal = ({songId, playlistId}) => {
+    console.log(songId, 'songId')
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const playlist = useSelector(state=>state.playlists[playlistId])
@@ -12,8 +13,8 @@ const RemoveSongModal = ({songId, playlistId}) => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        await dispatch(RemoveSong(playlist.id, songId));
-        await dispatch(PlaylistDetailsFetch(playlist.id));
+        await dispatch(RemoveSong(playlistId, songId));
+        await dispatch(PlaylistDetailsFetch(playlistId));
         closeModal();
     }
 

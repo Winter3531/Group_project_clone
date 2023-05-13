@@ -42,7 +42,7 @@ class Album(db.Model):
             'album_img': self.album_img,
             'user_id': self.user_id,
             'username': self.owners.username,
-            'songs':[[song.song_like_dict() for song in self.songs] if self.songs else []] if self.songs else [],
+            'songs':[song.song_like_dict() for song in self.songs] if self.songs else [],
             # 'liked':[like.to_dict for like in self.likes] if self.likes else 'No like',
             'likable_type': [like.likable_type for like in self.likes] if self.likes else [],
             'likable_id': [like.id for like in self.likes] if self.likes else []

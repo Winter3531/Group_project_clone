@@ -72,7 +72,7 @@ export const currentUserPlaylists = () => async (dispatch) => {
 
 
 export const PlaylistDetailsFetch = (playlistId) => async (dispatch) => {
-    console.log('playlistId', playlistId)
+    // console.log('playlistId', playlistId)
     const res = await fetch(`/api/playlists/${playlistId}`);
 
     if (res.ok) {
@@ -169,7 +169,7 @@ export const RemoveSong = (playlistId, songId) => async (dispatch) => {
 
     if (res.ok) {
         const deletedSong = await res.json();
-        // console.log(deletedSong)
+        console.log(deletedSong, "deleted song")
         // dispatch(removeSong())
         return deletedSong;
     }
@@ -204,8 +204,9 @@ export default function playlistReducer(state = initalState, action) {
             return newState
         case REMOVE_SONG:
             const updatedPlaylist = { ...state[action.playlistId] };
-            const updatedSongs = updatedPlaylist.songs ? updatedPlaylist.songs.filter(
-                song => song.id !== action.songId
+            const updatedSongs = updatedPlaylist.songs ?
+            updatedPlaylist.songs.filter(
+                song => console.log(song.id) 
               ) : [];
             updatedPlaylist.songs = updatedSongs;
             return { ...state, [action.playlistId]: updatedPlaylist };
