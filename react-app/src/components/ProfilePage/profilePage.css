@@ -1,0 +1,31 @@
+.no-profile {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-page-whole {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.playlist-display {
+    /* display: flex; */
+}
+.play-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.playlist-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.album-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

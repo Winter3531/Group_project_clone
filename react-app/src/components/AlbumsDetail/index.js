@@ -113,6 +113,7 @@ const AlbumDetials = () => {
                                         buttonText={"Add song"}
                                         modalComponent={<SongAddModal albumId={album.id} />}
                                     />
+                                    <OpenPlayer type='albums' typeId={album.id} />
                                 </> : <></>
                             }
                         </div>

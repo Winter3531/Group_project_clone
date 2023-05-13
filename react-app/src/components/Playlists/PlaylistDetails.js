@@ -8,6 +8,7 @@ import DeletePlaylistModal from "./DeletePlaylistModal";
 import RemoveSongModal from "./RemoveSongModal";
 import Player from "../MusicPlayer";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 
 const PlaylistDetails = () => {
@@ -89,6 +90,7 @@ const PlaylistDetails = () => {
                     </div>
                 </div>
             }
+            <OpenPlayer type='playlists' typeId={playlist.id} />
         </div>
         <div>
             {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
