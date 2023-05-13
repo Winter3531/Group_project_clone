@@ -12,6 +12,7 @@ import SongDeleteModal from "../Songs/SongDeleteModal";
 import AddSongModal from "../Playlists/AddSongModal";
 import './AlbumsDetail.css'
 import SongLike from "../SongLike";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 
 
 
@@ -44,7 +45,7 @@ const AlbumDetials = () => {
         history.push(`/albums/${albumId}`)
     }
 
-    let songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
+    // let songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
 
     const handleCancelClick = async (e) => {
         e.preventDefault();
@@ -61,7 +62,7 @@ const AlbumDetials = () => {
     let count = 0
 
     return (
-        <div>
+        <div id="detail-page">
             {album && sessionUser ?
                 (
                     <>
@@ -76,13 +77,16 @@ const AlbumDetials = () => {
                                 <p><span >{album.year_recorded}</span>
                                     <span className="album-description">{album.username}</span>
                                     <span className="album-description">{album.songs?.length} songs</span>
-                                    <span className="album-description">About {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span>
+                                    <span className="album-description">About
+                                    {album.songs ? songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el) : songlength = 0}
+                                    {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span>
                                 </p>
                                 <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
                             </div>
                         </div>
 
                         <div className="album-buttons">
+                        <OpenPlayer type='albums' typeId={album.id} />
                             {album.likable_type == 'album' ?
                                 <span className="like-input">
                                     <i className="fas fa-heart true"
@@ -118,7 +122,7 @@ const AlbumDetials = () => {
                                 <th></th>
                             </tr>
                             {(album.songs ? album.songs?.map(song =>
-                                <tr id={song.id}>
+                                <tr >
                                     <td>{count += 1}.</td>
                                     <td>{song.song_name}</td>
                                     <td>{album.album_name}</td>
