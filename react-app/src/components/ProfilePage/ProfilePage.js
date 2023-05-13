@@ -27,7 +27,7 @@ export default function ProfilePage() {
         } else {
             dispatch(getAllAlbums())
         }
-    },[dispatch])
+    },[dispatch, user])
 
     async function clickAttempt(){
     }
@@ -37,9 +37,11 @@ export default function ProfilePage() {
         {user ?
         <div className='profile-page-whole'>
             <div className="profile-page-header">
-                <img  src={user.user_image} alt={`userimg${user.id}`} id="user-img" height={120} width={120}/>
-                <h1>{user.username}'s Profile</h1>
-                <p>{user.first_name} {user.last_name}</p>
+                <img  src={user.user_image} alt={`userimg${user.id}`} id="user-img" height={200} width={200}/>
+                <div className="user-data">
+                    <h2>{user.username}'s Profile</h2>
+                    <p>{user.first_name} {user.last_name}</p>
+                </div>
             </div>
             {playlists &&
                 <div className="playlist-display">
@@ -47,9 +49,10 @@ export default function ProfilePage() {
                         <div className="playlist-bar" >
                             {Object.values(playlists).map( playlist => (
                                 <div className="playlist-card" key={playlist.id}>
+                                    <img className="profile-playlist-img" src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90}/>
                                     <p>
                                         <NavLink to={`/playlists/${playlist.id}`} >
-                                            <p>{playlist.playlist_name}</p>
+                                            <p id='link-to-item' >{playlist.playlist_name}</p>
                                         </NavLink>
                                     </p>
                                     <p className="play-button">
@@ -62,13 +65,14 @@ export default function ProfilePage() {
             }
                 <div className="album-display">
                     <h3>Albums</h3>
+                    {/* <hr className="line-break"></hr> */}
                     <div className="album-bar">
                         {Object.values(albums).map( album => (
                             <div className="album-card" key={album.id}>
                                 <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
                                 <p>
                                     <NavLink to={`/albums/${album.id}`} >
-                                        <p>{album.album_name}</p>
+                                        <p id='link-to-item' >{album.album_name}</p>
                                     </NavLink>
                                 </p>
                                 <p className="play-button">
