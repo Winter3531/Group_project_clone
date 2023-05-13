@@ -6,8 +6,12 @@ import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import { likedUserThunk } from "../../store/session";
 import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import ProfileButton from '../Navigation/ProfileButton'
 
 import './profilePage.css'
+import { allSongsFetch } from "../../store/song";
+import { getAllAlbums } from "../../store/album";
+import OpenModalButton from "../OpenModalButton";
 
 
 export default function ProfilePage() {
@@ -17,16 +21,22 @@ export default function ProfilePage() {
     const {user} = useSelector(state=>state.session)
 
     useEffect(()=> {
-        dispatch(currentUserPlaylists())
-        dispatch(currentUserAlbums())
+        if (user){
+            dispatch(currentUserPlaylists());
+            dispatch(currentUserAlbums());
+        }
+        dispatch(getAllAlbums())
     },[dispatch])
+
+    async function clickAttempt(){
+    }
 
     return(
         <>
         {user ?
         <div className='profile-page-whole'>
             <div className="profile-page-header">
-                <img  src={user.image} alt={`userimg${user.id}`} id="user-img" height={120} width={120}/>
+                <img  src={user.user_image} alt={`userimg${user.id}`} id="user-img" height={120} width={120}/>
                 <h1>{user.username}'s Profile</h1>
                 <p>{user.first_name} {user.last_name}</p>
             </div>
@@ -70,7 +80,15 @@ export default function ProfilePage() {
         </div>
         :
         <div className='no-profile'>
-            <h2>Create an account to continue</h2>
+            <h2>All Albums</h2>
+            <div className="no-user-all-albums" onClick={clickAttempt}>
+                {Object.values(albums).map( album => (
+                    <div className="album-card" key={album.id}>
+                        <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
+                        <p>{album.album_name}</p>
+                    </div>
+                ))}
+            </div>
         </div>
         }
         </>
