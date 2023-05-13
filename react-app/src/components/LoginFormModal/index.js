@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('demo@aa.io');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory()
@@ -25,6 +25,8 @@ function LoginFormModal() {
   };
 
   const createDemo = () => {
+    setEmail('demo@aa.io')
+    setPassword('password')
     return dispatch(login(email, password)).then(closeModal)
   }
 
