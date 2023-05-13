@@ -28,7 +28,6 @@ const SideNav = ({ isLoaded }) => {
             dispatch(allSongsFetch());
             dispatch(getAllAlbums());
             dispatch(search(input));
-            dispatch(getAlbumDetail(albumId))
         }
     }, [dispatch, input])
 

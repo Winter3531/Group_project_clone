@@ -27,6 +27,10 @@ const AlbumDetials = () => {
     const sessionUser = useSelector(state => state?.session.user);
     const [like, setLike] = useState(false);
 
+    useEffect(() => {
+        dispatch(getAlbumDetail(albumId))
+    }, [dispatch, albumId])
+
     const songLengthFunc = (data) => {
         const sec = data % 60
         const min = (data - sec) / 60
@@ -45,8 +49,6 @@ const AlbumDetials = () => {
         history.push(`/albums/${albumId}`)
     }
 
-    // let songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
-
     const handleCancelClick = async (e) => {
         e.preventDefault();
         await dispatch(unLikeAlbum(album))
@@ -55,11 +57,13 @@ const AlbumDetials = () => {
     }
 
 
-    useEffect(() => {
-        dispatch(getAlbumDetail(albumId))
-    }, [dispatch, albumId])
-
     let count = 0
+
+
+    // let songlength = 0
+    // if (album.songs) {
+    //     return songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el)
+    // }
 
     return (
         <div id="detail-page">
@@ -77,9 +81,8 @@ const AlbumDetials = () => {
                                 <p><span >{album.year_recorded}</span>
                                     <span className="album-description">{album.username}</span>
                                     <span className="album-description">{album.songs?.length} songs</span>
-                                    <span className="album-description">About
-                                    {album.songs ? songlength = album?.songs.map(song => song.song_length).reduce((acc, el) => acc + el) : songlength = 0}
-                                    {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span>
+                                    {/* <span className="album-description">About
+                                    {Math.floor(songlength / 3600)} hr {Math.floor(songlength / 60)} min {songlength % 60} sec</span> */}
                                 </p>
                                 <p>{album.likable_id ? album.likable_id.length : 0} Like</p>
                             </div>
