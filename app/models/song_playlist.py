@@ -25,6 +25,7 @@ class SongPlaylist(db.Model):
             "song_length": self.songs.song_length,
             "song_src": self.songs.song_src,
             "playlist_name": self.playlists.playlist_name,
+            "songs":[[song.playlist_song_like_dict() for song in self.songs] if self.songs else []] if self.songs else [],
         }
 
     def player_dict(self):
