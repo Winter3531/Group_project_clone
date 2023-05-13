@@ -14,7 +14,7 @@ const DeletePlaylistModal = ({playlistId}) => {
         e.preventDefault();
         await dispatch(DeletePlaylist(playlistId));
         // await dispatch(currentUserPlaylists());
-        history.push('/playlists/current');
+        history.push('/collection');
         closeModal();
     }
 

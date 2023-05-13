@@ -15,7 +15,6 @@ import SongLike from "../SongLike";
 
 
 
-
 const AlbumDetials = () => {
     const dispatch = useDispatch();
     const { albumId } = useParams()

@@ -1,6 +1,6 @@
 .like-input .false {
     color: rgb(162, 162, 162);
-
+    margin: 5px 5px;
 }
 .like-input .false:hover {
     color: rgb(133, 242, 111);
@@ -9,7 +9,7 @@
 
 .like-input .true {
     color: rgb(30,315,96);
-
+    margin: 5px 5px;
 }
 
 .fa-heart {
@@ -18,3 +18,42 @@
     font-size: 30px;
 }
 
+#detail-page {
+    background-color: rgb(17, 16, 16);
+    border-radius: 10px;
+    margin-top: 40px;
+    margin-right: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 10px;
+    margin-bottom: 50px;
+}
+
+.playlist-header {
+    display: flex;
+}
+
+.playlist-details {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.playlist-buttons {
+    display: inline-block;
+    margin-left: 50px;
+}
+
+.playlist-description::before {
+    content: "・";
+}
+
+.playlist-table {
+    width: 90%;
+    margin: 40px;
+    font-size: 18px;
+}
+
+.playlist-time {
+    color:rgb(162, 162, 162)
+}
