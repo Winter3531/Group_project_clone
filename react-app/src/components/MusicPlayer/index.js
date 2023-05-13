@@ -9,8 +9,13 @@ import { currentTracksFetch } from '../../store/playerState';
 // import 'react-h5-audio-player/src/styles.scss' Use SASS
 
 export default function Player() {
+    const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
     const [currentTrack, setTrackIndex] = useState(0)
+
+    useEffect(() => {
+        setTrackIndex(0)
+    },[dispatch, playlist])
 
     const handleClickNext = () => {
         // console.log('click next', currentTrack)
@@ -24,7 +29,6 @@ export default function Player() {
         setTrackIndex((currentTrack) =>
             currentTrack > 0 ? currentTrack - 1 : 0
         )
-
     }
 
     const handleEnd = () => {
@@ -45,6 +49,7 @@ export default function Player() {
                 onClickPrevious={handleClickPrev}
                 onEnded={handleEnd}
                 // Try other props!
+                autoPlay={true}
                 />
             }
         </>

@@ -14,8 +14,8 @@ import Navigation from "./components/Navigation";
 import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
-import SearchResult from "./components/Search";
 import Player from "./components/MusicPlayer";
+import './App.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -26,46 +26,51 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      <SideNav isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path="/collection">
-            <ProfilePage />
-          </Route>
-          <Route exact path='/albums/new'>
-            <CreateAlbumForm />
-          </Route>
-          <Route exact path="/albums/current">
-            <UserAlbums />
-          </Route>
-          <Route path='/albums/:albumId/edit'>
-            <EditAlbumForm />
-          </Route>
-          <Route exact path="/albums/:albumId">
-            <AlbumDetials />
-          </Route>
-          <Route exact path="/playlists/current">
-            <UserPlaylists />
-          </Route>
-          <Route path="/playlists/:playlistId">
-            <PlaylistDetails />
-          </Route>
-          <Route path="/songs">
-            <SongsDisplay />
-          </Route>
-          <Route path="/search">
-            <SearchResult />
-          </Route>
-        </Switch>
-      )}
-      <Player />
+      <div className="whole-page">
+        <div>
+          <Navigation isLoaded={isLoaded} />
+          <SideNav isLoaded={isLoaded} />
+        </div>
+        <div className="pages">
+          {isLoaded && (
+            <Switch>
+              <Route path="/login" >
+                <LoginFormPage />
+              </Route>
+              <Route path="/signup">
+                <SignupFormPage />
+              </Route>
+              <Route path="/collection">
+                <ProfilePage />
+              </Route>
+              <Route exact path='/albums/new'>
+                <CreateAlbumForm />
+              </Route>
+              <Route exact path="/albums/current">
+                <UserAlbums />
+              </Route>
+              <Route path='/albums/:albumId/edit'>
+                <EditAlbumForm />
+              </Route>
+              <Route exact path="/albums/:albumId">
+                <AlbumDetials />
+              </Route>
+              <Route exact path="/playlists/current">
+                <UserPlaylists />
+              </Route>
+              <Route path="/playlists/:playlistId">
+                <PlaylistDetails />
+              </Route>
+              <Route path="/songs">
+                <SongsDisplay />
+              </Route>
+            </Switch>
+          )}
+        </div>
+      </div>
+      <div className="player">
+          <Player />
+      </div>
     </>
   );
 }

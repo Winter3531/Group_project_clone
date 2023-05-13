@@ -37,7 +37,7 @@ const initalState = {};
 export default function playerReducer(state = initalState, action) {
     switch(action.type) {
         case CURR_PLAY:
-            return {...action.tracks};
+            return {...action.tracks}
 
         default:
             return state;

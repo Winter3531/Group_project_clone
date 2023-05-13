@@ -18,7 +18,7 @@ class Song(db.Model):
 
     albums = db.relationship('Album', back_populates='songs')
 
-    playlists_song = db.relationship('SongPlaylist', back_populates='songs')
+    playlists_song = db.relationship('SongPlaylist', back_populates='songs', cascade="all, delete-orphan")
 
     likes = db.relationship('Like', lazy=True, primaryjoin='and_(Like.likable_type=="song", foreign(Like.likable_id)==Song.id)', back_populates='songs', cascade="all, delete-orphan")
 
@@ -56,6 +56,11 @@ class Song(db.Model):
             'song_src': self.song_src,
             'album_id': self.album_id,
             'likes': [like.to_dict() for like in self.likes] if self.likes else []
+        }
+
+    def player_dict(self):
+        return {
+            "song_src": self.song_src,
         }
 
 
