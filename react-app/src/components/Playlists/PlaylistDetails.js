@@ -103,6 +103,7 @@ const PlaylistDetails = () => {
                                 onClick={likeClick}></i>
                         </span>
                     }
+            <OpenPlayer type='playlists' typeId={playlist.id} />
                     {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                         <OpenModalButton
                             buttonText={"Edit Playlist"}

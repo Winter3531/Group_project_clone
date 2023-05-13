@@ -42,5 +42,8 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'image': self.user_image,
             'Follow': [user.to_dict() for user in self.likes] if self.likes else []
         }

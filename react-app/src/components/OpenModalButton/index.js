@@ -32,6 +32,8 @@ function OpenModalButton({
     return (<i onClick={onClick} className="fa fa-edit" />)
   } else if (buttonText === 'Delete Album') {
     return (<i onClick={onClick} className="fas fa-times" />)
+  } else if (buttonText === 'Add Song to Playlist') {
+    return (<i onClick={onClick} className="fa fa-plus" />)
   }
   return (<button onClick={onClick}>{buttonText}</button>);
 }

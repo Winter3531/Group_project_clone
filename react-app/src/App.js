@@ -14,7 +14,6 @@ import Navigation from "./components/Navigation";
 import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
-import SearchResult from "./components/Search";
 import Player from "./components/MusicPlayer";
 import './App.css'
 
@@ -28,7 +27,7 @@ function App() {
   return (
     <>
       <div className="whole-page">
-        <div className="navi-drawer">
+        <div>
           <Navigation isLoaded={isLoaded} />
           <SideNav isLoaded={isLoaded} />
         </div>
@@ -65,14 +64,13 @@ function App() {
               <Route path="/songs">
                 <SongsDisplay />
               </Route>
-              <Route path="/search">
-                <SearchResult />
-              </Route>
             </Switch>
           )}
         </div>
       </div>
-      <Player />
+      <div className="player">
+          <Player />
+      </div>
     </>
   );
 }

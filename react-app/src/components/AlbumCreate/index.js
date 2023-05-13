@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { createAlbum } from "../../store/album";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-
+import './AlbumCreate.css'
 
 const CreateAlbumFormModal = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [album_name, setAlbumName] = useState("");
-    const [year_recorded, setYearRecorded] = useState("");
+    const [year_recorded, setYearRecorded] = useState(1999);
     const [album_img, setAlbumImg] = useState("");
     const { closeModal } = useModal();
 
@@ -35,39 +35,45 @@ const CreateAlbumFormModal = () => {
     };
 
     return (
-        <section>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <div>Album Name</div>
-                    <input
-                        type="text"
-                        placeholder="Album Name"
-                        required
-                        value={album_name}
-                        onChange={updateAlbumName} />
-                </div>
-                <div>
-                    <div>Year Recorded</div>
-                    <input
-                        type="number"
-                        placeholder="Year Recorded"
-                        required
-                        value={year_recorded}
-                        onChange={updateYearRecorded} />
-                </div>
-                <div>
-                    <div>Album Image</div>
-                    <input
-                        type="text"
-                        placeholder="Album Image"
-                        required
-                        value={album_img}
-                        onChange={updateAlbumImg} />
-                </div>
-                <button type="submit">Create new Album</button>
-
-            </form>
-        </section>
+        <form className="create-form" onSubmit={handleSubmit}>
+            <div>
+                <h1>Add New Album</h1>
+            </div>
+            <div>
+                <div>Album Name</div>
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Album Name"
+                    required
+                    value={album_name}
+                    onChange={updateAlbumName} />
+            </div>
+            <div>
+                <div>Year Recorded</div>
+                <input
+                    className="input"
+                    type="number"
+                    placeholder="Year Recorded"
+                    required
+                    value={year_recorded}
+                    onChange={updateYearRecorded} />
+            </div>
+            <div>
+                <div>Album Image</div>
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Album Image"
+                    required
+                    value={album_img}
+                    onChange={updateAlbumImg} />
+            </div>
+            <div className="create-buttons">
+                <button className="create-button" type="submit">Create</button>
+                <button className="create-button" onClick={closeModal}>No </button>
+            </div>
+        </form>
     )
 }
 
