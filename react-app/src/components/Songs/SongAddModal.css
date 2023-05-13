@@ -6,7 +6,6 @@
     border: rgb(248, 249, 219) solid 1px;
     font-family: Arial, Helvetica, sans-serif;
     color:  rgb(248, 249, 219);
-    font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template-rows: repeat(auto-fill, 80px);
     text-align: center;
@@ -15,7 +14,7 @@
 .input-box {
     height: 30px;
     width: 200px;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 5px;
 }
 

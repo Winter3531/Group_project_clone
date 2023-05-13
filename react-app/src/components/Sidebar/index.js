@@ -16,7 +16,7 @@ const SideNav = ({ isLoaded }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [input, setInput] = useState("")
-    const {albumId} = useParams()
+    const { albumId } = useParams()
 
     const results = useSelector((state) => state.search)
     const albums = results.albums
@@ -25,8 +25,6 @@ const SideNav = ({ isLoaded }) => {
 
     useEffect(() => {
         if (input.length > 0) {
-            dispatch(allSongsFetch());
-            dispatch(getAllAlbums());
             dispatch(search(input));
         }
     }, [dispatch, input])
@@ -43,44 +41,45 @@ const SideNav = ({ isLoaded }) => {
 
     const reset = (id) => {
         document.querySelector(".search-results").classList.add("hidden");
-        dispatch(getAlbumDetail(id));
         history.push(`/albums/${id}`);
         setInput("")
     }
 
+    const randomColor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
+    document.documentElement.style.setProperty('--main-bg-color', randomColor);
+
 
     return (
         <div className="navi-drawer">
+            <input
+                className="search-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onFocus={() => show()}
+                placeholder="Search..."
+            />
             <div className="search-container" onBlur={(e) => hide(e)}>
-                    <input
-                        className="search-input"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onFocus={() => show()}
-                        placeholder="Search..."
-                    />
-                    <div className="search-results hidden">
-                        {songs  && ( songs.length > 0  && input?.length > 0 ?
-                            songs.map((song) => (
-                                <div key={song.id} className="search-card" onMouseDown={() => reset(song.album_id)}>
-                                    <p>Song</p>
-                                    <div>{song?.song_name}</div>
-                                </div>))
-                        : <div className="search-none">No Song Match.</div>)}
-                    </div>
-                    <div className="search-results hidden">
-                        {albums && (albums.length > 0  && input?.length > 0 ?
+                <div className="search-results hidden">
+                    {songs && (songs.length > 0 && input?.length > 0 ?
+                        songs.map((song) => (
+                            <div key={song.id} className="search-card" onMouseDown={() => reset(song.album_id)}>
+                                <p>Song</p>
+                                <div>{song?.song_name}</div>
+                            </div>))
+                        : (input?.length > 0 ? <div className="search-none">Nothing.....</div> :
+                            <div className="search-none hidden">Nothing.....</div>)
+                    )}
+                    {albums && (albums.length > 0 && input?.length > 0 ?
                         (
                             albums.map((album) => (
                                 <div key={album.id} className="search-card" onMouseDown={() => reset(album.id)}>
                                     <p>Album</p>
                                     <div>{album.album_name}</div>
-                                    <img className="search-image" src={reset.image} alt="" />
                                 </div>))
-                        ) : (
-                            <div className="search-none">No Results.</div>
-                        ))}
-                    </div>
+                        ) : (input?.length > 0 ? <div className="search-none">Nothing.....</div> :
+                            <div className="search-none hidden">Nothing.....</div>))}
+                </div>
+
             </div>
             {isLoaded && sessionUser && (
                 <div>
