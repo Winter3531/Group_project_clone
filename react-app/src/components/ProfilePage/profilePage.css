@@ -1,11 +1,27 @@
 .no-profile {
-    padding: 60px;
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 1500px;
+}
+
+.no-profile-header {
+    display: flex;
+    margin-bottom: 50px;
+    align-items: center;
+    align-content: center;
 }
 
 .no-user-all-albums {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    width: 80%;
+}
 
+.no-profile h2 {
+    border-bottom: solid white 1px;
+    margin-right: 75%
 }
 
 .profile-page-whole {
@@ -13,7 +29,6 @@
     flex-direction: column;
     justify-content: space-around;
     margin-left: 60px;
-    text-decoration: none;
 }
 
 /* ************** */
@@ -82,5 +97,10 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 20px;
+    margin: 40px;
+}
+
+.album-card p {
+    margin: 10px;
+    align-self: center;
 }
