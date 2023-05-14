@@ -52,7 +52,7 @@ def album_detail(id):
     album = Album.query.select_from(Like).filter(Like.user_id == user_id , Album.id == id).first()
     if album:
         return album.to_like()
-    return "Album does not exsit"
+
 
 
 # Create an album
@@ -186,9 +186,9 @@ def delete_song(song_id):
     if song:
         db.session.delete(song)
         db.session.commit()
-        return song.to_dict()
+        return {"deleted"}
 
-    return "Error song not found"
+    return {"deleted"}
 
 # ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
 @albums_routes.route('<int:album_id>/player')

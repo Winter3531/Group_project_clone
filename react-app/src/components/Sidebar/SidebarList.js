@@ -22,7 +22,6 @@ const SidebarList = () => {
         userPlaylists = Object.values(playlists).filter((playlists) => playlists.owner_id == user.id)
     }
 
-    console.log(userPlaylists, "this is playlis")
     useEffect(() => {
         dispatch(currentUserAlbums())
         dispatch(currentUserPlaylists())

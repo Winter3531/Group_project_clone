@@ -39,9 +39,9 @@ export default function SongAddModal({ albumId }) {
 
         setErrors([])
         await dispatch(addNewSongFetch(newSongData))
+        await closeModal()
+        await history.push(`/albums/${albumId}`)
         await dispatch(getAlbumDetail(albumId))
-        closeModal()
-        history.push(`/albums/${albumId}`)
     }
 
     return (

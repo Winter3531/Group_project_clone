@@ -38,7 +38,7 @@ const unlike = (song) => ({
 export const deleteSongThunk = (songId) => async (dispatch) => {
 
     const response = await fetch(`/api/albums/songs/${songId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
     })
 
 
