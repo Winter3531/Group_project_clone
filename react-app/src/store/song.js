@@ -92,7 +92,6 @@ export const allSongsFetch = () => async (dispatch) => {
 };
 
 export const likeSong = (new_like) => async dispatch => {
-    console.log(new_like, 'this is song in thnun')
     const response = await fetch(`/api/songs/${new_like.likable_id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

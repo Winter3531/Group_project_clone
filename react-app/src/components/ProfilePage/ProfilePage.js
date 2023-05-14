@@ -39,7 +39,7 @@ export default function ProfilePage() {
             dispatch(currentUserAlbums());
         } else {
             dispatch(getAllAlbums())
-            dispatch(getAllPlaylists)
+            dispatch(getAllPlaylists())
         }
     },[dispatch, user])
 
@@ -99,6 +99,10 @@ export default function ProfilePage() {
         </div>
         :
         <div className='no-profile'>
+            <div className="no-profile-header">
+                <img src='https://res.cloudinary.com/dtcuw5i2e/image/upload/v1684030309/spotify-logo_mvjr5k.jpg' height={50} width={50}/>
+                <h1>SpotiPy</h1>
+            </div>
             <h2>All Albums</h2>
             <div className="no-user-all-albums" onClick={clickAttempt}>
                 {Object.values(albums).map( album => (
@@ -112,7 +116,7 @@ export default function ProfilePage() {
             <div className="no-user-all-albums" onClick={clickAttempt}>
                 {Object.values(playlists).map( playlist => (
                     <div className="album-card" key={playlist.id}>
-                        <img height={90} width={90} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg"/>
+                        <img height={90} width={90} id='album-img' src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg"/>
                         <p>{playlist.playlist_name}</p>
                     </div>
                 ))}
