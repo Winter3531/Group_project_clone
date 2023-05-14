@@ -158,7 +158,6 @@ export const unlikePlaylist = (playlistId) => async (dispatch) => {
 };
 
 export const RemoveSong = (playlistId, songId) => async (dispatch) => {
-    console.log(playlistId, songId, 'this is data in remove song thunk')
     const res = await fetch(`/api/playlists/${playlistId}/songs/${songId}`, {
         method: 'DELETE'
     });
