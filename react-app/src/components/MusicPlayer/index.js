@@ -12,14 +12,16 @@ export default function Player() {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
     const [currentTrack, setTrackIndex] = useState(0)
+    const [track, setTrack] = useState()
 
     useEffect(() => {
         setTrackIndex(0)
     },[dispatch, playlist])
 
     const handleClickNext = () => {
+        // console.log(currentTrack, "NEXT")
         setTrackIndex((currentTrack) =>
-              currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
+            currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
       };
 
@@ -30,8 +32,9 @@ export default function Player() {
     }
 
     const handleEnd = () => {
+        // console.log(currentTrack, "END")
         setTrackIndex((currentTrack) =>
-              currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
+            currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
     }
 
@@ -40,7 +43,7 @@ export default function Player() {
             {playlist &&
                 <AudioPlayer
                 volume="0.1"
-                src={playlist[currentTrack].song_src}
+                src={playlist[currentTrack]?.song_src}
                 showSkipControls
                 onClickNext={handleClickNext}
                 onClickPrevious={handleClickPrev}

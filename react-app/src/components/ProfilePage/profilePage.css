@@ -24,6 +24,10 @@
     margin-right: 75%
 }
 
+.no-profile-header img {
+    border-radius: 100%;
+}
+
 .profile-page-whole {
     display: flex;
     flex-direction: column;
