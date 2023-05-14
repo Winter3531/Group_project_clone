@@ -6,7 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
 import RemoveSongModal from "./RemoveSongModal";
-import OpenPlayer from "../MusicPlayer";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 import PlaylistSongLike from "../SongLike/playlistLikes";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 //
