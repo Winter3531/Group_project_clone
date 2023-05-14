@@ -10,7 +10,12 @@ const PlaylistSongLike = ({song, playlistId}) => {
 
     const handleLikeSong = async (e) => {
         e.preventDefault()
-        await dispatch(likeSong(song.id))
+        const new_like ={
+            user_id: sessionUser.id,
+            likable_id: song.id,
+            likable_type: "song"
+        }
+        await dispatch(likeSong(new_like))
 
         dispatch(PlaylistDetailsFetch(playlistId))
     }

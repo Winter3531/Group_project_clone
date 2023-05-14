@@ -17,10 +17,11 @@ import { getAllPlaylists } from "../../store/playlist";
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
-    const playlists = useSelector(state=>state.playlists)
-    const albums = useSelector(state=>state.albums)
+    const playlists = useSelector(state=>state?.playlists)
+    const albums = useSelector(state=>state?.albums)
     const {user} = useSelector(state=>state.session)
 
+    console.log(playlists, 'this is playlists')
     let userAlbums =[]
     if (user) {
         userAlbums = Object.values(albums).filter((album) => album.user_id == user.id)

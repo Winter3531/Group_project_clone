@@ -11,9 +11,15 @@ const SongLike = ({song, albumId}) => {
     const dispatch = useDispatch();
     const history = useHistory()
 
+
     const handleLikeSong = async (e) => {
         e.preventDefault()
-        await dispatch(likeSong(song.id))
+        const new_like ={
+            user_id: sessionUser.id,
+            likable_id: song.id,
+            likable_type: "song"
+        }
+        await dispatch(likeSong(new_like))
 
         dispatch(getAlbumDetail(albumId))
     }
@@ -32,7 +38,7 @@ const SongLike = ({song, albumId}) => {
     return (
 
 
-        <div>{Object.values(song.likes).map((like) => like.user_id) == sessionUser.id ?
+        <div>{Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
             <div className="like-input">
             <div
                 className="true"

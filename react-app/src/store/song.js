@@ -91,11 +91,12 @@ export const allSongsFetch = () => async (dispatch) => {
     };
 };
 
-export const likeSong = (song) => async dispatch => {
-    const response = await fetch(`/api/songs/${song}/likes`, {
+export const likeSong = (new_like) => async dispatch => {
+    console.log(new_like, 'this is song in thnun')
+    const response = await fetch(`/api/songs/${new_like.likable_id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(song)
+        body: JSON.stringify(new_like)
     });
 
 
