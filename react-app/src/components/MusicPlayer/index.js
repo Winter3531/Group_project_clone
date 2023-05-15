@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { currentTracksFetch } from '../../store/playerState';
 
 // import 'react-h5-audio-player/lib/styles.less' Use LESS
 // import 'react-h5-audio-player/src/styles.scss' Use SASS
@@ -12,7 +11,6 @@ export default function Player() {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
     const [currentTrack, setTrackIndex] = useState(0)
-    const [track, setTrack] = useState()
 
     useEffect(() => {
         setTrackIndex(0)
