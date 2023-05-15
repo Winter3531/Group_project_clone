@@ -49,10 +49,10 @@ def user_albums():
 @albums_routes.route('/<int:id>')
 def album_detail(id):
     user_id = current_user.get_id()
-    album = Album.query.select_from(Like).filter(Like.user_id == user_id , Album.id == id).first()
+    album = Album.query.filter( Album.id == id).first()
     if album:
         return album.to_like()
-    return "Album does not exsit"
+    return {"error": "can't find album"}
 
 
 # Create an album
@@ -115,21 +115,20 @@ def delete_album(id):
     db.session.delete(album)
     db.session.commit()
 
-    return user_albums()
+    return album.to_dict()
 
 # Like an album
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
 @login_required
 def like_album(id):
     user_id = current_user.get_id()
-    albums = Album.query.select_from(Like).filter(Album.id == id, Like.likable_type == 'album', Like.likable_id == id).first()
+    albums = Album.query.select_from(Like).filter(Album.id == id, Like.likable_type == 'album', Like.likable_id == id, Like.user_id == user_id).first()
     # albums = Like.query.filter(Like.likable_id == id, Like.likable_type == 'album')
     # return {album.id: album.to_dict() for album in albums}
     if albums and request.method == 'POST':
-        return albums.to_like()
+        return {"error": "You have liked this album"}
     elif albums and request.method == 'GET':
         return albums.to_like()
-
 
     liked_album = Like(
         user_id=user_id,
@@ -146,7 +145,8 @@ def like_album(id):
 @login_required
 def delete_like_album(id):
     user_id = current_user.get_id()
-    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id, Like.user_id == user_id ).first()
+
+    liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id, Like.user_id == user_id).first()
     if liked_album:
         db.session.delete(liked_album)
         db.session.commit()
@@ -186,9 +186,9 @@ def delete_song(song_id):
     if song:
         db.session.delete(song)
         db.session.commit()
-        return song.to_dict()
+        return {"Message":"Deleted"}
 
-    return "Error song not found"
+    return {"error":"Can't find song"}
 
 # ROUTE TO PULL SONGS IN LIST FOR THE PLAYER
 @albums_routes.route('<int:album_id>/player')

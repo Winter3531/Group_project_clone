@@ -6,19 +6,20 @@ import OpenModalButton from "../OpenModalButton";
 import EditPlaylistModal from "./EditPlaylistModal";
 import DeletePlaylistModal from "./DeletePlaylistModal";
 import RemoveSongModal from "./RemoveSongModal";
-import OpenPlayer from "../MusicPlayer";
+import OpenPlayer from "../MusicPlayer/OpenPlayer";
 import PlaylistSongLike from "../SongLike/playlistLikes";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-//
+
 import './PlaylistDetails.css'
 
 
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory()
-    const sessionUser = useSelector(state=>state.session.user);
+    const sessionUser = useSelector(state=>state?.session.user);
     const { playlistId } = useParams();
     const playlist = useSelector(state=>state?.playlists[playlistId]);
+
 
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
@@ -38,7 +39,12 @@ const PlaylistDetails = () => {
 
     const likeClick = async (e) => {
         e.preventDefault();
-        await dispatch(likePlaylist(playlistId))
+        const new_like = {
+            user_id: sessionUser.id,
+            likable_id: playlistId,
+            likable_type: 'playlist'
+        }
+        await dispatch(likePlaylist(new_like))
         await dispatch(PlaylistDetailsFetch(playlistId))
         history.push(`/playlists/${playlistId}`)
     };
@@ -99,7 +105,7 @@ const PlaylistDetails = () => {
                     </div>
 
                 <div className="playlist-buttons">
-                    {playlist.likable_type == "playlist" ?
+                    {playlist?.user_id && (playlist?.user_id.filter((id) => id == sessionUser.id).length > 0 ?
                         <span className="like-input">
                             <i className="fas fa-heart true"
                                 onClick={unlikeClick}></i>
@@ -109,7 +115,7 @@ const PlaylistDetails = () => {
                             <i className="far fa-heart false"
                                 onClick={likeClick}></i>
                         </span>
-                    }
+                    )}
                     <OpenPlayer type='playlists' typeId={playlist.id} />
                     {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
                         <OpenModalButton
