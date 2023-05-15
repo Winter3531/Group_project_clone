@@ -38,7 +38,7 @@ const SongLike = ({song, albumId}) => {
     return (
 
 
-        <div>{ (Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
+        <div>{ sessionUser && (Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
             <div className="like-input">
             <div
                 className="true"

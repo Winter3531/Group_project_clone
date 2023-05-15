@@ -15,6 +15,7 @@ import SideNav from "./components/Sidebar";
 import CreateAlbumForm from "./components/AlbumCreate";
 import EditAlbumForm from "./components/AlbumEdit";
 import Player from "./components/MusicPlayer";
+import HomePage from "./components/HomePage/HomePage";
 import './App.css'
 
 function App() {
@@ -61,6 +62,9 @@ function App() {
               </Route>
               <Route path="/songs">
                 <SongsDisplay />
+              </Route>
+              <Route exact path='/home'>
+                <HomePage />
               </Route>
             </Switch>
           )}
