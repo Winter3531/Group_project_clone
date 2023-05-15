@@ -107,7 +107,7 @@ const AlbumDetials = () => {
 
                         <div className="album-buttons">
                             {album && (<OpenPlayer type='albums' typeId={album.id} />)}
-                            { sessionUser && (album?.liked_user_id.filter((id) => id == sessionUser.id).length > 0 ?
+                            { sessionUser && album?.liked_user_id ?((album?.liked_user_id.filter((id) => id == sessionUser.id).length > 0 ?
                                 <span className="like-input">
                                     <i className="fas fa-heart true"
                                         onClick={handleCancelClick}></i>
@@ -117,7 +117,7 @@ const AlbumDetials = () => {
                                     <i className="far fa-heart false"
                                         onClick={handleClick}></i>
                                 </span>
-                            )}
+                            )) : <></>}
                             {sessionUser && sessionUser.id === album.user_id ?
                                 <>
                                     <OpenModalButton
@@ -157,14 +157,14 @@ const AlbumDetials = () => {
                                                         modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                                     />
                                                 </span>
-                                            </>
-                                            : <></>}
                                                 <div className="add-song-button">
                                                     <OpenModalButton
                                                         buttonText="Add Song to Playlist"
                                                         modalComponent={<AddSongModal songId={song.id} />}
                                                     />
                                                 </div>
+                                            </>
+                                            : <></>}
                                     </td>
                                 </tr>)
                                 : <div>No Songs</div>)}

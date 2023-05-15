@@ -10,12 +10,15 @@ function Navigation({ isLoaded }){
 	return (
 		<div className='nav-bar'>
 			<h2 className='home-icon'>
-				<NavLink className='home-icon' exact to="/collection"><i className='fas fa-home'></i> Home</NavLink>
+				<NavLink className='home-icon' exact to="/home"><i className='fas fa-home'></i> Home</NavLink>
+			</h2>
+			<h2>
+				<NavLink className='home-icon' exact to="/collection"><i className='fas fa-music'></i> Library</NavLink>
 			</h2>
 			{isLoaded && (
-				<div>
-					<ProfileButton user={sessionUser} />
-				</div>
+				<h2>
+					<ProfileButton user={sessionUser} /> Profile
+				</h2>
 			)}
 		</div>
 	);
