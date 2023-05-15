@@ -157,14 +157,14 @@ const AlbumDetials = () => {
                                                         modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                                     />
                                                 </span>
-                                                <div className="add-song-button">
+                                            </>
+                                            : <></>}
+                                                {sessionUser && (<div className="add-song-button">
                                                     <OpenModalButton
                                                         buttonText="Add Song to Playlist"
                                                         modalComponent={<AddSongModal songId={song.id} />}
                                                     />
-                                                </div>
-                                            </>
-                                            : <></>}
+                                                </div>)}
                                     </td>
                                 </tr>)
                                 : <div>No Songs</div>)}
