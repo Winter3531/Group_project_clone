@@ -15,7 +15,7 @@ import { getAllPlaylists } from "../../store/playlist";
 export default function ProfilePage() {
     const dispatch = useDispatch();
     const playlists = useSelector(state=>state.playlists)
-    const albums = useSelector(state=>state.albums)
+    const albums = useSelector(state=>state?.albums)
     const {user} = useSelector(state=>state.session)
 
     let userAlbums =[]
@@ -75,7 +75,6 @@ export default function ProfilePage() {
             }
                 <div className="album-display">
                     <h3>Albums</h3>
-                    {/* <hr className="line-break"></hr> */}
                     <div className="album-bar">
                         {userAlbums.map( album => (
                             <div className="album-card" key={album.id}>
