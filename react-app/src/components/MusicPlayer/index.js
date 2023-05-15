@@ -10,6 +10,7 @@ import 'react-h5-audio-player/lib/styles.css';
 export default function Player() {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
+    const sessionUser = useSelector(state=>state.session?.user)
     const [currentTrack, setTrackIndex] = useState(0)
 
     useEffect(() => {
@@ -38,7 +39,8 @@ export default function Player() {
 
     return (
         <>
-            {playlist &&
+            {console.log(sessionUser, playlist)}
+            {playlist && sessionUser &&
                 <AudioPlayer
                 volume="0.1"
                 src={playlist[currentTrack]?.song_src}
