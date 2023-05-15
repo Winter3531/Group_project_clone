@@ -5,6 +5,7 @@ import { DeletePlaylist, currentUserPlaylists } from "../../store/playlist";
 import { useHistory } from "react-router-dom";
 
 
+
 const DeletePlaylistModal = ({playlistId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -20,9 +21,14 @@ const DeletePlaylistModal = ({playlistId}) => {
 
     return (
         <>
-            <h1 className="playlist-modal-header">Are you sure you want to delete your playlist?</h1>
-            <button className="yes" onClick={handleClick}>Delete</button>
-            <button className="no" onClick={closeModal}>Cancel</button>
+            <div className="delete-form">
+                <h1 className="delete-title">Confirm Delete</h1>
+                <div className="delete-confirm">Are you sure you want to delete this playlist?</div>
+                <div className="delete-buttons">
+                <button className="delete-button" onClick={handleClick}>Yes (Delete)</button>
+                <button className="delete-button" onClick={closeModal}>No </button>
+                </div>
+            </div>
         </>
     )
 }

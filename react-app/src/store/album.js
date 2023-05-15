@@ -119,16 +119,17 @@ export const deleteAlbum = albumId => async dispatch => {
 
     if (response.ok) {
         const album = await response.json();
-        dispatch(remove(album))
+        dispatch(remove(albumId))
         return album
     }
 }
 
-export const likeAlbum = (album) => async dispatch => {
-    const response = await fetch(`/api/albums/${album.id}/likes`, {
+export const likeAlbum = (new_like) => async dispatch => {
+
+    const response = await fetch(`/api/albums/${new_like.likable_id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(album)
+        body: JSON.stringify(new_like)
     });
 
     if (response.ok) {
@@ -138,14 +139,14 @@ export const likeAlbum = (album) => async dispatch => {
     }
 }
 
-export const unLikeAlbum = album => async dispatch => {
-    const response = await fetch(`/api/albums/${album.id}/likes`, {
+export const unLikeAlbum = albumId => async dispatch => {
+    const response = await fetch(`/api/albums/${albumId}/likes`, {
         method: 'DELETE',
     });
 
     if (response.ok) {
         const liked_album = await response.json();
-        dispatch(unlike(album))
+        dispatch(unlike(liked_album))
         return liked_album
     }
 }

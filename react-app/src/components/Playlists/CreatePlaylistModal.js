@@ -44,20 +44,26 @@ const PlaylistFormModal = () => {
     };
 
     return (
-        <>
-            <h1 className="playlist-modal-header">Create a new playlist</h1>
-            <form className='playlist-modal-form' onSubmit={handleSubmit}>
-                <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+        <form className='create-form' onSubmit={handleSubmit}>
+            <div>
+                <h1>Create a new playlist</h1>
+            </div>
+            <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+            <div>
+                <div>Playlist Name</div>
                 <input
                     type="text"
                     value={playlist_name}
                     onChange={(e) => setPlaylistName(e.target.value)}
-                    className="playlistName"
+                    className="input"
                     placeholder="Playlist Name"
                 />
-                <button className="submit" disabled={isButtonDisabled} type='submit'>Create Playlist</button>
-            </form>
-        </>
+            </div>
+            <div className="creates">
+                <button className="create-button" type="submit">Create</button>
+                <button className="create-button" onClick={closeModal}>No</button>
+            </div>
+        </form>
     )
 }
 

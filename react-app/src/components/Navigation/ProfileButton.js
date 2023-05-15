@@ -13,8 +13,6 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const ulRef = useRef();
   const { closeModal } = useModal();
 
@@ -40,13 +38,11 @@ function ProfileButton({ user }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
-    history.push('/collection')
+    await history.push('/collection')
   };
 
   const createDemo = () => {
-    setEmail('demo@aa.io');
-    setPassword('password');
-    return dispatch(login(email, password)).then(closeModal)
+    return dispatch(login('demo@aa.io', 'password')).then(closeModal)
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

@@ -99,14 +99,14 @@ def deletePlaylist(id):
 @login_required
 def like_playlist(id):
     user_id = current_user.get_id()
-    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id).first()
+    playlist = Playlist.query.select_from(Like).filter(Like.likable_type == 'playlist', Like.likable_id == id, Like.user_id == user_id).first()
 
     if playlist and request.method == 'GET':
         if playlist:
             return playlist.to_dict()
 
     if playlist and request.method == 'POST':
-        return playlist.exists_to_dict()
+        return {"error": "You have liked this playlist"}
 
     liked_playlist = Like(
         user_id = user_id,
@@ -122,7 +122,8 @@ def like_playlist(id):
 @playlists_routes.route('/<int:id>/likes', methods=['DELETE'])
 @login_required
 def delete_like_playlist(id):
-    liked_playlist = Like.query.select_from(Playlist).filter(Playlist.id == id, Like.likable_type == 'playlist').first()
+    user_id = current_user.get_id()
+    liked_playlist = Like.query.select_from(Playlist).filter(Playlist.id == id, Like.likable_type == 'playlist', Like.likable_id == id, Like.user_id == user_id).first()
 
     if liked_playlist:
         db.session.delete(liked_playlist)

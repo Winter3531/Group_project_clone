@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { currentTracksFetch } from '../../store/playerState';
 
 // import 'react-h5-audio-player/lib/styles.less' Use LESS
 // import 'react-h5-audio-player/src/styles.scss' Use SASS
@@ -11,6 +10,7 @@ import { currentTracksFetch } from '../../store/playerState';
 export default function Player() {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
+    const sessionUser = useSelector(state=>state.session?.user)
     const [currentTrack, setTrackIndex] = useState(0)
 
     useEffect(() => {
@@ -18,8 +18,9 @@ export default function Player() {
     },[dispatch, playlist])
 
     const handleClickNext = () => {
+        // console.log(currentTrack, "NEXT")
         setTrackIndex((currentTrack) =>
-              currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
+            currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
       };
 
@@ -30,17 +31,18 @@ export default function Player() {
     }
 
     const handleEnd = () => {
+        // console.log(currentTrack, "END")
         setTrackIndex((currentTrack) =>
-              currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
+            currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
     }
 
     return (
         <>
-            {playlist &&
+            {playlist && sessionUser &&
                 <AudioPlayer
                 volume="0.1"
-                src={playlist[currentTrack].song_src}
+                src={playlist[currentTrack]?.song_src}
                 showSkipControls
                 onClickNext={handleClickNext}
                 onClickPrevious={handleClickPrev}
