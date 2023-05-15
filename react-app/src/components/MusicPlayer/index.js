@@ -39,7 +39,6 @@ export default function Player() {
 
     return (
         <>
-            {console.log(sessionUser, playlist)}
             {playlist && sessionUser &&
                 <AudioPlayer
                 volume="0.1"
