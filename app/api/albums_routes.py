@@ -115,7 +115,7 @@ def delete_album(id):
     db.session.delete(album)
     db.session.commit()
 
-    return user_albums()
+    return album.to_dict()
 
 # Like an album
 @albums_routes.route('/<int:id>/likes', methods=['GET','POST'])
@@ -145,7 +145,7 @@ def like_album(id):
 @login_required
 def delete_like_album(id):
     user_id = current_user.get_id()
-    print(id,' this is id in ........')
+
     liked_album = Like.query.select_from(Album).filter(Album.id == id, Like.likable_type =='album', Like.likable_id == id, Like.user_id == user_id).first()
     if liked_album:
         db.session.delete(liked_album)

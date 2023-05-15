@@ -7,7 +7,7 @@ import './SongLike.css'
 import { getAlbumDetail } from "../../store/album";
 
 const SongLike = ({song, albumId}) => {
-    const sessionUser = useSelector(state => state?.session.user);
+    const sessionUser = useSelector(state => state?.session?.user);
     const dispatch = useDispatch();
     const history = useHistory()
 
@@ -38,7 +38,7 @@ const SongLike = ({song, albumId}) => {
     return (
 
 
-        <div>{Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
+        <div>{ (Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
             <div className="like-input">
             <div
                 className="true"
@@ -55,7 +55,7 @@ const SongLike = ({song, albumId}) => {
 
             </div>
         </div>
-        }</div>
+        )}</div>
     )
 };
 

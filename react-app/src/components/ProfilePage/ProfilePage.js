@@ -21,7 +21,6 @@ export default function ProfilePage() {
     const albums = useSelector(state=>state?.albums)
     const {user} = useSelector(state=>state.session)
 
-    console.log(playlists, 'this is playlists')
     let userAlbums =[]
     if (user) {
         userAlbums = Object.values(albums).filter((album) => album.user_id == user.id)

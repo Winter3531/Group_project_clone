@@ -40,7 +40,7 @@ function ProfileButton({ user }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
-    history.push('/collection')
+    await history.push('/collection')
   };
 
   const createDemo = () => {

@@ -132,10 +132,12 @@ export const DeletePlaylist = (playlistId) => async (dispatch) => {
     }
 };
 
-export const likePlaylist = (playlistId) => async (dispatch) => {
-    const res = await fetch(`/api/playlists/${playlistId}/likes`, {
+export const likePlaylist = (new_like) => async (dispatch) => {
+
+    const res = await fetch(`/api/playlists/${new_like.likable_id}/likes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(new_like)
     });
 
     if (res.ok) {
