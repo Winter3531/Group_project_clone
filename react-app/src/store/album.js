@@ -119,7 +119,7 @@ export const deleteAlbum = albumId => async dispatch => {
 
     if (response.ok) {
         const album = await response.json();
-        dispatch(remove(album))
+        dispatch(remove(albumId))
         return album
     }
 }

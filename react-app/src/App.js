@@ -20,6 +20,7 @@ import './App.css'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -63,10 +64,10 @@ function App() {
               </Route>
             </Switch>
           )}
+              <div className="player">
+                  <Player />
+              </div>
         </div>
-      </div>
-      <div className="player">
-          <Player />
       </div>
     </>
   );
