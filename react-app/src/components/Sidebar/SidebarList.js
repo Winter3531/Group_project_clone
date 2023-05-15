@@ -47,7 +47,7 @@ const SidebarList = () => {
                 <div key={`sidebar-playlist-${playlist.id}`}>
                 <NavLink to={`/playlists/${playlist.id}`}>
                 <div className="list-name">
-                    {playlist.playlist_name}
+                    {playlist.playlist_name} : {playlist.songs.length} songs
                 </div>
                 </NavLink>
                 </div>

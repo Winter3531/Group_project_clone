@@ -38,11 +38,11 @@ function ProfileButton({ user }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
-    await history.push('/collection')
+    await history.push('/home')
   };
 
   const createDemo = () => {
-    return dispatch(login('demo@aa.io', 'password')).then(closeModal)
+    return dispatch(login('demo@aa.io', 'password')).then(closeModal).then(history.push('/home'))
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

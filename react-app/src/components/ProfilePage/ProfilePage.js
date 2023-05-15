@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
-import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import OpenPlayer from "../MusicPlayer/OpenPlayer"
 
 
 import './profilePage.css'
@@ -60,9 +60,9 @@ export default function ProfilePage() {
                             {userPlaylists.map( playlist => (
                                 <div className="playlist-card" key={playlist.id}>
                                     <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90}/>
-                                    <div>
+                                    <div id='link-to-album-div'>
                                         <NavLink to={`/playlists/${playlist.id}`} >
-                                            <p id='link-to-item' >{playlist.playlist_name}</p>
+                                            <p id='link-to-album' >{playlist.playlist_name}</p>
                                         </NavLink>
                                     </div>
                                     <div className="play-button">

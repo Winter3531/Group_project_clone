@@ -11,7 +11,7 @@ const AddSongModal = ({songId}) => {
     const [selectedPlaylist, setSelectedPlaylist] = useState(0);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const playlists = useSelector(state=>state?.playlists);
-    const sessionUser = useSelector(state=>state.session.user);
+    const sessionUser = useSelector(state=>state.session?.user);
 
 
     useEffect(() => {
@@ -28,7 +28,12 @@ const AddSongModal = ({songId}) => {
         setFormSubmitted(true);
         setTimeout(() => {
             closeModal()
-        }, 3000);
+        }, 1200);
+    }
+
+    let userPlaylists = []
+    if (sessionUser) {
+        userPlaylists = Object.values(playlists).filter((playlists) => playlists.owner_id === sessionUser.id)
     }
 
 
@@ -44,7 +49,7 @@ const AddSongModal = ({songId}) => {
                                 <div>
                                     <select id='mySelect' value={selectedPlaylist} onChange={handleSelectChange}>
                                         <option value={(e) => e.target.value}>-- Select --</option>
-                                        {Object.values(playlists).map(playlist => {
+                                        {userPlaylists.map(playlist => {
                                             const songs = playlist?.songs.map(song => song.songs);
                                             const songIds = songs.map(song => song.id);
                                             const isSongAdded = songIds.includes(songId);
