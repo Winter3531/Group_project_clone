@@ -21,6 +21,7 @@ const SideNav = ({ isLoaded }) => {
     const results = useSelector((state) => state.search)
     const albums = results.albums
     const songs = results.songs
+    const playlists = results.playlists
 
     useEffect(() => {
         if (input.length > 0) {
@@ -38,9 +39,14 @@ const SideNav = ({ isLoaded }) => {
         };
     };
 
-    const reset = (id) => {
+    const reset1 = (id) => {
         document.querySelector(".search-results").classList.add("hidden");
         history.push(`/albums/${id}`);
+        setInput("")
+    }
+    const reset2 = (id) => {
+        document.querySelector(".search-results").classList.add("hidden");
+        history.push(`/playlists/${id}`);
         setInput("")
     }
 
@@ -61,7 +67,7 @@ const SideNav = ({ isLoaded }) => {
                 <div className="search-results hidden">
                     {songs && (songs.length > 0 && input?.length > 0 ?
                         songs.map((song) => (
-                            <div key={song.id} className="search-card" onMouseDown={() => reset(song.album_id)}>
+                            <div key={song.id} className="search-card" onMouseDown={() => reset1(song.album_id)}>
                                 <p>Song</p>
                                 <div>{song?.song_name}</div>
                             </div>))
@@ -71,12 +77,21 @@ const SideNav = ({ isLoaded }) => {
                     {albums && (albums.length > 0 && input?.length > 0 ?
                         (
                             albums.map((album) => (
-                                <div key={album.id} className="search-card" onMouseDown={() => reset(album.id)}>
+                                <div key={album.id} className="search-card" onMouseDown={() => reset1(album.id)}>
                                     <p>Album</p>
                                     <div>{album.album_name}</div>
                                 </div>))
                         ) : (input?.length > 0 ? <div className="search-none">No Albums</div> :
                             <div className="search-none hidden">No Albums</div>))}
+                    {playlists && (playlists.length > 0 && input?.length > 0 ?
+                        playlists.map((playlists) => (
+                            <div key={playlists.id} className="search-card" onMouseDown={() => reset2(playlists.id)}>
+                                <p>Playlist</p>
+                                <div>{playlists?.playlist_name}</div>
+                            </div>))
+                        : (input?.length > 0 ? <div className="search-none">No Playlist</div> :
+                            <div className="search-none hidden">No Playlist</div>)
+                    )}
                 </div>
 
             </div>

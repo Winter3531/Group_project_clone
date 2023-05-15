@@ -20,12 +20,7 @@ export default function SongAddModal({ albumId }) {
     const [errors, setErrors] = useState([])
     const { closeModal } = useModal();
 
-    const newSongData = {
-        song_name,
-        song_src,
-        song_length,
-        album_id: albumId
-    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,11 +33,18 @@ export default function SongAddModal({ albumId }) {
         if (validationErrors.length) return setErrors(validationErrors)
 
         setErrors([])
+
+        const newSongData = {
+            song_name,
+            song_src,
+            song_length,
+            album_id: albumId
+        }
         await dispatch(addNewSongFetch(newSongData))
-        await dispatch(getAlbumDetail(albumId))
-        closeModal()
-        history.push(`/albums/${albumId}`)
+              dispatch(getAlbumDetail(albumId))
+              closeModal()
     }
+
 
     return (
             <form className="new-song-modal-form" onSubmit={handleSubmit} >
