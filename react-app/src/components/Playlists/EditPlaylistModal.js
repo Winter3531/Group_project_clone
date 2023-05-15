@@ -49,20 +49,27 @@ const EditPlaylistModal = ({playlistId}) => {
     };
 
     return (
-        <>
-            <h1 className="playlist-modal-header">Edit your playlist</h1>
-            <form className='playlist-modal-form' onSubmit={handleSubmit}>
+        <form className='edit-form' onSubmit={handleSubmit}>
+            <div>
+                <h1>Edit Playlist</h1>
+            </div>
+            <div>
                 <ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+            </div>
+            <div>
                 <input
                     type="text"
                     value={playlist_name}
                     onChange={(e) => setPlaylistName(e.target.value)}
-                    className="playlistName"
+                    className="input"
                     placeholder="Playlist Name"
                 />
-                <button className="submit" disabled={isButtonDisabled} type='submit'>Edit</button>
-            </form>
-        </>
+            </div>
+            <div className="edit-buttons">
+                <button className="edit-button" type="submit" disabled={isButtonDisabled}>Update Album</button>
+                <button className="edit-button" onClick={closeModal}>No </button>
+            </div>
+        </form>
     )
 }
 
