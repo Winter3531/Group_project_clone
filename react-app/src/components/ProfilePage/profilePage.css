@@ -60,7 +60,9 @@
 }
 
 #link-to-item {
+    display: flex;
     padding: 10px;
+    align-self: center;
 }
 
 /* ***************** */
@@ -79,6 +81,11 @@
     flex-direction: row;
     justify-content: flex-start;
     padding: 40px;
+}
+
+.playlist-card p {
+    margin: 10px;
+    align-self: center;
 }
 
 /* ****************** */
@@ -107,4 +114,11 @@
 .album-card p {
     margin: 10px;
     align-self: center;
+}
+
+#link-to-album-div {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
 }
