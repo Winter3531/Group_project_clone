@@ -28,7 +28,7 @@ function LoginFormModal() {
 
   return (
     <div className="login-form-modal">
-      <h1>Log In</h1>
+      <h1 id='log-in-h1'>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (

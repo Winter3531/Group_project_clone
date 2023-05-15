@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
-import OpenPlayer from "../MusicPlayer/OpenPlayer";
+import OpenPlayer from "../MusicPlayer/OpenPlayer"
 
 
 import './profilePage.css'
