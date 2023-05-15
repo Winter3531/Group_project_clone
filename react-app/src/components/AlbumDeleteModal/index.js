@@ -4,6 +4,8 @@ import { useModal } from "../../context/Modal";
 import * as albumActions from '../../store/album';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import './AlbumDeleteModal.css'
+import { deleteAlbum } from "../../store/album";
+import { currentUserAlbums } from "../../store/album";
 
 
 const ConfirmDeleteAlbumModal = ({ albumId }) => {
@@ -14,10 +16,10 @@ const ConfirmDeleteAlbumModal = ({ albumId }) => {
 
   const DeleteAlbum = async (e) => {
     e.preventDefault();
-    await dispatch(albumActions.deleteAlbum(albumId));
+    await dispatch(deleteAlbum(albumId));
     closeModal();
+    await dispatch(currentUserAlbums());
     await history.push('/collection')
-    await dispatch(albumActions.currentUserAlbums());
   };
 
   return (

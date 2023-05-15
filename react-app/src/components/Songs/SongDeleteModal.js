@@ -15,8 +15,8 @@ export default function SongDeleteModal({ songId, albumId }){
         e.preventDefault();
         await dispatch(deleteSongThunk(songId))
         await dispatch(getAlbumDetail(albumId))
-        closeModal()
-        history.push(`/albums/${albumId}`)
+        await closeModal()
+        await history.push(`/albums/${albumId}`)
     }
 
     return (

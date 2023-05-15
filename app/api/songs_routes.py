@@ -96,24 +96,24 @@ def delete_song(song_id):
 @login_required
 def like_song(id):
     user_id = current_user.get_id()
-    songs = Song.query.select_from(Like).filter(Song.id == id, Like.likable_type == 'song', Like.likable_id == id).first()
+    songs = Song.query.select_from(Like).filter(Song.id == id, Like.likable_type == 'song', Like.likable_id == id, Like.user_id == user_id).first()
     if songs and request.method == 'POST':
-        return songs.song_like_dict()
+        return {"eorror":"You have liked this song"}
     elif songs and request.method == 'GET':
-        return songs.song_like_dict()
+        return songs.song_album_dict()
 
 
-    liked_album = Like(
+    liked_song = Like(
         user_id=user_id,
         likable_type='song',
         likable_id=id
     )
-    db.session.add(liked_album)
+    db.session.add(liked_song)
     db.session.commit()
-    return liked_album.song_dict()
+    return liked_song.song_dict()
 
 
-# Delete a liked ablum
+# Delete a liked song
 @songs_routes.route('/<int:id>/likes', methods=['DELETE'])
 @login_required
 def delete_like_song(id):

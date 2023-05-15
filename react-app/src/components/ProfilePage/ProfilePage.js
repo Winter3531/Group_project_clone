@@ -14,7 +14,7 @@ import { getAllPlaylists } from "../../store/playlist";
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
-    const playlists = useSelector(state=>state.playlists)
+    const playlists = useSelector(state=>state?.playlists)
     const albums = useSelector(state=>state?.albums)
     const {user} = useSelector(state=>state.session)
 

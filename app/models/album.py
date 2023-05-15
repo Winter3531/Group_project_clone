@@ -45,7 +45,8 @@ class Album(db.Model):
             'songs':[song.song_like_dict() for song in self.songs] if self.songs else [],
             # 'liked':[like.to_dict for like in self.likes] if self.likes else 'No like',
             'likable_type': [like.likable_type for like in self.likes] if self.likes else [],
-            'likable_id': [like.id for like in self.likes] if self.likes else []
+            'likable_id': [like.likable_id for like in self.likes] if self.likes else [],
+            'liked_user_id':[like.user_id for like in self.likes] if self.likes else [],
         }
 
     def liked_album_dict(self):

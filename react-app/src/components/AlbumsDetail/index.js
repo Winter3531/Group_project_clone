@@ -21,7 +21,7 @@ const AlbumDetials = () => {
     const { albumId } = useParams()
     const history = useHistory()
     let album = useSelector(state => state?.albums[albumId]);
-    const sessionUser = useSelector(state => state?.session.user);
+    const sessionUser = useSelector(state => state?.session?.user);
     const [like, setLike] = useState(false);
 
     useEffect(() => {
@@ -41,14 +41,22 @@ const AlbumDetials = () => {
     }
     const handleClick = async (e) => {
         e.preventDefault();
-        await dispatch(likeAlbum(album))
-        await dispatch(getAlbumDetail(albumId))
-        history.push(`/albums/${albumId}`)
+        const new_like = {
+            user_id : sessionUser.id,
+            likable_id: albumId,
+            likable_type: "album"
+        }
+        let createdLike = await dispatch(likeAlbum(new_like))
+        if (createdLike) {
+
+            dispatch(getAlbumDetail(albumId))
+            history.push(`/albums/${albumId}`)
+        }
     }
 
     const handleCancelClick = async (e) => {
         e.preventDefault();
-        await dispatch(unLikeAlbum(album))
+        await dispatch(unLikeAlbum(albumId))
         await dispatch(getAlbumDetail(albumId))
         history.push(`/albums/${albumId}`)
     }
@@ -63,7 +71,7 @@ const AlbumDetials = () => {
 
     return (
         <div id="detail-page">
-            {album && sessionUser ?
+            {album &&
                 (
                     <>
                         <div className="album-header">
@@ -85,21 +93,21 @@ const AlbumDetials = () => {
                                         </>
                                     ) : null}
                                 </p>
-                                <p>{album?.length >= 2 ? (
+                                <p>{album?.likable_id.length >= 2 ? (
                                     <div>
-                                        <div>{album.length} Likes</div>
+                                        <div>{album.likable_id.length} Likes</div>
                                     </div>
                                 ) : (
                                     <div>
-                                        <div>{album.length || 0} Like</div>
+                                        <div>{album.likable_id.length || 0} Like</div>
                                     </div>
                                 )}</p>
                             </div>
                         </div>
 
                         <div className="album-buttons">
-                            <OpenPlayer type='albums' typeId={album.id} />
-                            {album.likable_type == 'album' ?
+                            {album && (<OpenPlayer type='albums' typeId={album.id} />)}
+                            { sessionUser && (album?.liked_user_id.filter((id) => id == sessionUser.id).length > 0 ?
                                 <span className="like-input">
                                     <i className="fas fa-heart true"
                                         onClick={handleCancelClick}></i>
@@ -109,7 +117,7 @@ const AlbumDetials = () => {
                                     <i className="far fa-heart false"
                                         onClick={handleClick}></i>
                                 </span>
-                            }
+                            )}
                             {sessionUser && sessionUser.id === album.user_id ?
                                 <>
                                     <OpenModalButton
@@ -149,22 +157,21 @@ const AlbumDetials = () => {
                                                         modalComponent={<SongDeleteModal albumId={albumId} songId={song.id} />}
                                                     />
                                                 </span>
+                                            </>
+                                            : <></>}
                                                 <div className="add-song-button">
                                                     <OpenModalButton
                                                         buttonText="Add Song to Playlist"
                                                         modalComponent={<AddSongModal songId={song.id} />}
                                                     />
                                                 </div>
-                                            </>
-                                            : <></>}
                                     </td>
                                 </tr>)
-                                : <div>No Songs </div>)}
+                                : <div>No Songs</div>)}
 
                         </table>
                     </>
-                ) :
-                <p>Can't Read</p>
+                )
             }
         </div>
     )
