@@ -38,7 +38,7 @@ export default function HomePage() {
             <h2>All Playlists</h2>
             <div className="no-user-all-albums" onClick={clickAttempt}>
                 {Object.values(playlists).map( playlist => (
-                    <NavLink to={`/albums/${playlist.id}`} className="album-card" key={playlist.id}>
+                    <NavLink to={`/playlists/${playlist.id}`} className="album-card" key={playlist.id}>
                         <img height={90} width={90} id='album-img' alt='playlist-stock-img' src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg"/>
                         <p>{playlist.playlist_name}</p>
                     </NavLink>
