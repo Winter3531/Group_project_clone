@@ -19,9 +19,14 @@ const RemoveSongModal = ({songId, playlistId}) => {
 
     return (
         <>
-            <h1 className="playlist-modal-header">Are you sure you want to remove this song?</h1>
-            <button className="yes" onClick={handleClick}>Yes</button>
-            <button className="no" onClick={closeModal}>Cancel</button>
+            <div className="delete-confirmation-form">
+                <h1 className="delete-title">Confirm Delete</h1>
+                <div className="delete-confirm">Are you sure you want to remove this song?</div>
+                <div className="delete-buttons">
+                    <button className="delete-button" onClick={handleClick}>Yes</button>
+                    <button className="delete-button" onClick={closeModal}>No</button>
+                </div>
+            </div>
         </>
     )
 }
