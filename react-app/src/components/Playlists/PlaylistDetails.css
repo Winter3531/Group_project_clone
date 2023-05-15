@@ -18,7 +18,7 @@
     font-size: 30px;
 }
 
-#detail-page {
+.detail-page {
     background-color: rgb(17, 16, 16);
     border-radius: 10px;
     margin-top: 40px;
@@ -28,8 +28,9 @@
     margin-bottom: 50px;
 }
 
-.playlist-header {
+.header {
     display: flex;
+    justify-content: flex-start;
 }
 
 

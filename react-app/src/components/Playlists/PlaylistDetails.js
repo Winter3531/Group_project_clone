@@ -74,7 +74,7 @@ const PlaylistDetails = () => {
         <div className="detail-page">
             {playlist && sessionUser ? (
                 <div>
-                    <div className="playlist-header">
+                    <div className="header">
                         <span>
                             <img className="playlist-img" src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg"/>
                         </span>

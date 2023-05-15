@@ -144,11 +144,12 @@ def player_route(playlist_id):
     return 'Playlist not found'
 
 # Remove playlist song by id.
-@playlists_routes.route('/<int:playlist_id>/songs/<int:song_playlist_id>', methods=['DELETE'])
+@playlists_routes.route('/<int:playlist_id>/songs/<int:song_id>', methods=['DELETE'])
 @login_required
-def remove_playlist_song(song_playlist_id):
-    song_playlist = SongPlaylist.query.get(song_playlist_id)
+def remove_playlist_song(playlist_id, song_id):
+    song_playlist = SongPlaylist.query.get(song_id)
 
+    print(song_playlist, "song playlist ******************************")
     if not song_playlist:
         return jsonify({'error': 'Song not found in playlist.'}), 404
 
