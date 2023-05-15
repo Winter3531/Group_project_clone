@@ -72,7 +72,7 @@ const PlaylistDetails = () => {
 
     return (
         <div className="detail-page">
-            {playlist && sessionUser ? (
+            {playlist && (
                 <div>
                     <div className="header">
                         <span>
@@ -156,9 +156,7 @@ const PlaylistDetails = () => {
                     : <div>No Songs </div>)}
                 </table>
             </div>
-        ) :
-        <p>Can't Read</p>
-        }
+        )}
     </div>
     )
 };

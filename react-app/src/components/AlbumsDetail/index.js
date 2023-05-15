@@ -32,12 +32,12 @@ const AlbumDetials = () => {
         const sec = data % 60
         const min = (data - sec) / 60
         if (sec === 0) {
-            return `${min}:00`
+            return `${min} min 00 sec`
         }
         if (sec < 10) {
-            return `${min}:0${sec}`
+            return `${min} min 0${sec} sec`
         }
-        return `${min}:${sec}`
+        return `${min} min ${sec} sec`
     }
     const handleClick = async (e) => {
         e.preventDefault();
