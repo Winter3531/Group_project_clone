@@ -203,7 +203,7 @@ export default function playlistReducer(state = initalState, action) {
             const updatedPlaylist = { ...state[action.playlistId] };
             const updatedSongs = updatedPlaylist.songs ?
             updatedPlaylist.songs.filter(
-                song => console.log(song.id)
+                song => song.id
               ) : [];
             updatedPlaylist.songs = updatedSongs;
             return { ...state, [action.playlistId]: updatedPlaylist };

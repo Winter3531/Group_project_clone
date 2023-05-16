@@ -67,7 +67,6 @@ const AlbumDetials = () => {
 
     const songLengthsArr = album?.songs?.map(song => song.song_length);
     const summedSongs = songLengthsArr?.reduce((total, length) => total + length, null);
-    const albumSeconds = songLengthFunc(summedSongs)
 
     return (
         <div id="detail-page">
@@ -84,10 +83,10 @@ const AlbumDetials = () => {
                                 <h1>{album.album_name}</h1>
                                 <p><span >{album.year_recorded}</span>
                                     <span className="album-description">{album.username}</span>
-                                    <span className="album-description">{album.songs?.length} songs</span>
+                                    <span className="album-description">{album.songs?.length} songs ・ </span>
                                     {album?.songs ? (
                                         <>
-                                            <span className="album-description">
+                                            <span className="album-length">
                                                 {Math.floor(summedSongs / 3600)} hr {Math.floor(summedSongs / 60)} min {summedSongs % 60} sec
                                             </span>
                                         </>

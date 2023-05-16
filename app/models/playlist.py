@@ -27,6 +27,7 @@ class Playlist(db.Model):
             'owner_name': self.owner.username,
             'likable_type': [like.likable_type for like in self.likes] if self.likes else None,
             'likable_id': [like.id for like in self.likes] if self.likes else [],
+            'liked_user_id':[like.user_id for like in self.likes] if self.likes else [],
             'user_id': [like.user_id for like in self.likes] if self.likes else [],
             'songs': [songs.to_dict() for songs in self.songs_playlist] if self.songs_playlist else []
         }

@@ -16,10 +16,9 @@ import './PlaylistDetails.css'
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory()
-    const sessionUser = useSelector(state=>state?.session.user);
     const { playlistId } = useParams();
     const playlist = useSelector(state=>state?.playlists[playlistId]);
-
+    const sessionUser = useSelector(state=>state?.session?.user);
 
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
@@ -37,19 +36,22 @@ const PlaylistDetails = () => {
         return `${min} min ${sec} sec`
     };
 
-    const likeClick = async (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
         const new_like = {
             user_id: sessionUser.id,
             likable_id: playlistId,
             likable_type: 'playlist'
         }
-        await dispatch(likePlaylist(new_like))
-        await dispatch(PlaylistDetailsFetch(playlistId))
-        history.push(`/playlists/${playlistId}`)
+        const createdLike = await dispatch(likePlaylist(new_like))
+
+        if (createdLike) {
+            dispatch(PlaylistDetailsFetch(playlistId))
+            history.push(`/playlists/${playlistId}`)
+        }
     };
 
-    const unlikeClick = async (e) => {
+    const handleCancelClick = async (e) => {
         e.preventDefault();
         await dispatch(unlikePlaylist(playlistId))
         await dispatch(PlaylistDetailsFetch(playlistId))
@@ -57,17 +59,11 @@ const PlaylistDetails = () => {
     };
 
 
-    let playlistLikes = playlist?.likable_id
-    if (playlistLikes == null) {
-        playlistLikes = 0
-    }
     let count = 0
 
 
     const songLengthsArr = playlist?.songs?.map(song => song.songs.song_length);
     const summedSongs = songLengthsArr?.reduce((total, length) => total + length, null);
-    const playlistSeconds = songLengthFunc(summedSongs)
-
 
 
     return (
@@ -84,19 +80,21 @@ const PlaylistDetails = () => {
                             <p><span>{playlist.owner_name}</span>
                             {playlist?.songs ? (
                                 <>
-                                    <span className="playlist-description">{playlist?.songs.length} Songs, </span>
-                                    <span className="playlist-time">{playlistSeconds}</span>
+                                    <span className="playlist-description">{playlist?.songs.length} Songs ・</span>
+                                    <span className="playlist-time">
+                                        {Math.floor(summedSongs / 3600)} hr {Math.floor(summedSongs / 60)} min {summedSongs % 60} sec
+                                    </span>
                                 </>
                             ): null}
                             </p>
                             <div>
-                                {playlistLikes?.length >= 2 ? (
+                                {playlist?.likable_id?.length >= 2 ? (
                                 <div>
-                                    <div>{playlistLikes.length} Likes</div>
+                                    <div>{playlist.likable_id.length} Likes</div>
                                 </div>
                                 ): (
                                 <div>
-                                    <div>{playlistLikes.length || 0} Like</div>
+                                    <div>{playlist.likable_id.length || 0} Like</div>
                                 </div>
                                 )}
                             </div>
@@ -105,29 +103,29 @@ const PlaylistDetails = () => {
                     </div>
 
                 <div className="playlist-buttons">
-                    {playlist?.user_id && (playlist?.user_id.filter((id) => id == sessionUser.id).length > 0 ?
-                        <span className="like-input">
-                            <i className="fas fa-heart true"
-                                onClick={unlikeClick}></i>
-                            </span>
-                            :
-                        <span className="like-input">
-                            <i className="far fa-heart false"
-                                onClick={likeClick}></i>
-                        </span>
-                    )}
-                    <OpenPlayer type='playlists' typeId={playlist.id} />
-                    {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
-                        <OpenModalButton
-                            buttonText={"Edit Playlist"}
-                            modalComponent={<EditPlaylistModal playlistId={playlistId} />}
-                        />
-                    )}
-                    {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
-                        <OpenModalButton
-                            buttonText={"Delete Album"}
-                            modalComponent={<DeletePlaylistModal playlistId={playlistId} />}
-                        />
+                    {playlist && (<OpenPlayer type='playlists' typeId={playlist.id} />)}
+                    {sessionUser && playlist?.liked_user_id ?((playlist?.liked_user_id?.filter((id) => id == sessionUser?.id).length > 0 ?
+                                <span className="like-input">
+                                    <i className="fas fa-heart true"
+                                        onClick={handleCancelClick}></i>
+                                </span>
+                                :
+                                <span className="like-input">
+                                    <i className="far fa-heart false"
+                                        onClick={handleClick}></i>
+                                </span>
+                    )) : <></>}
+                    {sessionUser && sessionUser?.id === playlist?.owner_id && (
+                        <div>
+                            <OpenModalButton
+                                buttonText={"Edit Playlist"}
+                                modalComponent={<EditPlaylistModal playlistId={playlistId} />}
+                            />
+                            <OpenModalButton
+                                buttonText={"Delete Album"}
+                                modalComponent={<DeletePlaylistModal playlistId={playlistId} />}
+                            />
+                        </div>
                     )}
                 </div>
                 <table className="playlist-table">
