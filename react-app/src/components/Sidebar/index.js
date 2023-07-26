@@ -10,6 +10,7 @@ import { allSongsFetch } from "../../store/song";
 import { getAlbumDetail, getAllAlbums } from "../../store/album";
 import SidebarList from "./SidebarList";
 
+import './index.css';
 
 const SideNav = ({ isLoaded }) => {
     const sessionUser = useSelector(state => state.session.user)
@@ -97,17 +98,21 @@ const SideNav = ({ isLoaded }) => {
             </div>
             {isLoaded && sessionUser && (
                 <div>
-                    <div>
-                        <OpenModalButton
-                            buttonText="Create Playlist"
-                            modalComponent={<PlaylistFormModal />}
-                        /> Create Playlist
-                    </div>
-                    <div>
-                        <OpenModalButton
-                            buttonText="Create Album"
-                            modalComponent={<CreateAlbumFormModal />}
-                        /> Create Album
+                    <div className="create-btns">
+                        <div className="create-playlist-btn">
+                            <OpenModalButton
+                                buttonText="Create Playlist"
+                                modalComponent={<PlaylistFormModal />}
+                            />
+                            <span>Create Playlist</span>
+                        </div>
+                        <div className="create-album-btn">
+                            <OpenModalButton
+                                buttonText="Create Album"
+                                modalComponent={<CreateAlbumFormModal />}
+                            />
+                            <span>Create Album</span>
+                        </div>
                     </div>
                     <div><SidebarList /></div>
                 </div>

@@ -106,14 +106,18 @@
 
 .album-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     margin: 40px;
+    width: 90px;
 }
 
 .album-card p {
     margin: 10px;
     align-self: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90px;
 }
 
 #link-to-album-div {
