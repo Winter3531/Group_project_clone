@@ -2,7 +2,7 @@
     padding: 100px;
     display: flex;
     flex-direction: column;
-    width: 1500px;
+    width: auto;
 }
 
 .no-profile-header {
@@ -55,47 +55,19 @@
 
 .play-button {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
-#link-to-item {
-    display: flex;
-    padding: 10px;
-    align-self: center;
-}
-
-/* ***************** */
+/* ****************** */
+.album-display h3,
 .playlist-display h3 {
     padding-bottom: 30px;
     border-bottom: solid white 2px;
     margin-right: 75%;
 }
 
+#album-img,
 .profile-playlist-img {
-    border-radius: 5px;
-}
-
-.playlist-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 40px;
-}
-
-.playlist-card p {
-    margin: 10px;
-    align-self: center;
-}
-
-/* ****************** */
-.album-display h3 {
-    padding-bottom: 30px;
-    border-bottom: solid white 2px;
-    margin-right: 75%;
-}
-
-#album-img {
     border-radius: 5px;
 }
 
@@ -104,25 +76,34 @@
     flex-direction: column;
 }
 
-.album-card {
+.album-details {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+}
+
+.album-card,
+.playlist-card {
+    display: flex;
+    justify-content: center;
     margin: 40px;
     width: 90px;
 }
 
-.album-card p {
+.album-card p,
+.playlist-card p {
     margin: 10px;
     align-self: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 90px;
 }
 
 #link-to-album-div {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    margin: 10px;
+}
+
+#link-to-album {
+    display: flex;
+    justify-content: center;
 }

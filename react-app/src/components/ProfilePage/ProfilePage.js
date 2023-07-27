@@ -59,15 +59,17 @@ export default function ProfilePage() {
                         <div className="playlist-bar" >
                             {userPlaylists.map( playlist => (
                                 <div className="playlist-card" key={playlist.id}>
-                                    <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90}/>
-                                    <div id='link-to-album-div'>
-                                        <NavLink to={`/playlists/${playlist.id}`} >
-                                            <p id='link-to-album' >{playlist.playlist_name}</p>
-                                        </NavLink>
+                                    <div className="album-details">
+                                        <div id='link-to-album-div'>
+                                            <NavLink to={`/playlists/${playlist.id}`} >
+                                                <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90}/>
+                                                <p id='link-to-album' >{playlist.playlist_name}</p>
+                                            </NavLink>
+                                        </div>
                                     </div>
-                                    <div className="play-button">
+                                    {/* <div className="play-button">
                                         <OpenPlayer type='playlists' typeId={playlist.id} />
-                                    </div>
+                                    </div> */}
                                 </div>
                             ))}
                         </div>
@@ -78,15 +80,17 @@ export default function ProfilePage() {
                     <div className="album-bar">
                         {userAlbums.map( album => (
                             <div className="album-card" key={album.id}>
-                                <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
-                                <p>
-                                    <NavLink to={`/albums/${album.id}`} >
-                                        <p id='link-to-item' >{album.album_name}</p>
-                                    </NavLink>
-                                </p>
-                                <p className="play-button">
+                                <div className="album-details">
+                                    <div id='link-to-album-div'>
+                                        <NavLink to={`/albums/${album.id}`} >
+                                            <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
+                                            <p id='link-to-album' >{album.album_name}</p>
+                                        </NavLink>
+                                    </div>
+                                </div>
+                                {/* <div className="play-button">
                                     <OpenPlayer type='albums' typeId={album.id} />
-                                </p>
+                                </div> */}
                             </div>
                         ))}
                     </div>
