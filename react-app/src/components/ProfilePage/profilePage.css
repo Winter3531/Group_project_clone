@@ -1,32 +1,32 @@
-.no-profile {
+/* .no-profile {
     padding: 100px;
     display: flex;
     flex-direction: column;
     width: auto;
-}
+} */
 
-.no-profile-header {
+/* .no-profile-header {
     display: flex;
     margin-bottom: 50px;
     align-items: center;
     align-content: center;
-}
+} */
 
-.no-user-all-albums {
+/* .no-user-all-albums {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     width: 80%;
-}
+} */
 
-.no-profile h2 {
+/* .no-profile h2 {
     border-bottom: solid white 1px;
     margin-right: 75%
 }
 
 .no-profile-header img {
     border-radius: 100%;
-}
+} */
 
 .profile-page-whole {
     display: flex;
@@ -95,6 +95,11 @@
     align-self: center;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.playlist-card:hover,
+.album-card:hover {
+    cursor: pointer;
 }
 
 #link-to-album-div {

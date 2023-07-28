@@ -41,6 +41,10 @@ a:link {
     width: 100px;
 }
 
+.home-album-card:hover {
+    cursor: pointer;
+}
+
 .albumName {
     display: inline-block;
     flex-direction: column;
