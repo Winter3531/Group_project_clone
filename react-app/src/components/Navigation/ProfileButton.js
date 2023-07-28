@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import './ProfileButton.css'
+import { deleteTracksThunk } from "../../store/playerState";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function ProfileButton({ user }) {
 
   const handleLogout = async (e) => {
     e.preventDefault();
+    await dispatch(deleteTracksThunk())
     await dispatch(logout());
     await history.push('/home')
   };
