@@ -50,9 +50,6 @@ const SideNav = ({ isLoaded }) => {
         setInput("")
     }
 
-    const randomColor = "#" + ((1 << 24) * Math.random() | 0).toString(16);
-    document.documentElement.style.setProperty('--main-bg-color', randomColor);
-
 
     return (
         <div className="navi-drawer">
@@ -66,29 +63,34 @@ const SideNav = ({ isLoaded }) => {
             <div className="search-container" onBlur={(e) => hide(e)}>
                 <div className="search-results hidden">
                     {songs && (songs.length > 0 && input?.length > 0 ?
-                        songs.map((song) => (
+                    <div>
+                        <div className="search-card-title" onMouseDown={(e) => hide(e)}>Songs</div>
+                        {songs.map((song) => (
                             <div key={song.id} className="search-card" onMouseDown={() => reset1(song.album_id)}>
-                                <p>Song</p>
-                                <div>{song?.song_name}</div>
-                            </div>))
+                                {song?.song_name}
+                            </div>))}
+                    </div>
                         : (input?.length > 0 ? <div className="search-none">No Songs</div> :
                             <div className="search-none hidden">No Songs</div>)
                     )}
                     {albums && (albums.length > 0 && input?.length > 0 ?
-                        (
-                            albums.map((album) => (
+                    <div>
+                        <div className="search-card-title" onMouseDown={(e) => hide(e)}>Albums</div>
+                        {albums.map((album) => (
                                 <div key={album.id} className="search-card" onMouseDown={() => reset1(album.id)}>
-                                    <p>Album</p>
-                                    <div>{album.album_name}</div>
-                                </div>))
-                        ) : (input?.length > 0 ? <div className="search-none">No Albums</div> :
+                                    {album.album_name}
+                                </div>))}
+                    </div>
+                                : (input?.length > 0 ? <div className="search-none">No Albums</div> :
                             <div className="search-none hidden">No Albums</div>))}
                     {playlists && (playlists.length > 0 && input?.length > 0 ?
-                        playlists.map((playlists) => (
+                    <div>
+                        <div className="search-card-title" onMouseDown={(e) => hide(e)}>Playlists</div>
+                        {playlists.map((playlists) => (
                             <div key={playlists.id} className="search-card" onMouseDown={() => reset2(playlists.id)}>
-                                <p>Playlist</p>
-                                <div>{playlists?.playlist_name}</div>
-                            </div>))
+                                {playlists?.playlist_name}
+                            </div>))}
+                    </div>
                         : (input?.length > 0 ? <div className="search-none">No Playlist</div> :
                             <div className="search-none hidden">No Playlist</div>)
                     )}

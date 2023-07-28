@@ -42,6 +42,7 @@ class Like(db.Model):
             'album_id' : self.albums.id,
             'album_name' : self.albums.album_name,
             'year_recorded' : self.albums.year_recorded,
+            'album_img': self.albums.album_img
         }
 
     def to_dict(self):
@@ -66,8 +67,20 @@ class Like(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'likable_id': self.likable_id,
+            'likable_type': self.likable_type,
             'song_id': self.songs.id,
             'song_name': self.songs.song_name,
             'song_length': self.songs.song_length,
-            'song_src' : self.songs.song_src
+            'song_src' : self.songs.song_src,
+            'album_id' : self.songs.album_id
+        }
+
+    def playlist_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'likable_id': self.likable_id,
+            'likable_type': self.likable_type,
+            'playlist_id': self.playlists.id,
+            'playlist_name': self.playlists.playlist_name,
         }

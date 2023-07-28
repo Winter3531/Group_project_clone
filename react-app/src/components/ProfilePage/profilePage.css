@@ -122,3 +122,10 @@
     padding: 10px;
     margin: 10px;
 }
+
+.profile-section {
+    display: flex;
+}
+.profile-section div {
+    margin-right: auto;
+}

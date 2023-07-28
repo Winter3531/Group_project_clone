@@ -6,6 +6,7 @@ import playlistReducer from './playlist';
 import songReducer from './song';
 import playerReducer from './playerState';
 import searchReducer from './search';
+import likeReducer from './like';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   songs: songReducer,
   search: searchReducer,
   player: playerReducer,
+  like: likeReducer
 });
 
 
