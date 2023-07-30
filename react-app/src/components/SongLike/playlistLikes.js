@@ -5,7 +5,7 @@ import { PlaylistDetailsFetch } from "../../store/playlist";
 import './SongLike.css'
 
 const PlaylistSongLike = ({song, playlistId}) => {
-    const sessionUser = useSelector(state => state?.session.user);
+    const sessionUser = useSelector(state => state?.session?.user);
     const dispatch = useDispatch();
 
     const handleLikeSong = async (e) => {
@@ -33,8 +33,7 @@ const PlaylistSongLike = ({song, playlistId}) => {
     // }, [dispatch])
 
     return (
-        <div>
-            {Object.values(song.likes).filter((like)=> like.user_id == sessionUser.id ).length > 0 ?
+        <div>{ sessionUser && (Object.values(song?.likes).filter((like)=> like?.user_id == sessionUser?.id ).length > 0 ?
             <div className="like-input">
             <div
                 className="true"
@@ -51,8 +50,7 @@ const PlaylistSongLike = ({song, playlistId}) => {
 
             </div>
         </div>
-        }
-        </div>
+        )}</div>
     )
 };
 

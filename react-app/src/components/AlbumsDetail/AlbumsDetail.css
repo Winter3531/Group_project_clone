@@ -121,3 +121,7 @@ td {
 .play-button {
     font-size: 30px;
 }
+
+.album-length {
+    color:rgb(162, 162, 162)
+}
