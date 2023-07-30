@@ -124,3 +124,13 @@ def delete_like_song(id):
         db.session.commit()
         return liked_song.song_dict()
     return song_detail(id)
+
+# ROUTE TO ADD A SONG TO MUSIC PLAYER
+@songs_routes.route('/<int:song_id>/player', methods=['GET'])
+@login_required
+def player_route(song_id):
+    song = Song.query.get(song_id)
+
+    if song:
+        return {'songs': [song.player_dict()]}
+    return {'error': 'Song not found'}
