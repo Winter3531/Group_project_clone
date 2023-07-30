@@ -16,16 +16,9 @@ import './PlaylistDetails.css'
 const PlaylistDetails = () => {
     const dispatch = useDispatch();
     const history = useHistory()
-<<<<<<< HEAD
-    const sessionUser = useSelector(state => state?.session.user);
-    const { playlistId } = useParams();
-    const playlist = useSelector(state => state?.playlists[playlistId]);
-
-=======
     const { playlistId } = useParams();
     const playlist = useSelector(state=>state?.playlists[playlistId]);
     const sessionUser = useSelector(state=>state?.session?.user);
->>>>>>> a29d60ce70b6f166d0209ed48eccdef281a82b24
 
     useEffect(() => {
         dispatch(PlaylistDetailsFetch(playlistId));
@@ -85,24 +78,6 @@ const PlaylistDetails = () => {
                             <p>Playlist</p>
                             <h1>{playlist.playlist_name}</h1>
                             <p><span>{playlist.owner_name}</span>
-<<<<<<< HEAD
-                                {playlist?.songs ? (
-                                    <>
-                                        <span className="playlist-description">{playlist?.songs.length} Songs, </span>
-                                        <span className="playlist-time">{playlistSeconds}</span>
-                                    </>
-                                ) : null}
-                            </p>
-                            <div>
-                                {playlistLikes?.length >= 2 ? (
-                                    <div>
-                                        <div>{playlistLikes.length} Likes</div>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <div>{playlistLikes.length || 0} Like</div>
-                                    </div>
-=======
                             {playlist?.songs ? (
                                 <>
                                     <span className="playlist-description">{playlist?.songs.length} Songs ・</span>
@@ -121,29 +96,12 @@ const PlaylistDetails = () => {
                                 <div>
                                     <div>{playlist.likable_id.length || 0} Like</div>
                                 </div>
->>>>>>> a29d60ce70b6f166d0209ed48eccdef281a82b24
                                 )}
                             </div>
 
                         </span>
                     </div>
 
-<<<<<<< HEAD
-                    <div className="playlist-buttons">
-                        {playlist?.user_id && (playlist?.user_id.filter((id) => id == sessionUser.id).length > 0 ?
-                            <span className="like-input">
-                                <i className="fas fa-heart true"
-                                    onClick={unlikeClick}></i>
-                            </span>
-                            :
-                            <span className="like-input">
-                                <i className="far fa-heart false"
-                                    onClick={likeClick}></i>
-                            </span>
-                        )}
-                        <OpenPlayer type='playlists' typeId={playlist.id} />
-                        {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
-=======
                 <div className="playlist-buttons">
                     {playlist && (<OpenPlayer type='playlists' typeId={playlist.id} />)}
                     {sessionUser && playlist?.liked_user_id ?((playlist?.liked_user_id?.filter((id) => id == sessionUser?.id).length > 0 ?
@@ -159,55 +117,14 @@ const PlaylistDetails = () => {
                     )) : <></>}
                     {sessionUser && sessionUser?.id === playlist?.owner_id && (
                         <div>
->>>>>>> a29d60ce70b6f166d0209ed48eccdef281a82b24
                             <OpenModalButton
                                 buttonText={"Edit Playlist"}
                                 modalComponent={<EditPlaylistModal playlistId={playlistId} />}
                             />
-<<<<<<< HEAD
-                        )}
-                        {sessionUser !== undefined && sessionUser.id === playlist.owner_id && (
-=======
->>>>>>> a29d60ce70b6f166d0209ed48eccdef281a82b24
                             <OpenModalButton
                                 buttonText={"Delete Album"}
                                 modalComponent={<DeletePlaylistModal playlistId={playlistId} />}
                             />
-<<<<<<< HEAD
-                        )}
-                    </div>
-                    <table className="playlist-table">
-                        <tr className="song-header">
-                            <th>#</th>
-                            <th >Title</th>
-                            <th ><i className="far fa-clock"></i></th>
-                            <th></th>
-                        </tr>
-                        {(playlist.songs ? playlist.songs?.map(song =>
-                            <tr >
-                                <td>{count += 1}.</td>
-                                <td>{song.songs.song_name}</td>
-                                <td>{songLengthFunc(song.songs.song_length)}</td>
-                                <td className="song-button">
-                                    <OpenPlayer type='songs' typeId={song.id} />
-                                    <span><PlaylistSongLike song={song.songs} playlistId={playlistId} /></span>
-                                    {sessionUser && sessionUser.id === playlist.owner_id ? (
-                                        <span className="delete-song-button">
-                                            <OpenModalButton
-                                                buttonText={"Delete song"}
-                                                modalComponent={<RemoveSongModal songId={song.id} playlistId={playlistId} />} />
-                                        </span>
-                                    ) : null}
-                                </td>
-                            </tr>)
-                            : <div>No Songs </div>)}
-                    </table>
-                </div>
-            ) :
-                <p>Can't Read</p>
-            }
-        </div>
-=======
                         </div>
                     )}
                 </div>
@@ -239,7 +156,6 @@ const PlaylistDetails = () => {
             </div>
         )}
     </div>
->>>>>>> a29d60ce70b6f166d0209ed48eccdef281a82b24
     )
 };
 
