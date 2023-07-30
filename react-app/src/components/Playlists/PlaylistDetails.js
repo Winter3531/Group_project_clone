@@ -136,7 +136,7 @@ const PlaylistDetails = () => {
                         <th></th>
                     </tr>
                 {(playlist.songs ? playlist.songs?.map(song =>
-                    <tr >
+                    <tr key={song.id}>
                         <td>{count += 1}.</td>
                         <td>{song.songs.song_name}</td>
                         <td>{songLengthFunc(song.songs.song_length)}</td>
