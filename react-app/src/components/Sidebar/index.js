@@ -54,10 +54,12 @@ const SideNav = ({ isLoaded }) => {
     return (
         <div className="navi-drawer">
             <input
+            type="search"
                 className="search-input"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onFocus={() => show()}
+                onBlur={(e)=> hide(e)}
                 placeholder="Search..."
             />
             <div className="search-container" onBlur={(e) => hide(e)}>
