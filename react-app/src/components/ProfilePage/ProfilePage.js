@@ -22,6 +22,7 @@ export default function ProfilePage() {
     const likedSong = Object.values(likes).filter(like => like.likable_type == "song")
     const { user } = useSelector(state => state.session)
 
+    console.log(likedSong, '--playlist')
     let userAlbums = []
     if (user) {
         userAlbums = Object.values(albums).filter((album) => album.user_id === user.id)
@@ -107,15 +108,27 @@ export default function ProfilePage() {
                             </div>
                         </div>
                         <div>
+                        <div className="album-display">
+                                <h3>Liked Songs</h3>
+                                <div className="album-bar">
+                                    {likedSong.map(song => (
+                                        <div className="album-card" key={song.id}>
+                                                    <p id='link-to-item' >{song.song_name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
                             {likedPlaylist &&
                                 <div className="playlist-display">
                                     <h3>Liked Playlists</h3>
                                     <div className="playlist-bar" >
                                         {likedPlaylist.map(playlist => (
                                             <div className="playlist-card" key={playlist.id}>
-                                                <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90} />
                                                 <div id='link-to-album-div'>
-                                                    <NavLink to={`/playlists/${playlist.id}`} >
+                                                    <NavLink to={`/playlists/${playlist.playlist_id}`} >
+                                                <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90} />
                                                         <p id='link-to-album' >{playlist.playlist_name}</p>
                                                     </NavLink>
                                                 </div>
@@ -130,9 +143,9 @@ export default function ProfilePage() {
                                 <div className="album-bar">
                                     {likedAlbum.map(album => (
                                         <div className="album-card" key={album.id}>
-                                            <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90} />
                                             <p>
-                                                <NavLink to={`/albums/${album.id}`} >
+                                                <NavLink to={`/albums/${album.album_id}`} >
+                                            <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90} />
                                                     <p id='link-to-item' >{album.album_name}</p>
                                                 </NavLink>
                                             </p>
