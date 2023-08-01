@@ -46,8 +46,9 @@
 }
 
 .album-buttons {
-    display: inline-block;
+    display: flex;
     margin-left: 50px;
+    align-content: center;
 }
 
 
@@ -60,14 +61,14 @@
 }
 
 :where(.fa-trash-alt, .fa-plus) {
-    font-size: 28px;
+    font-size: 30px;
     line-height: 30px;
     color: rgb(188, 188, 188);
 
 }
 
 :where(.fa-plus, .fa-trash-alt):hover {
-    font-size: 28px;
+    font-size: 30px;
     color: white;
 }
 
@@ -84,11 +85,11 @@
 }
 
 .fa-edit {
-    font-size: 24px;
+    font-size: 28px;
     color: rgb(188, 188, 188);
 }
 .fa-edit:hover {
-    font-size: 24px;
+    font-size: 30px;
     color: white;
 }
 
@@ -119,7 +120,7 @@ td {
 }
 
 .play-button {
-    font-size: 30px;
+    font-size: 28px;
 }
 
 .album-length {
