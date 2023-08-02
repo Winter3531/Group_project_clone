@@ -141,7 +141,7 @@ const AlbumDetials = () => {
                                 <th></th>
                             </tr>
                             {(album.songs ? album?.songs.map(song =>
-                                <tr >
+                                <tr key={song.id}>
                                     <td>{count += 1}.</td>
                                     <td>{song.song_name}</td>
                                     <td>{album.album_name}</td>
