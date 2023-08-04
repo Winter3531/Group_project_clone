@@ -33,7 +33,6 @@ def playlist_details(id):
     Queries for a playlist using the id and returns the detials in a dictionary.
     """
     playlist = Playlist.query.get(id)
-    print(playlist)
     return playlist.to_dict()
 
 # Create a playlist
@@ -149,7 +148,6 @@ def player_route(playlist_id):
 def remove_playlist_song(playlist_id, song_id):
     song_playlist = SongPlaylist.query.get(song_id)
 
-    print(song_playlist, "song playlist ******************************")
     if not song_playlist:
         return jsonify({'error': 'Song not found in playlist.'}), 404
 

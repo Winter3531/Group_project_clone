@@ -18,7 +18,6 @@ export default function Player() {
     },[dispatch, playlist])
 
     const handleClickNext = () => {
-        // console.log(currentTrack, "NEXT")
         setTrackIndex((currentTrack) =>
             currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
@@ -31,7 +30,6 @@ export default function Player() {
     }
 
     const handleEnd = () => {
-        // console.log(currentTrack, "END")
         setTrackIndex((currentTrack) =>
             currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );

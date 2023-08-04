@@ -20,7 +20,6 @@ export default function ProfilePage() {
     const likedSong = Object.values(likes).filter(like => like.likable_type == "song")
     const { user } = useSelector(state => state.session)
 
-    console.log(likedSong, '--album')
     let userAlbums = []
     if (user) {
         userAlbums = Object.values(albums).filter((album) => album.user_id === user.id)
