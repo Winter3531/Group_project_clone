@@ -7,6 +7,7 @@ import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import AboutDevsModal from "./AboutDevsModal";
 import './ProfileButton.css'
 import { deleteTracksThunk } from "../../store/playerState";
 
@@ -52,7 +53,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-        <i className="fas fa-user-circle" onClick={openMenu} />
+      <i className="fas fa-user-circle" onClick={openMenu} /> <span className="profile-btn" onClick={openMenu}>Profile</span>
 
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -70,7 +71,6 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
-
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}

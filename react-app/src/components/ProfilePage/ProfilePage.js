@@ -1,6 +1,6 @@
 import { useDispatch, useSelector, useStore } from "react-redux"
 import { useEffect } from "react";
-import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { currentUserPlaylists } from "../../store/playlist";
 import { currentUserAlbums } from "../../store/album";
 import OpenPlayer from "../MusicPlayer/OpenPlayer"
@@ -12,6 +12,7 @@ import { likedAlbums, likedPlaylists, likedSongs } from "../../store/like";
 
 export default function ProfilePage() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const playlists = useSelector(state => state?.playlists)
     const albums = useSelector(state => state?.albums)
     const likes = useSelector(state => state?.like)
@@ -20,6 +21,7 @@ export default function ProfilePage() {
     const likedSong = Object.values(likes).filter(like => like.likable_type == "song")
     const { user } = useSelector(state => state.session)
 
+    console.log(likedSong, '--playlist')
     let userAlbums = []
     if (user) {
         userAlbums = Object.values(albums).filter((album) => album.user_id === user.id)
@@ -43,7 +45,17 @@ export default function ProfilePage() {
         }
     }, [dispatch, user])
 
-    async function clickAttempt() {
+    const albumClick = (e, id) => {
+        e.preventDefault();
+        history.push(`/albums/${id}`);
+    };
+
+    const playlistClick = (e, id) => {
+        e.preventDefault();
+        history.push(`/playlists/${id}`);
+    };
+
+    async function clickAttempt(){
     }
 
     return (
@@ -58,22 +70,15 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="profile-section">
-                        <div>
+                        <div className="user-music">
                             {userPlaylists &&
                                 <div className="playlist-display">
                                     <h3>Playlists</h3>
-                                    <div className="playlist-bar" >
+                                    <div className="album-bar" >
                                         {userPlaylists.map(playlist => (
-                                            <div className="playlist-card" key={playlist.id}>
+                                            <div className="playlist-card" key={playlist.id} onClick={(e) => playlistClick(e, playlist.id)}>
                                                 <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90} />
-                                                <div id='link-to-album-div'>
-                                                    <NavLink to={`/playlists/${playlist.id}`} >
-                                                        <p id='link-to-album' >{playlist.playlist_name}</p>
-                                                    </NavLink>
-                                                </div>
-                                                <div className="play-button">
-                                                    <OpenPlayer type='playlists' typeId={playlist.id} />
-                                                </div>
+                                                <div className="albumName">{playlist.playlist_name}</div>
                                             </div>
                                         ))}
                                     </div>
@@ -83,37 +88,36 @@ export default function ProfilePage() {
                                 <h3>Albums</h3>
                                 <div className="album-bar">
                                     {userAlbums.map(album => (
-                                        <div className="album-card" key={album.id}>
+                                        <div className="album-card" key={album.id} onClick={(e) => albumClick(e, album.id)}>
                                             <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90} />
-                                            <p>
-                                                <NavLink to={`/albums/${album.id}`} >
-                                                    <p id='link-to-item' >{album.album_name}</p>
-                                                </NavLink>
-                                            </p>
-                                            <p className="play-button">
-                                                <OpenPlayer type='albums' typeId={album.id} />
-                                            </p>
+                                            <div className="albumName">{album.album_name}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
                         <div>
+                        <div className="album-display">
+                                <h3>Liked Songs</h3>
+                                <div className="album-bar">
+                                    {likedSong.map(song => (
+                                        <div className="album-card" key={song.id} onClick={(e) => albumClick(e, song.album_id)}>
+                                            <img alt="" className="profile-playlist-img" src='https://res.cloudinary.com/djclmc80y/image/upload/v1690941936/liked-songs-spotipy_cnlirz.jpg' height={90} width={90}/>
+                                            <div className="albumName">{song.song_name}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="section-three">
                             {likedPlaylist &&
                                 <div className="playlist-display">
                                     <h3>Liked Playlists</h3>
-                                    <div className="playlist-bar" >
+                                    <div className="album-bar" >
                                         {likedPlaylist.map(playlist => (
-                                            <div className="playlist-card" key={playlist.id}>
+                                            <div className="playlist-card" key={playlist.id} onClick={(e) => playlistClick(e, playlist.playlist_id)}>
                                                 <img className="profile-playlist-img" alt={`playlist-${playlist.id}`} src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" height={90} width={90} />
-                                                <div id='link-to-album-div'>
-                                                    <NavLink to={`/playlists/${playlist.id}`} >
-                                                        <p id='link-to-album' >{playlist.playlist_name}</p>
-                                                    </NavLink>
-                                                </div>
-                                                <div className="play-button">
-                                                    <OpenPlayer type='playlists' typeId={playlist.id} />
-                                                </div>
+                                                <div className="albumName">{playlist.playlist_name}</div>
                                             </div>
                                         ))}
                                     </div>
@@ -123,16 +127,11 @@ export default function ProfilePage() {
                                 <h3>Liked Albums</h3>
                                 <div className="album-bar">
                                     {likedAlbum.map(album => (
-                                        <div className="album-card" key={album.id}>
+                                        <div className="album-card" key={album.id} onClick={(e) => albumClick(e, album.id)}>
+                                            <div>
                                             <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90} />
-                                            <p>
-                                                <NavLink to={`/albums/${album.id}`} >
-                                                    <p id='link-to-item' >{album.album_name}</p>
-                                                </NavLink>
-                                            </p>
-                                            <p className="play-button">
-                                                <OpenPlayer type='albums' typeId={album.id} />
-                                            </p>
+                                                <div className="albumName" >{album.album_name}</div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -151,7 +150,7 @@ export default function ProfilePage() {
                         {Object.values(albums).map(album => (
                             <div className="album-card" key={album.id}>
                                 <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90} />
-                                <p>{album.album_name}</p>
+                                <div className="albumName">{album.album_name}</div>
                             </div>
                         ))}
                     </div>
@@ -160,7 +159,7 @@ export default function ProfilePage() {
                         {Object.values(playlists).map(playlist => (
                             <div className="album-card" key={playlist.id}>
                                 <img height={90} width={90} id='album-img' alt='playlist-stock-img' src="https://d2rd7etdn93tqb.cloudfront.net/wp-content/uploads/2022/03/spotify-playlist-cover-orange-headphones-032322.jpg" />
-                                <p>{playlist.playlist_name}</p>
+                                <div className="albumName">{playlist.playlist_name}</div>
                             </div>
                         ))}
                     </div>

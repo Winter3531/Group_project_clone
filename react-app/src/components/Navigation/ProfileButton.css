@@ -3,3 +3,11 @@
     color: white;
     background-color: transparent;
 }
+
+.fa-user-circle:hover {
+    cursor: pointer;
+}
+
+.profile-btn:hover {
+    cursor: pointer;
+  }

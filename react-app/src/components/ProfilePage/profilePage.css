@@ -1,32 +1,32 @@
-.no-profile {
+/* .no-profile {
     padding: 100px;
     display: flex;
     flex-direction: column;
-    width: 1500px;
-}
+    width: auto;
+} */
 
-.no-profile-header {
+/* .no-profile-header {
     display: flex;
     margin-bottom: 50px;
     align-items: center;
     align-content: center;
-}
+} */
 
-.no-user-all-albums {
+/* .no-user-all-albums {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     width: 80%;
-}
+} */
 
-.no-profile h2 {
+/* .no-profile h2 {
     border-bottom: solid white 1px;
     margin-right: 75%
 }
 
 .no-profile-header img {
     border-radius: 100%;
-}
+} */
 
 .profile-page-whole {
     display: flex;
@@ -55,77 +55,74 @@
 
 .play-button {
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
-#link-to-item {
-    display: flex;
-    padding: 10px;
-    align-self: center;
-}
-
-/* ***************** */
+/* ****************** */
+.album-display h3,
 .playlist-display h3 {
     padding-bottom: 30px;
     border-bottom: solid white 2px;
     margin-right: 75%;
+    min-width: 175px;
 }
 
+#album-img,
 .profile-playlist-img {
     border-radius: 5px;
 }
 
-.playlist-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 40px;
-}
-
-.playlist-card p {
-    margin: 10px;
-    align-self: center;
-}
-
-/* ****************** */
-.album-display h3 {
-    padding-bottom: 30px;
-    border-bottom: solid white 2px;
-    margin-right: 75%;
-}
-
-#album-img {
-    border-radius: 5px;
-}
-
-.album-display {
+.album-display,
+.playlist-display {
     display: flex;
     flex-direction: column;
 }
 
-.album-card {
+.album-details {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin: 40px;
+    justify-content: center;
 }
 
-.album-card p {
-    margin: 10px;
-    align-self: center;
+.album-card,
+.playlist-card {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+    width: 100px;
+}
+
+.playlist-card:hover,
+.album-card:hover {
+    cursor: pointer;
 }
 
 #link-to-album-div {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    margin: 10px;
+}
+
+#link-to-album {
+    display: flex;
+    justify-content: center;
 }
 
 .profile-section {
     display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 90%;
 }
 .profile-section div {
     margin-right: auto;
+}
+
+.album-bar {
+    display: flex;
+}
+
+.user-music,
+.section-three {
+    display: flex;
+    width: 80%;
 }
