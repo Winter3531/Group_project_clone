@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
-// import 'react-h5-audio-player/lib/styles.less' Use LESS
-// import 'react-h5-audio-player/src/styles.scss' Use SASS
-
 export default function Player() {
     const dispatch = useDispatch();
     const playlist = useSelector(state=>state.player?.songs)
@@ -18,7 +15,6 @@ export default function Player() {
     },[dispatch, playlist])
 
     const handleClickNext = () => {
-        // console.log(currentTrack, "NEXT")
         setTrackIndex((currentTrack) =>
             currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );
@@ -31,7 +27,6 @@ export default function Player() {
     }
 
     const handleEnd = () => {
-        // console.log(currentTrack, "END")
         setTrackIndex((currentTrack) =>
             currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
           );

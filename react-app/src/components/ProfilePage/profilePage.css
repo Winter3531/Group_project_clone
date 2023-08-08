@@ -64,6 +64,7 @@
     padding-bottom: 30px;
     border-bottom: solid white 2px;
     margin-right: 75%;
+    min-width: 175px;
 }
 
 #album-img,
@@ -71,7 +72,8 @@
     border-radius: 5px;
 }
 
-.album-display {
+.album-display,
+.playlist-display {
     display: flex;
     flex-direction: column;
 }
@@ -84,17 +86,9 @@
 .album-card,
 .playlist-card {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     margin: 40px;
-    width: 90px;
-}
-
-.album-card p,
-.playlist-card p {
-    margin: 10px;
-    align-self: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    width: 100px;
 }
 
 .playlist-card:hover,
@@ -115,7 +109,20 @@
 
 .profile-section {
     display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 90%;
 }
 .profile-section div {
     margin-right: auto;
+}
+
+.album-bar {
+    display: flex;
+}
+
+.user-music,
+.section-three {
+    display: flex;
+    width: 80%;
 }

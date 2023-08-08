@@ -141,6 +141,7 @@ const PlaylistDetails = () => {
                         <td>{song.songs.song_name}</td>
                         <td>{songLengthFunc(song.songs.song_length)}</td>
                         <td className="song-button">
+                        <OpenPlayer type='songs' typeId={song.id} />
                             <span><PlaylistSongLike song={song.songs} playlistId={playlistId} /></span>
                             {sessionUser && sessionUser.id === playlist.owner_id ? (
                                 <span className="delete-song-button">

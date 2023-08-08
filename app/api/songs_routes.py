@@ -12,7 +12,6 @@ songs_routes = Blueprint('songs', __name__)
 @songs_routes.route('')
 def all_songs():
     songs = Song.query.all()
-    # print(songs)
     return {song.id: song.song_like_dict() for song in songs}
 
 @songs_routes.route('/<int:id>')
@@ -25,7 +24,6 @@ def song_detail(id):
 @songs_routes.route('/new', methods=['POST'])
 @login_required
 def add_song():
-    # print(request.json)
     form = SongForm()
     owner_id = current_user.get_id()
 
@@ -62,7 +60,6 @@ def delete_song(song_id):
 # @songs_routes.route('/<int:song_id>/likes', methods=['GET','POST','DELETE'])
 # @login_required
 # def song_likes(song_id):
-#     # print(id, "Song_id", current_user.get_id(), "user_id")
 #     user_id = current_user.id
 #     like_exists = Like.query.filter_by(user_id = user_id, likable_id = song_id, likable_type = 'song').first()
 
