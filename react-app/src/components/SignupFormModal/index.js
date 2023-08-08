@@ -49,6 +49,7 @@ function SignupFormModal() {
 					Email
 					<input
 						placeholder="Email"
+						className="signup-form-input"
 						type="text"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
@@ -59,6 +60,7 @@ function SignupFormModal() {
 					Username
 					<input
 						placeholder="Username"
+						className="signup-form-input"
 						type="text"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
@@ -69,6 +71,7 @@ function SignupFormModal() {
 					First Name
 					<input
 						placeholder="First Name"
+						className="signup-form-input"
 						type="text"
 						value={firstName}
 						onChange={(e) => setFirstName(e.target.value)}
@@ -79,6 +82,7 @@ function SignupFormModal() {
 					Last Name
 					<input
 						placeholder="Last Name"
+						className="signup-form-input"
 						type="text"
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
@@ -89,6 +93,7 @@ function SignupFormModal() {
 					Date of Birth
 					<input
 						type="date"
+						className="signup-form-input"
 						value={dOB}
 						onChange={(e) => setDOB(e.target.value)}
 						required
@@ -98,6 +103,7 @@ function SignupFormModal() {
 					Profile Image
 					<input
 						placeholder="Profile Image URL"
+						className="signup-form-input"
 						type="text"
 						value={userImage}
 						onChange={(e) => setUserImage(e.target.value)}
@@ -108,6 +114,7 @@ function SignupFormModal() {
 					Password
 					<input
 						placeholder="Password"
+						className="signup-form-input"
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
@@ -118,13 +125,14 @@ function SignupFormModal() {
 					Confirm Password
 					<input
 						placeholder="Confirm Password"
+						className="signup-form-input"
 						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
 				</label>
-				<button type="submit">Sign Up</button>
+				<button className="signup-form-button" type="submit">Sign Up</button>
 			</form>
 		</div>
 	);

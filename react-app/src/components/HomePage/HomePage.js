@@ -42,7 +42,7 @@ export default function HomePage() {
                 {Object.values(albums).map( album => (
                     <div className="home-album-card" key={album.id} onClick={(e) => albumClick(e, album.id)}>
                         <img src={album.album_img} alt={`albumimg${album.id}`} id="album-img" height={90} width={90}/>
-                    <div className="albumName">{album.album_name}</div>
+                        <div className="albumName">{album.album_name}</div>
                     </div>
                 ))}
             </div>

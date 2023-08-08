@@ -38,7 +38,7 @@
   background-color: rgb(17, 16, 16);
   border-radius: 10px;
   width: 180px;
-  height: 180px;
+  height: fit-content;
   padding-left: 20px;
   margin-top: 40px;
   margin-left: 20px;
@@ -49,3 +49,14 @@
   align-items: center;
 }
 
+.about-devs-btn {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.about-devs-btn:hover {
+  cursor: pointer;
+}

@@ -34,6 +34,8 @@ function OpenModalButton({
     return (<i onClick={onClick} className="fas fa-times" />)
   } else if (buttonText === 'Add Song to Playlist') {
     return (<i onClick={onClick} className="fa fa-plus" />)
+  } else if (buttonText === 'About Devs') {
+    return (<button className='about-devs-btn' onClick={onClick}>{buttonText}</button>)
   }
   return (<button onClick={onClick}>{buttonText}</button>);
 }
