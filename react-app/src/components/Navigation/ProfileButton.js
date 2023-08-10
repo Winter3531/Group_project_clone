@@ -41,7 +41,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     await dispatch(deleteTracksThunk())
     await dispatch(logout());
-    await history.push('/home')
+    await history.push('/')
   };
 
   const createDemo = () => {
