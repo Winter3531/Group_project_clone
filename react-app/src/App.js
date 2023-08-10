@@ -63,7 +63,7 @@ function App() {
               <Route path="/songs">
                 <SongsDisplay />
               </Route>
-              <Route exact path='/home'>
+              <Route exact path='/'>
                 <HomePage />
               </Route>
             </Switch>
